@@ -60,12 +60,13 @@ def main() -> int:
     print(f"Band-spec table: {table_path}")
     print(f"Band-spec rows: {len(artifacts.band_spec_rows)}")
     print(f"Band rows: {len(artifacts.band_rows)}")
+    print(f"Persist realized curves: {manifest.curve_realization.persist_realized_curves}")
     if args.dry_run:
         return 0
 
     try:
         written = write_band_spec_artifacts(ROOT, manifest, artifacts)
-    except RuntimeError as exc:
+    except (RuntimeError, ValueError, NotImplementedError) as exc:
         print(str(exc))
         return 1
 

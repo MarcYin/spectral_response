@@ -11,9 +11,11 @@ The active design baseline is documented in:
 
 The repository currently contains:
 
-- a `src/rsrf/` package skeleton
-- a CLI bootstrap for manifest validation and layout inspection
-- placeholder ingest entrypoints for sampled-curve and band-spec workflows
+- a registry-backed read API for canonical sampled curves and band specs
+- a CLI for repository inspection, manifest validation, and canonical data discovery
+- working ingest entrypoints for sampled-curve and band-spec workflows
+- a shared `realize_curve()` helper used by runtime convolution and persisted realization
+- optional persisted realized curves for band-spec sources under `data/realized/`
 - data, docs, scripts, sources, and tests directories aligned with the implementation plan
 
 ## Repository layout
@@ -66,6 +68,10 @@ Without installing the package:
 ```bash
 PYTHONPATH=src python3 -m rsrf --help
 PYTHONPATH=src python3 -m rsrf show-layout
+PYTHONPATH=src python3 -m rsrf list-sensors
+PYTHONPATH=src python3 -m rsrf list-bands sentinel-2c_msi --variant band_average
+PYTHONPATH=src python3 -m rsrf show-metadata hyperspec_example --variant metadata_band_spec
+PYTHONPATH=src python3 -m rsrf show-response sentinel-2c_msi B03 --variant band_average
 PYTHONPATH=src python3 -m rsrf validate-manifest rsrf_source_manifest_sentinel2c_v2.json
 PYTHONPATH=src python3 -m rsrf show-registry-rows rsrf_source_manifest_hyperspectral_band_spec_example.json
 PYTHONPATH=src python3 -m rsrf register-manifest rsrf_source_manifest_sentinel2c_v2.json
@@ -86,7 +92,5 @@ rsrf --help
 
 ## Next implementation steps
 
-1. Add `list-sensors`, `list-bands`, and `show-metadata` CLI commands on top of the read API.
-2. Implement optional realized-curve persistence for band-spec sources.
-3. Add sensor-specific validation plots and richer regression fixtures.
-4. Expand from the two reference sources to the wider P0 sensor set.
+1. Add sensor-specific validation plots and richer regression fixtures.
+2. Expand from the two reference sources to the wider P0 sensor set.
