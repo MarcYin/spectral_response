@@ -46,6 +46,7 @@ The repository currently contains:
 
 ## Package modules
 
+- `rsrf.api`: registry-backed read API for canonical curves and band specs
 - `rsrf.models`: core enums and lightweight data classes
 - `rsrf.registry`: repository path conventions
 - `rsrf.io`: JSON and metadata helpers
@@ -70,6 +71,11 @@ PYTHONPATH=src python3 -m rsrf show-registry-rows rsrf_source_manifest_hyperspec
 PYTHONPATH=src python3 -m rsrf register-manifest rsrf_source_manifest_sentinel2c_v2.json
 python3 scripts/ingest/ingest_sentinel2_srf.py --dry-run
 python3 scripts/ingest/ingest_band_spec_table.py --dry-run
+PYTHONPATH=src python3 - <<'PY'
+from rsrf.api import list_sensors, load_response_definition
+print(list_sensors())
+print(type(load_response_definition('sentinel-2c_msi', 'B01', 'band_average')).__name__)
+PY
 ```
 
 After installation:
@@ -80,7 +86,7 @@ rsrf --help
 
 ## Next implementation steps
 
-1. Replace the ingest placeholders with real parsers.
-2. Add structured registry table writes.
-3. Add sensor-specific validation plots and regression fixtures.
+1. Add `list-sensors`, `list-bands`, and `show-metadata` CLI commands on top of the read API.
+2. Implement optional realized-curve persistence for band-spec sources.
+3. Add sensor-specific validation plots and richer regression fixtures.
 4. Expand from the two reference sources to the wider P0 sensor set.
