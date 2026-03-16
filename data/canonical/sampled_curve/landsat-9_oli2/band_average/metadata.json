@@ -1,0 +1,180 @@
+{
+  "band_metrics": {
+    "B1": {
+      "band_index": 1,
+      "center_wavelength_nm": 447.0,
+      "fwhm_nm": 14.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 459.0,
+      "native_support_min_nm": 427.0,
+      "sample_count": 33
+    },
+    "B2": {
+      "band_index": 2,
+      "center_wavelength_nm": 503.0,
+      "fwhm_nm": 59.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 530.0,
+      "native_support_min_nm": 436.0,
+      "sample_count": 95
+    },
+    "B3": {
+      "band_index": 3,
+      "center_wavelength_nm": 576.0,
+      "fwhm_nm": 56.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 610.0,
+      "native_support_min_nm": 512.0,
+      "sample_count": 99
+    },
+    "B4": {
+      "band_index": 4,
+      "center_wavelength_nm": 649.0,
+      "fwhm_nm": 36.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 691.0,
+      "native_support_min_nm": 625.0,
+      "sample_count": 67
+    },
+    "B5": {
+      "band_index": 5,
+      "center_wavelength_nm": 872.0,
+      "fwhm_nm": 27.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 900.0,
+      "native_support_min_nm": 829.0,
+      "sample_count": 72
+    },
+    "B6": {
+      "band_index": 6,
+      "center_wavelength_nm": 1636.0,
+      "fwhm_nm": 85.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 1697.0,
+      "native_support_min_nm": 1515.0,
+      "sample_count": 183
+    },
+    "B7": {
+      "band_index": 7,
+      "center_wavelength_nm": 2278.0,
+      "fwhm_nm": 188.0,
+      "native_sampling_nm": 0.9999999999997726,
+      "native_support_max_nm": 2355.0,
+      "native_support_min_nm": 2037.0,
+      "sample_count": 319
+    },
+    "B8": {
+      "band_index": 8,
+      "center_wavelength_nm": 670.0,
+      "fwhm_nm": 172.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 692.0,
+      "native_support_min_nm": 488.0,
+      "sample_count": 205
+    },
+    "B9": {
+      "band_index": 9,
+      "center_wavelength_nm": 1378.0,
+      "fwhm_nm": 20.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 1409.0,
+      "native_support_min_nm": 1340.0,
+      "sample_count": 70
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_table": {
+    "band_count": 9,
+    "row_count": 1143,
+    "wavelength_max_nm": 2355.0,
+    "wavelength_min_nm": 427.0
+  },
+  "generated_at": "2026-03-16T17:40:06.640272+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "c3-master",
+    "file_sha256": "365b39a2a70f41d840fb16f94ec3864fb5ef40793462c98f036fd7e9d0becfe9",
+    "license_note": "USGS terms apply",
+    "notes": [
+      "Canonical storage retains the official sampled curves from the USGS viewer export",
+      "No curve realization step is needed because sampled curves are already official"
+    ],
+    "parser": {
+      "entrypoint": "parse_usgs_json_directory",
+      "notes": [
+        "Raw source is a directory of official per-band JSON curves from the USGS Spectral Characteristics Viewer",
+        "Band metrics are derived from sampled curves because the raw bundle does not include a single summary table"
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_sampled_curve.py"
+    },
+    "raw_local_path": "sources/raw/usgs/landsat/landsat-9/oli2/c3-master",
+    "representation_variant": "band_average",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "landsat-9_oli2",
+    "source_id": "landsat-9_oli2_usgs_scv_c3_master",
+    "source_tier": "A",
+    "source_type": "official",
+    "title": "USGS Spectral Characteristics Viewer curves for Landsat 9 OLI-2",
+    "url": "https://landsat.usgs.gov/spectral-characteristics-viewer",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 9,
+      "expected_domain": "VSWIR",
+      "monotonic_centers_required": false,
+      "plot_overlay_required": false,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_usgs_json_directory",
+    "function": "parse_usgs_json_directory",
+    "module": "rsrf.parsers.usgs_json",
+    "script": "scripts/ingest/ingest_sampled_curve.py"
+  },
+  "representation_variant": "band_average",
+  "sensor_unit_id": "landsat-9_oli2",
+  "source_artifact": {
+    "file_count": 9,
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/usgs/landsat/landsat-9/oli2/c3-master",
+    "sha256": "365b39a2a70f41d840fb16f94ec3864fb5ef40793462c98f036fd7e9d0becfe9",
+    "size_bytes": 77990
+  },
+  "source_id": "landsat-9_oli2_usgs_scv_c3_master",
+  "source_tier": "A",
+  "source_type": "official"
+}

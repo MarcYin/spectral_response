@@ -1,0 +1,70 @@
+{
+  "source_id": "landsat-9_tirs2_usgs_workbook_2026_03_16",
+  "sensor_unit_id": "landsat-9_tirs2",
+  "representation_variant": "band_average",
+  "source_tier": "A",
+  "source_type": "official",
+  "content_kind": "sampled_curve",
+  "title": "USGS workbook curves for Landsat 9 TIRS-2 band-average response",
+  "url": "https://landsat.usgs.gov/spectral-characteristics-viewer",
+  "retrieved_at": "2026-03-16",
+  "doc_version": "2026-03-16",
+  "raw_local_path": "sources/raw/usgs/landsat/landsat-9/tirs2/2026-03-16/L9_TIRS2_RSR.xlsx",
+  "file_sha256": "72af7625caf52688db077a5014ea93d98fa9eaeb68b65059bf1d7316d20c1bb1",
+  "license_note": "USGS terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_sampled_curve.py",
+    "entrypoint": "parse_landsat_tirs_workbook",
+    "outputs": {
+      "canonical": [
+        "curves.parquet",
+        "metadata.json"
+      ],
+      "optional": []
+    },
+    "notes": [
+      "Use the official Landsat TIRS band-average workbook tabs as published by USGS",
+      "Band metrics are derived directly from the sampled curves written to canonical storage"
+    ]
+  },
+  "canonical": {
+    "kind": "sampled_curve",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "source_published_axis",
+    "normalization": "relative_response_peak_preserved",
+    "published_shape_type": "sampled"
+  },
+  "band_spec": {
+    "enabled": false,
+    "band_index_field": null,
+    "band_id_field": null,
+    "center_wavelength_field": null,
+    "fwhm_field": null,
+    "band_status_field": null,
+    "shape_param_fields": {}
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": null,
+    "profile_type": null,
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0"
+  },
+  "validation": {
+    "expected_band_count": 2,
+    "expected_domain": "TIR",
+    "require_band_spec": false,
+    "require_sampled_curve": true,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": false,
+    "monotonic_centers_required": true
+  },
+  "notes": [
+    "Canonical storage retains the official sampled curves from the TIRS band-average workbook",
+    "No curve realization step is needed because sampled curves are already official"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "source_id": "snpp_viirs_noaa_band_average_oct2011",
+  "sensor_unit_id": "snpp_viirs",
+  "representation_variant": "band_average",
+  "source_tier": "A",
+  "source_type": "official",
+  "content_kind": "sampled_curve",
+  "title": "S-NPP VIIRS band-average RSR release October 2011",
+  "url": "https://ncc.nesdis.noaa.gov/VIIRS/VIIRSSpectralResponseFunctions.php",
+  "retrieved_at": "2026-03-16",
+  "doc_version": "Oct2011",
+  "raw_local_path": "sources/raw/noaa/viirs/snpp/band-average/Oct2011/NG_VIIRS_NPP_RSR_filtered_Oct2011_BA.zip",
+  "file_sha256": "a49d9aab756a1284265244ffb72044cbfd22b56b41bddf10292a00fb801f9329",
+  "license_note": "NOAA NESDIS terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_sampled_curve.py",
+    "entrypoint": "parse_viirs_band_average_zip",
+    "outputs": {
+      "canonical": [
+        "curves.parquet",
+        "metadata.json"
+      ],
+      "optional": []
+    },
+    "notes": [
+      "Only band-average VIIRS members are ingested; detector-specific files are excluded",
+      "DNB files are excluded from the current canonical inventory to keep the VIIRS set consistent across releases",
+      "When a zip contains superseded and current band-average files, the newest release is preferred per band"
+    ]
+  },
+  "canonical": {
+    "kind": "sampled_curve",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "source_published_axis",
+    "normalization": "relative_response_peak_preserved",
+    "published_shape_type": "sampled"
+  },
+  "band_spec": {
+    "enabled": false,
+    "band_index_field": null,
+    "band_id_field": null,
+    "center_wavelength_field": null,
+    "fwhm_field": null,
+    "band_status_field": null,
+    "shape_param_fields": {}
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": null,
+    "profile_type": null,
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0"
+  },
+  "validation": {
+    "expected_band_count": 22,
+    "expected_domain": "VSWIR_TIR",
+    "require_band_spec": false,
+    "require_sampled_curve": true,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": false,
+    "monotonic_centers_required": false
+  },
+  "notes": [
+    "Canonical storage retains the official sampled curves from the NOAA release bundle",
+    "No curve realization step is needed because sampled curves are already official"
+  ]
+}

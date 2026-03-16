@@ -1,0 +1,610 @@
+[
+ {
+   "Terra ASTER": 10.16,
+   "TerraA-13": 0.0014
+ },
+ {
+   "Terra ASTER": 10.17,
+   "TerraA-13": 0.0036
+ },
+ {
+   "Terra ASTER": 10.18,
+   "TerraA-13": 0.0068
+ },
+ {
+   "Terra ASTER": 10.19,
+   "TerraA-13": 0.011
+ },
+ {
+   "Terra ASTER": 10.2,
+   "TerraA-13": 0.0171
+ },
+ {
+   "Terra ASTER": 10.21,
+   "TerraA-13": 0.0255
+ },
+ {
+   "Terra ASTER": 10.22,
+   "TerraA-13": 0.0371
+ },
+ {
+   "Terra ASTER": 10.23,
+   "TerraA-13": 0.0514
+ },
+ {
+   "Terra ASTER": 10.24,
+   "TerraA-13": 0.0709
+ },
+ {
+   "Terra ASTER": 10.25,
+   "TerraA-13": 0.0955
+ },
+ {
+   "Terra ASTER": 10.26,
+   "TerraA-13": 0.1263
+ },
+ {
+   "Terra ASTER": 10.27,
+   "TerraA-13": 0.1659
+ },
+ {
+   "Terra ASTER": 10.28,
+   "TerraA-13": 0.2125
+ },
+ {
+   "Terra ASTER": 10.29,
+   "TerraA-13": 0.2651
+ },
+ {
+   "Terra ASTER": 10.3,
+   "TerraA-13": 0.3288
+ },
+ {
+   "Terra ASTER": 10.31,
+   "TerraA-13": 0.4005
+ },
+ {
+   "Terra ASTER": 10.32,
+   "TerraA-13": 0.4752
+ },
+ {
+   "Terra ASTER": 10.33,
+   "TerraA-13": 0.5541
+ },
+ {
+   "Terra ASTER": 10.34,
+   "TerraA-13": 0.6411
+ },
+ {
+   "Terra ASTER": 10.35,
+   "TerraA-13": 0.7177
+ },
+ {
+   "Terra ASTER": 10.36,
+   "TerraA-13": 0.7823
+ },
+ {
+   "Terra ASTER": 10.37,
+   "TerraA-13": 0.836
+ },
+ {
+   "Terra ASTER": 10.38,
+   "TerraA-13": 0.8824
+ },
+ {
+   "Terra ASTER": 10.39,
+   "TerraA-13": 0.9007
+ },
+ {
+   "Terra ASTER": 10.4,
+   "TerraA-13": 0.9138
+ },
+ {
+   "Terra ASTER": 10.41,
+   "TerraA-13": 0.92
+ },
+ {
+   "Terra ASTER": 10.42,
+   "TerraA-13": 0.919
+ },
+ {
+   "Terra ASTER": 10.43,
+   "TerraA-13": 0.9112
+ },
+ {
+   "Terra ASTER": 10.44,
+   "TerraA-13": 0.8988
+ },
+ {
+   "Terra ASTER": 10.45,
+   "TerraA-13": 0.8914
+ },
+ {
+   "Terra ASTER": 10.46,
+   "TerraA-13": 0.8836
+ },
+ {
+   "Terra ASTER": 10.47,
+   "TerraA-13": 0.8783
+ },
+ {
+   "Terra ASTER": 10.48,
+   "TerraA-13": 0.8729
+ },
+ {
+   "Terra ASTER": 10.49,
+   "TerraA-13": 0.8714
+ },
+ {
+   "Terra ASTER": 10.5,
+   "TerraA-13": 0.8687
+ },
+ {
+   "Terra ASTER": 10.51,
+   "TerraA-13": 0.8621
+ },
+ {
+   "Terra ASTER": 10.52,
+   "TerraA-13": 0.8638
+ },
+ {
+   "Terra ASTER": 10.53,
+   "TerraA-13": 0.866
+ },
+ {
+   "Terra ASTER": 10.54,
+   "TerraA-13": 0.8662
+ },
+ {
+   "Terra ASTER": 10.55,
+   "TerraA-13": 0.8679
+ },
+ {
+   "Terra ASTER": 10.56,
+   "TerraA-13": 0.8836
+ },
+ {
+   "Terra ASTER": 10.57,
+   "TerraA-13": 0.889
+ },
+ {
+   "Terra ASTER": 10.58,
+   "TerraA-13": 0.8897
+ },
+ {
+   "Terra ASTER": 10.59,
+   "TerraA-13": 0.8994
+ },
+ {
+   "Terra ASTER": 10.6,
+   "TerraA-13": 0.9115
+ },
+ {
+   "Terra ASTER": 10.61,
+   "TerraA-13": 0.9127
+ },
+ {
+   "Terra ASTER": 10.62,
+   "TerraA-13": 0.9213
+ },
+ {
+   "Terra ASTER": 10.63,
+   "TerraA-13": 0.937
+ },
+ {
+   "Terra ASTER": 10.64,
+   "TerraA-13": 0.9408
+ },
+ {
+   "Terra ASTER": 10.65,
+   "TerraA-13": 0.9457
+ },
+ {
+   "Terra ASTER": 10.66,
+   "TerraA-13": 0.9489
+ },
+ {
+   "Terra ASTER": 10.67,
+   "TerraA-13": 0.9534
+ },
+ {
+   "Terra ASTER": 10.68,
+   "TerraA-13": 0.9547
+ },
+ {
+   "Terra ASTER": 10.69,
+   "TerraA-13": 0.954
+ },
+ {
+   "Terra ASTER": 10.7,
+   "TerraA-13": 0.9603
+ },
+ {
+   "Terra ASTER": 10.71,
+   "TerraA-13": 0.9668
+ },
+ {
+   "Terra ASTER": 10.72,
+   "TerraA-13": 0.9667
+ },
+ {
+   "Terra ASTER": 10.73,
+   "TerraA-13": 0.967
+ },
+ {
+   "Terra ASTER": 10.74,
+   "TerraA-13": 0.97
+ },
+ {
+   "Terra ASTER": 10.75,
+   "TerraA-13": 0.9588
+ },
+ {
+   "Terra ASTER": 10.76,
+   "TerraA-13": 0.9626
+ },
+ {
+   "Terra ASTER": 10.77,
+   "TerraA-13": 0.9662
+ },
+ {
+   "Terra ASTER": 10.78,
+   "TerraA-13": 0.9607
+ },
+ {
+   "Terra ASTER": 10.79,
+   "TerraA-13": 0.9649
+ },
+ {
+   "Terra ASTER": 10.8,
+   "TerraA-13": 0.9744
+ },
+ {
+   "Terra ASTER": 10.81,
+   "TerraA-13": 0.9711
+ },
+ {
+   "Terra ASTER": 10.82,
+   "TerraA-13": 0.9736
+ },
+ {
+   "Terra ASTER": 10.83,
+   "TerraA-13": 0.9797
+ },
+ {
+   "Terra ASTER": 10.84,
+   "TerraA-13": 0.981
+ },
+ {
+   "Terra ASTER": 10.85,
+   "TerraA-13": 0.9831
+ },
+ {
+   "Terra ASTER": 10.86,
+   "TerraA-13": 0.991
+ },
+ {
+   "Terra ASTER": 10.87,
+   "TerraA-13": 0.9959
+ },
+ {
+   "Terra ASTER": 10.88,
+   "TerraA-13": 1
+ },
+ {
+   "Terra ASTER": 10.89,
+   "TerraA-13": 0.995
+ },
+ {
+   "Terra ASTER": 10.9,
+   "TerraA-13": 0.9864
+ },
+ {
+   "Terra ASTER": 10.91,
+   "TerraA-13": 0.9684
+ },
+ {
+   "Terra ASTER": 10.92,
+   "TerraA-13": 0.9418
+ },
+ {
+   "Terra ASTER": 10.93,
+   "TerraA-13": 0.9122
+ },
+ {
+   "Terra ASTER": 10.94,
+   "TerraA-13": 0.8619
+ },
+ {
+   "Terra ASTER": 10.95,
+   "TerraA-13": 0.803
+ },
+ {
+   "Terra ASTER": 10.96,
+   "TerraA-13": 0.7421
+ },
+ {
+   "Terra ASTER": 10.97,
+   "TerraA-13": 0.6583
+ },
+ {
+   "Terra ASTER": 10.98,
+   "TerraA-13": 0.5668
+ },
+ {
+   "Terra ASTER": 10.99,
+   "TerraA-13": 0.4838
+ },
+ {
+   "Terra ASTER": 11,
+   "TerraA-13": 0.3893
+ },
+ {
+   "Terra ASTER": 11.01,
+   "TerraA-13": 0.3115
+ },
+ {
+   "Terra ASTER": 11.02,
+   "TerraA-13": 0.2489
+ },
+ {
+   "Terra ASTER": 11.03,
+   "TerraA-13": 0.1861
+ },
+ {
+   "Terra ASTER": 11.04,
+   "TerraA-13": 0.1433
+ },
+ {
+   "Terra ASTER": 11.05,
+   "TerraA-13": 0.11
+ },
+ {
+   "Terra ASTER": 11.06,
+   "TerraA-13": 0.0826
+ },
+ {
+   "Terra ASTER": 11.07,
+   "TerraA-13": 0.0644
+ },
+ {
+   "Terra ASTER": 11.08,
+   "TerraA-13": 0.0516
+ },
+ {
+   "Terra ASTER": 11.09,
+   "TerraA-13": 0.0405
+ },
+ {
+   "Terra ASTER": 11.1,
+   "TerraA-13": 0.0338
+ },
+ {
+   "Terra ASTER": 11.11,
+   "TerraA-13": 0.0294
+ },
+ {
+   "Terra ASTER": 11.12,
+   "TerraA-13": 0.0249
+ },
+ {
+   "Terra ASTER": 11.13,
+   "TerraA-13": 0.0226
+ },
+ {
+   "Terra ASTER": 11.14,
+   "TerraA-13": 0.0199
+ },
+ {
+   "Terra ASTER": 11.15,
+   "TerraA-13": 0.0173
+ },
+ {
+   "Terra ASTER": 11.16,
+   "TerraA-13": 0.0164
+ },
+ {
+   "Terra ASTER": 11.17,
+   "TerraA-13": 0.0141
+ },
+ {
+   "Terra ASTER": 11.18,
+   "TerraA-13": 0.0135
+ },
+ {
+   "Terra ASTER": 11.19,
+   "TerraA-13": 0.0122
+ },
+ {
+   "Terra ASTER": 11.2,
+   "TerraA-13": 0.0108
+ },
+ {
+   "Terra ASTER": 11.21,
+   "TerraA-13": 0.0104
+ },
+ {
+   "Terra ASTER": 11.22,
+   "TerraA-13": 0.0095
+ },
+ {
+   "Terra ASTER": 11.23,
+   "TerraA-13": 0.0088
+ },
+ {
+   "Terra ASTER": 11.24,
+   "TerraA-13": 0.008
+ },
+ {
+   "Terra ASTER": 11.25,
+   "TerraA-13": 0.0069
+ },
+ {
+   "Terra ASTER": 11.26,
+   "TerraA-13": 0.0063
+ },
+ {
+   "Terra ASTER": 11.27,
+   "TerraA-13": 0.0057
+ },
+ {
+   "Terra ASTER": 11.28,
+   "TerraA-13": 0.005
+ },
+ {
+   "Terra ASTER": 11.29,
+   "TerraA-13": 0.0042
+ },
+ {
+   "Terra ASTER": 11.3,
+   "TerraA-13": 0.0037
+ },
+ {
+   "Terra ASTER": 11.31,
+   "TerraA-13": 0.003
+ },
+ {
+   "Terra ASTER": 11.32,
+   "TerraA-13": 0.0024
+ },
+ {
+   "Terra ASTER": 11.33,
+   "TerraA-13": 0.0018
+ },
+ {
+   "Terra ASTER": 11.34,
+   "TerraA-13": 0.002
+ },
+ {
+   "Terra ASTER": 11.35,
+   "TerraA-13": 0.0017
+ },
+ {
+   "Terra ASTER": 11.36,
+   "TerraA-13": 0.0016
+ },
+ {
+   "Terra ASTER": 11.37,
+   "TerraA-13": 0.0016
+ },
+ {
+   "Terra ASTER": 11.38,
+   "TerraA-13": 0.0016
+ },
+ {
+   "Terra ASTER": 11.39,
+   "TerraA-13": 0.0018
+ },
+ {
+   "Terra ASTER": 11.4,
+   "TerraA-13": 0.0015
+ },
+ {
+   "Terra ASTER": 11.41,
+   "TerraA-13": 0.0015
+ },
+ {
+   "Terra ASTER": 11.42,
+   "TerraA-13": 0.0018
+ },
+ {
+   "Terra ASTER": 11.43,
+   "TerraA-13": 0.0014
+ },
+ {
+   "Terra ASTER": 11.44,
+   "TerraA-13": 0.0014
+ },
+ {
+   "Terra ASTER": 11.45,
+   "TerraA-13": 0.0016
+ },
+ {
+   "Terra ASTER": 11.46,
+   "TerraA-13": 0.0019
+ },
+ {
+   "Terra ASTER": 11.47,
+   "TerraA-13": 0.0016
+ },
+ {
+   "Terra ASTER": 11.48,
+   "TerraA-13": 0.0016
+ },
+ {
+   "Terra ASTER": 11.49,
+   "TerraA-13": 0.0018
+ },
+ {
+   "Terra ASTER": 11.5,
+   "TerraA-13": 0.0016
+ },
+ {
+   "Terra ASTER": 11.51,
+   "TerraA-13": 0.0015
+ },
+ {
+   "Terra ASTER": 11.52,
+   "TerraA-13": 0.0013
+ },
+ {
+   "Terra ASTER": 11.53,
+   "TerraA-13": 0.0013
+ },
+ {
+   "Terra ASTER": 11.54,
+   "TerraA-13": 0.0011
+ },
+ {
+   "Terra ASTER": 11.55,
+   "TerraA-13": 0.0014
+ },
+ {
+   "Terra ASTER": 11.56,
+   "TerraA-13": 0.0013
+ },
+ {
+   "Terra ASTER": 11.57,
+   "TerraA-13": 0.0011
+ },
+ {
+   "Terra ASTER": 11.58,
+   "TerraA-13": 0.001
+ },
+ {
+   "Terra ASTER": 11.59,
+   "TerraA-13": 0.0011
+ },
+ {
+   "Terra ASTER": 11.6,
+   "TerraA-13": 0.0013
+ },
+ {
+   "Terra ASTER": 11.61,
+   "TerraA-13": 0.0008
+ },
+ {
+   "Terra ASTER": 11.62,
+   "TerraA-13": 0.0002
+ },
+ {
+   "Terra ASTER": 11.63,
+   "TerraA-13": 0.0003
+ },
+ {
+   "Terra ASTER": 11.64,
+   "TerraA-13": 0.0005
+ },
+ {
+   "Terra ASTER": 11.65,
+   "TerraA-13": 0.0003
+ },
+ {
+   "Terra ASTER": 11.66,
+   "TerraA-13": 0.0004
+ },
+ {
+   "Terra ASTER": 11.67,
+   "TerraA-13": 0
+ }
+]

@@ -1,0 +1,70 @@
+{
+  "source_id": "landsat-1_mss_usgs_scv_c3_master",
+  "sensor_unit_id": "landsat-1_mss",
+  "representation_variant": "band_average",
+  "source_tier": "A",
+  "source_type": "official",
+  "content_kind": "sampled_curve",
+  "title": "USGS Spectral Characteristics Viewer curves for Landsat 1 MSS",
+  "url": "https://landsat.usgs.gov/spectral-characteristics-viewer",
+  "retrieved_at": "2026-03-16",
+  "doc_version": "c3-master",
+  "raw_local_path": "sources/raw/usgs/landsat/landsat-1/mss/c3-master",
+  "file_sha256": "1a7c6d972f0d76e1d6bd63023cec3ae05452bd2cb110875cd188266646aa9f3b",
+  "license_note": "USGS terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_sampled_curve.py",
+    "entrypoint": "parse_usgs_json_directory",
+    "outputs": {
+      "canonical": [
+        "curves.parquet",
+        "metadata.json"
+      ],
+      "optional": []
+    },
+    "notes": [
+      "Raw source is a directory of official per-band JSON curves from the USGS Spectral Characteristics Viewer",
+      "Band metrics are derived from sampled curves because the raw bundle does not include a single summary table"
+    ]
+  },
+  "canonical": {
+    "kind": "sampled_curve",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "source_published_axis",
+    "normalization": "relative_response_peak_preserved",
+    "published_shape_type": "sampled"
+  },
+  "band_spec": {
+    "enabled": false,
+    "band_index_field": null,
+    "band_id_field": null,
+    "center_wavelength_field": null,
+    "fwhm_field": null,
+    "band_status_field": null,
+    "shape_param_fields": {}
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": null,
+    "profile_type": null,
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0"
+  },
+  "validation": {
+    "expected_band_count": 4,
+    "expected_domain": "VSWIR",
+    "require_band_spec": false,
+    "require_sampled_curve": true,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": false,
+    "monotonic_centers_required": true
+  },
+  "notes": [
+    "Canonical storage retains the official sampled curves from the USGS viewer export",
+    "No curve realization step is needed because sampled curves are already official"
+  ]
+}

@@ -1,0 +1,610 @@
+[
+ {
+   "Landsat 7 ETM+": 10,
+   "L7ETM-6": 0
+ },
+ {
+   "Landsat 7 ETM+": 10.02,
+   "L7ETM-6": 0.019
+ },
+ {
+   "Landsat 7 ETM+": 10.03,
+   "L7ETM-6": 0.021
+ },
+ {
+   "Landsat 7 ETM+": 10.04,
+   "L7ETM-6": 0.007
+ },
+ {
+   "Landsat 7 ETM+": 10.05,
+   "L7ETM-6": 0.017
+ },
+ {
+   "Landsat 7 ETM+": 10.06,
+   "L7ETM-6": 0.027
+ },
+ {
+   "Landsat 7 ETM+": 10.07,
+   "L7ETM-6": 0.025
+ },
+ {
+   "Landsat 7 ETM+": 10.08,
+   "L7ETM-6": 0.027
+ },
+ {
+   "Landsat 7 ETM+": 10.09,
+   "L7ETM-6": 0.027
+ },
+ {
+   "Landsat 7 ETM+": 10.1,
+   "L7ETM-6": 0.03
+ },
+ {
+   "Landsat 7 ETM+": 10.12,
+   "L7ETM-6": 0.044
+ },
+ {
+   "Landsat 7 ETM+": 10.13,
+   "L7ETM-6": 0.037
+ },
+ {
+   "Landsat 7 ETM+": 10.14,
+   "L7ETM-6": 0.065
+ },
+ {
+   "Landsat 7 ETM+": 10.15,
+   "L7ETM-6": 0.053
+ },
+ {
+   "Landsat 7 ETM+": 10.16,
+   "L7ETM-6": 0.052
+ },
+ {
+   "Landsat 7 ETM+": 10.17,
+   "L7ETM-6": 0.049
+ },
+ {
+   "Landsat 7 ETM+": 10.18,
+   "L7ETM-6": 0.068
+ },
+ {
+   "Landsat 7 ETM+": 10.19,
+   "L7ETM-6": 0.084
+ },
+ {
+   "Landsat 7 ETM+": 10.2,
+   "L7ETM-6": 0.109
+ },
+ {
+   "Landsat 7 ETM+": 10.21,
+   "L7ETM-6": 0.124
+ },
+ {
+   "Landsat 7 ETM+": 10.22,
+   "L7ETM-6": 0.134
+ },
+ {
+   "Landsat 7 ETM+": 10.23,
+   "L7ETM-6": 0.173
+ },
+ {
+   "Landsat 7 ETM+": 10.24,
+   "L7ETM-6": 0.175
+ },
+ {
+   "Landsat 7 ETM+": 10.25,
+   "L7ETM-6": 0.217
+ },
+ {
+   "Landsat 7 ETM+": 10.26,
+   "L7ETM-6": 0.256
+ },
+ {
+   "Landsat 7 ETM+": 10.27,
+   "L7ETM-6": 0.286
+ },
+ {
+   "Landsat 7 ETM+": 10.28,
+   "L7ETM-6": 0.344
+ },
+ {
+   "Landsat 7 ETM+": 10.29,
+   "L7ETM-6": 0.384
+ },
+ {
+   "Landsat 7 ETM+": 10.3,
+   "L7ETM-6": 0.443
+ },
+ {
+   "Landsat 7 ETM+": 10.31,
+   "L7ETM-6": 0.492
+ },
+ {
+   "Landsat 7 ETM+": 10.33,
+   "L7ETM-6": 0.544
+ },
+ {
+   "Landsat 7 ETM+": 10.34,
+   "L7ETM-6": 0.614
+ },
+ {
+   "Landsat 7 ETM+": 10.35,
+   "L7ETM-6": 0.68
+ },
+ {
+   "Landsat 7 ETM+": 10.36,
+   "L7ETM-6": 0.725
+ },
+ {
+   "Landsat 7 ETM+": 10.37,
+   "L7ETM-6": 0.794
+ },
+ {
+   "Landsat 7 ETM+": 10.38,
+   "L7ETM-6": 0.823
+ },
+ {
+   "Landsat 7 ETM+": 10.39,
+   "L7ETM-6": 0.862
+ },
+ {
+   "Landsat 7 ETM+": 10.4,
+   "L7ETM-6": 0.89
+ },
+ {
+   "Landsat 7 ETM+": 10.41,
+   "L7ETM-6": 0.907
+ },
+ {
+   "Landsat 7 ETM+": 10.42,
+   "L7ETM-6": 0.93
+ },
+ {
+   "Landsat 7 ETM+": 10.43,
+   "L7ETM-6": 0.96
+ },
+ {
+   "Landsat 7 ETM+": 10.44,
+   "L7ETM-6": 0.965
+ },
+ {
+   "Landsat 7 ETM+": 10.45,
+   "L7ETM-6": 0.971
+ },
+ {
+   "Landsat 7 ETM+": 10.46,
+   "L7ETM-6": 0.969
+ },
+ {
+   "Landsat 7 ETM+": 10.47,
+   "L7ETM-6": 0.98
+ },
+ {
+   "Landsat 7 ETM+": 10.48,
+   "L7ETM-6": 0.979
+ },
+ {
+   "Landsat 7 ETM+": 10.49,
+   "L7ETM-6": 1
+ },
+ {
+   "Landsat 7 ETM+": 10.5,
+   "L7ETM-6": 0.981
+ },
+ {
+   "Landsat 7 ETM+": 10.51,
+   "L7ETM-6": 0.969
+ },
+ {
+   "Landsat 7 ETM+": 10.52,
+   "L7ETM-6": 0.988
+ },
+ {
+   "Landsat 7 ETM+": 10.53,
+   "L7ETM-6": 0.974
+ },
+ {
+   "Landsat 7 ETM+": 10.54,
+   "L7ETM-6": 0.952
+ },
+ {
+   "Landsat 7 ETM+": 10.59,
+   "L7ETM-6": 0.957
+ },
+ {
+   "Landsat 7 ETM+": 10.64,
+   "L7ETM-6": 0.957
+ },
+ {
+   "Landsat 7 ETM+": 10.7,
+   "L7ETM-6": 0.948
+ },
+ {
+   "Landsat 7 ETM+": 10.75,
+   "L7ETM-6": 0.948
+ },
+ {
+   "Landsat 7 ETM+": 10.8,
+   "L7ETM-6": 0.923
+ },
+ {
+   "Landsat 7 ETM+": 10.85,
+   "L7ETM-6": 0.915
+ },
+ {
+   "Landsat 7 ETM+": 10.9,
+   "L7ETM-6": 0.893
+ },
+ {
+   "Landsat 7 ETM+": 10.95,
+   "L7ETM-6": 0.897
+ },
+ {
+   "Landsat 7 ETM+": 11,
+   "L7ETM-6": 0.886
+ },
+ {
+   "Landsat 7 ETM+": 11.05,
+   "L7ETM-6": 0.883
+ },
+ {
+   "Landsat 7 ETM+": 11.1,
+   "L7ETM-6": 0.882
+ },
+ {
+   "Landsat 7 ETM+": 11.15,
+   "L7ETM-6": 0.88
+ },
+ {
+   "Landsat 7 ETM+": 11.2,
+   "L7ETM-6": 0.875
+ },
+ {
+   "Landsat 7 ETM+": 11.25,
+   "L7ETM-6": 0.856
+ },
+ {
+   "Landsat 7 ETM+": 11.29,
+   "L7ETM-6": 0.857
+ },
+ {
+   "Landsat 7 ETM+": 11.34,
+   "L7ETM-6": 0.83
+ },
+ {
+   "Landsat 7 ETM+": 11.39,
+   "L7ETM-6": 0.833
+ },
+ {
+   "Landsat 7 ETM+": 11.44,
+   "L7ETM-6": 0.8
+ },
+ {
+   "Landsat 7 ETM+": 11.49,
+   "L7ETM-6": 0.797
+ },
+ {
+   "Landsat 7 ETM+": 11.54,
+   "L7ETM-6": 0.789
+ },
+ {
+   "Landsat 7 ETM+": 11.59,
+   "L7ETM-6": 0.744
+ },
+ {
+   "Landsat 7 ETM+": 11.63,
+   "L7ETM-6": 0.719
+ },
+ {
+   "Landsat 7 ETM+": 11.68,
+   "L7ETM-6": 0.711
+ },
+ {
+   "Landsat 7 ETM+": 11.73,
+   "L7ETM-6": 0.699
+ },
+ {
+   "Landsat 7 ETM+": 11.78,
+   "L7ETM-6": 0.666
+ },
+ {
+   "Landsat 7 ETM+": 11.82,
+   "L7ETM-6": 0.666
+ },
+ {
+   "Landsat 7 ETM+": 11.87,
+   "L7ETM-6": 0.628
+ },
+ {
+   "Landsat 7 ETM+": 11.92,
+   "L7ETM-6": 0.626
+ },
+ {
+   "Landsat 7 ETM+": 11.96,
+   "L7ETM-6": 0.592
+ },
+ {
+   "Landsat 7 ETM+": 12.01,
+   "L7ETM-6": 0.586
+ },
+ {
+   "Landsat 7 ETM+": 12.02,
+   "L7ETM-6": 0.597
+ },
+ {
+   "Landsat 7 ETM+": 12.03,
+   "L7ETM-6": 0.613
+ },
+ {
+   "Landsat 7 ETM+": 12.04,
+   "L7ETM-6": 0.601
+ },
+ {
+   "Landsat 7 ETM+": 12.05,
+   "L7ETM-6": 0.544
+ },
+ {
+   "Landsat 7 ETM+": 12.06,
+   "L7ETM-6": 0.551
+ },
+ {
+   "Landsat 7 ETM+": 12.07,
+   "L7ETM-6": 0.578
+ },
+ {
+   "Landsat 7 ETM+": 12.08,
+   "L7ETM-6": 0.567
+ },
+ {
+   "Landsat 7 ETM+": 12.09,
+   "L7ETM-6": 0.546
+ },
+ {
+   "Landsat 7 ETM+": 12.1,
+   "L7ETM-6": 0.558
+ },
+ {
+   "Landsat 7 ETM+": 12.11,
+   "L7ETM-6": 0.544
+ },
+ {
+   "Landsat 7 ETM+": 12.12,
+   "L7ETM-6": 0.511
+ },
+ {
+   "Landsat 7 ETM+": 12.13,
+   "L7ETM-6": 0.565
+ },
+ {
+   "Landsat 7 ETM+": 12.14,
+   "L7ETM-6": 0.519
+ },
+ {
+   "Landsat 7 ETM+": 12.15,
+   "L7ETM-6": 0.546
+ },
+ {
+   "Landsat 7 ETM+": 12.16,
+   "L7ETM-6": 0.567
+ },
+ {
+   "Landsat 7 ETM+": 12.17,
+   "L7ETM-6": 0.545
+ },
+ {
+   "Landsat 7 ETM+": 12.18,
+   "L7ETM-6": 0.53
+ },
+ {
+   "Landsat 7 ETM+": 12.19,
+   "L7ETM-6": 0.53
+ },
+ {
+   "Landsat 7 ETM+": 12.2,
+   "L7ETM-6": 0.542
+ },
+ {
+   "Landsat 7 ETM+": 12.21,
+   "L7ETM-6": 0.532
+ },
+ {
+   "Landsat 7 ETM+": 12.22,
+   "L7ETM-6": 0.532
+ },
+ {
+   "Landsat 7 ETM+": 12.23,
+   "L7ETM-6": 0.533
+ },
+ {
+   "Landsat 7 ETM+": 12.24,
+   "L7ETM-6": 0.561
+ },
+ {
+   "Landsat 7 ETM+": 12.25,
+   "L7ETM-6": 0.518
+ },
+ {
+   "Landsat 7 ETM+": 12.26,
+   "L7ETM-6": 0.532
+ },
+ {
+   "Landsat 7 ETM+": 12.27,
+   "L7ETM-6": 0.533
+ },
+ {
+   "Landsat 7 ETM+": 12.28,
+   "L7ETM-6": 0.524
+ },
+ {
+   "Landsat 7 ETM+": 12.29,
+   "L7ETM-6": 0.55
+ },
+ {
+   "Landsat 7 ETM+": 12.3,
+   "L7ETM-6": 0.567
+ },
+ {
+   "Landsat 7 ETM+": 12.31,
+   "L7ETM-6": 0.531
+ },
+ {
+   "Landsat 7 ETM+": 12.32,
+   "L7ETM-6": 0.553
+ },
+ {
+   "Landsat 7 ETM+": 12.33,
+   "L7ETM-6": 0.527
+ },
+ {
+   "Landsat 7 ETM+": 12.34,
+   "L7ETM-6": 0.537
+ },
+ {
+   "Landsat 7 ETM+": 12.35,
+   "L7ETM-6": 0.53
+ },
+ {
+   "Landsat 7 ETM+": 12.36,
+   "L7ETM-6": 0.507
+ },
+ {
+   "Landsat 7 ETM+": 12.37,
+   "L7ETM-6": 0.488
+ },
+ {
+   "Landsat 7 ETM+": 12.38,
+   "L7ETM-6": 0.485
+ },
+ {
+   "Landsat 7 ETM+": 12.39,
+   "L7ETM-6": 0.447
+ },
+ {
+   "Landsat 7 ETM+": 12.4,
+   "L7ETM-6": 0.447
+ },
+ {
+   "Landsat 7 ETM+": 12.41,
+   "L7ETM-6": 0.425
+ },
+ {
+   "Landsat 7 ETM+": 12.42,
+   "L7ETM-6": 0.416
+ },
+ {
+   "Landsat 7 ETM+": 12.43,
+   "L7ETM-6": 0.405
+ },
+ {
+   "Landsat 7 ETM+": 12.44,
+   "L7ETM-6": 0.388
+ },
+ {
+   "Landsat 7 ETM+": 12.45,
+   "L7ETM-6": 0.358
+ },
+ {
+   "Landsat 7 ETM+": 12.46,
+   "L7ETM-6": 0.36
+ },
+ {
+   "Landsat 7 ETM+": 12.47,
+   "L7ETM-6": 0.275
+ },
+ {
+   "Landsat 7 ETM+": 12.48,
+   "L7ETM-6": 0.272
+ },
+ {
+   "Landsat 7 ETM+": 12.49,
+   "L7ETM-6": 0.29
+ },
+ {
+   "Landsat 7 ETM+": 12.5,
+   "L7ETM-6": 0.196
+ },
+ {
+   "Landsat 7 ETM+": 12.51,
+   "L7ETM-6": 0.205
+ },
+ {
+   "Landsat 7 ETM+": 12.52,
+   "L7ETM-6": 0.208
+ },
+ {
+   "Landsat 7 ETM+": 12.53,
+   "L7ETM-6": 0.172
+ },
+ {
+   "Landsat 7 ETM+": 12.54,
+   "L7ETM-6": 0.149
+ },
+ {
+   "Landsat 7 ETM+": 12.54,
+   "L7ETM-6": 0.126
+ },
+ {
+   "Landsat 7 ETM+": 12.55,
+   "L7ETM-6": 0.109
+ },
+ {
+   "Landsat 7 ETM+": 12.56,
+   "L7ETM-6": 0.105
+ },
+ {
+   "Landsat 7 ETM+": 12.57,
+   "L7ETM-6": 0.075
+ },
+ {
+   "Landsat 7 ETM+": 12.58,
+   "L7ETM-6": 0.069
+ },
+ {
+   "Landsat 7 ETM+": 12.59,
+   "L7ETM-6": 0.077
+ },
+ {
+   "Landsat 7 ETM+": 12.6,
+   "L7ETM-6": 0.099
+ },
+ {
+   "Landsat 7 ETM+": 12.61,
+   "L7ETM-6": 0.069
+ },
+ {
+   "Landsat 7 ETM+": 12.62,
+   "L7ETM-6": 0.073
+ },
+ {
+   "Landsat 7 ETM+": 12.63,
+   "L7ETM-6": 0.085
+ },
+ {
+   "Landsat 7 ETM+": 12.64,
+   "L7ETM-6": 0.069
+ },
+ {
+   "Landsat 7 ETM+": 12.65,
+   "L7ETM-6": 0.03
+ },
+ {
+   "Landsat 7 ETM+": 12.66,
+   "L7ETM-6": 0.045
+ },
+ {
+   "Landsat 7 ETM+": 12.67,
+   "L7ETM-6": 0.052
+ },
+ {
+   "Landsat 7 ETM+": 12.68,
+   "L7ETM-6": 0.013
+ },
+ {
+   "Landsat 7 ETM+": 12.69,
+   "L7ETM-6": 0.023
+ },
+ {
+   "Landsat 7 ETM+": 12.7,
+   "L7ETM-6": 0.009
+ }
+]

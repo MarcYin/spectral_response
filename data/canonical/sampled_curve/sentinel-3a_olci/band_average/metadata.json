@@ -1,0 +1,288 @@
+{
+  "band_metrics": {
+    "B01": {
+      "band_index": 1,
+      "center_wavelength_nm": 405.02392578125,
+      "fwhm_nm": 13.9644775390625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 411.2959899902344,
+      "native_support_min_nm": 387.7464599609375,
+      "sample_count": 200
+    },
+    "B02": {
+      "band_index": 2,
+      "center_wavelength_nm": 412.4762268066406,
+      "fwhm_nm": 9.755340576171875,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 421.2000427246094,
+      "native_support_min_nm": 402.5324401855469,
+      "sample_count": 200
+    },
+    "B03": {
+      "band_index": 3,
+      "center_wavelength_nm": 442.4312438964844,
+      "fwhm_nm": 9.8760986328125,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 452.3067932128906,
+      "native_support_min_nm": 433.5885925292969,
+      "sample_count": 200
+    },
+    "B04": {
+      "band_index": 4,
+      "center_wavelength_nm": 493.3233337402344,
+      "fwhm_nm": 9.897918701171875,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 499.82830810546875,
+      "native_support_min_nm": 481.06805419921875,
+      "sample_count": 200
+    },
+    "B05": {
+      "band_index": 5,
+      "center_wavelength_nm": 513.29248046875,
+      "fwhm_nm": 9.88519287109375,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 519.7887573242188,
+      "native_support_min_nm": 501.05316162109375,
+      "sample_count": 200
+    },
+    "B06": {
+      "band_index": 6,
+      "center_wavelength_nm": 562.3630981445312,
+      "fwhm_nm": 9.90087890625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 569.8123779296875,
+      "native_support_min_nm": 551.0492553710938,
+      "sample_count": 200
+    },
+    "B07": {
+      "band_index": 7,
+      "center_wavelength_nm": 623.2460327148438,
+      "fwhm_nm": 9.87188720703125,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 629.73486328125,
+      "native_support_min_nm": 611.0201416015625,
+      "sample_count": 200
+    },
+    "B08": {
+      "band_index": 8,
+      "center_wavelength_nm": 668.2122192382812,
+      "fwhm_nm": 9.8958740234375,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 674.6220703125,
+      "native_support_min_nm": 655.8665161132812,
+      "sample_count": 200
+    },
+    "B09": {
+      "band_index": 9,
+      "center_wavelength_nm": 674.6286010742188,
+      "fwhm_nm": 7.4461669921875,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 682.154296875,
+      "native_support_min_nm": 665.87353515625,
+      "sample_count": 200
+    },
+    "B10": {
+      "band_index": 10,
+      "center_wavelength_nm": 683.2329711914062,
+      "fwhm_nm": 7.44384765625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 689.6990966796875,
+      "native_support_min_nm": 673.4130249023438,
+      "sample_count": 200
+    },
+    "B11": {
+      "band_index": 11,
+      "center_wavelength_nm": 711.039794921875,
+      "fwhm_nm": 9.90203857421875,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 718.492431640625,
+      "native_support_min_nm": 699.726806640625,
+      "sample_count": 200
+    },
+    "B12": {
+      "band_index": 12,
+      "center_wavelength_nm": 753.5704956054688,
+      "fwhm_nm": 7.435791015625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 762.3192749023438,
+      "native_support_min_nm": 746.0486450195312,
+      "sample_count": 200
+    },
+    "B13": {
+      "band_index": 13,
+      "center_wavelength_nm": 761.7015991210938,
+      "fwhm_nm": 2.54498291015625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 767.3556518554688,
+      "native_support_min_nm": 756.0952758789062,
+      "sample_count": 200
+    },
+    "B14": {
+      "band_index": 14,
+      "center_wavelength_nm": 764.7980346679688,
+      "fwhm_nm": 3.69525146484375,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 771.06494140625,
+      "native_support_min_nm": 758.5901489257812,
+      "sample_count": 200
+    },
+    "B15": {
+      "band_index": 15,
+      "center_wavelength_nm": 767.886474609375,
+      "fwhm_nm": 2.54229736328125,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 773.5379028320312,
+      "native_support_min_nm": 762.3013305664062,
+      "sample_count": 200
+    },
+    "B16": {
+      "band_index": 16,
+      "center_wavelength_nm": 781.07470703125,
+      "fwhm_nm": 14.95025634765625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 791.1201171875,
+      "native_support_min_nm": 767.3171997070312,
+      "sample_count": 200
+    },
+    "B17": {
+      "band_index": 17,
+      "center_wavelength_nm": 857.5638427734375,
+      "fwhm_nm": 19.81158447265625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 879.9743041992188,
+      "native_support_min_nm": 851.1998901367188,
+      "sample_count": 200
+    },
+    "B18": {
+      "band_index": 18,
+      "center_wavelength_nm": 881.2975463867188,
+      "fwhm_nm": 9.90118408203125,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 893.74169921875,
+      "native_support_min_nm": 874.980712890625,
+      "sample_count": 200
+    },
+    "B19": {
+      "band_index": 19,
+      "center_wavelength_nm": 896.314208984375,
+      "fwhm_nm": 9.89752197265625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 908.7571411132812,
+      "native_support_min_nm": 889.99951171875,
+      "sample_count": 200
+    },
+    "B20": {
+      "band_index": 20,
+      "center_wavelength_nm": 931.2450561523438,
+      "fwhm_nm": 19.67822265625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 953.8208618164062,
+      "native_support_min_nm": 925.0224609375,
+      "sample_count": 200
+    },
+    "B21": {
+      "band_index": 21,
+      "center_wavelength_nm": 1001.185546875,
+      "fwhm_nm": 26.9140625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 1043.7667236328125,
+      "native_support_min_nm": 995.070068359375,
+      "sample_count": 200
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_table": {
+    "band_count": 21,
+    "row_count": 4200,
+    "wavelength_max_nm": 1043.7667236328125,
+    "wavelength_min_nm": 387.7464599609375
+  },
+  "generated_at": "2026-03-16T17:40:11.440614+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "20160713",
+    "file_sha256": "e2806df83b6a874e1b5ecd98bd56c70368e4bca6c75e6c7bad6b472cdc5fef7d",
+    "license_note": "Copernicus/ESA terms apply",
+    "notes": [
+      "Canonical storage retains the official mean sampled curves from the OLCI mean_rsr file",
+      "No curve realization step is needed because sampled curves are already official"
+    ],
+    "parser": {
+      "entrypoint": "parse_olci_mean_rsr_nc4",
+      "notes": [
+        "Use the official mean_rsr netCDF rather than the full per-pixel characterisation cube",
+        "The published 200-sample axis per band is preserved in canonical storage"
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_sampled_curve.py"
+    },
+    "raw_local_path": "sources/raw/esa/sentinel-3/s3a/olci/20160713/S3A_OL_SRF_20160713_mean_rsr.nc4",
+    "representation_variant": "band_average",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "sentinel-3a_olci",
+    "source_id": "sentinel-3a_olci_mean_rsr_20160713",
+    "source_tier": "A",
+    "source_type": "official",
+    "title": "Sentinel-3A OLCI mean spectral response function",
+    "url": "https://sentiwiki.copernicus.eu/web/s3-documents",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 21,
+      "expected_domain": "VSWIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_olci_mean_rsr_nc4",
+    "function": "parse_olci_mean_rsr_nc4",
+    "module": "rsrf.parsers.olci",
+    "script": "scripts/ingest/ingest_sampled_curve.py"
+  },
+  "representation_variant": "band_average",
+  "sensor_unit_id": "sentinel-3a_olci",
+  "source_artifact": {
+    "file_count": 1,
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/esa/sentinel-3/s3a/olci/20160713/S3A_OL_SRF_20160713_mean_rsr.nc4",
+    "sha256": "e2806df83b6a874e1b5ecd98bd56c70368e4bca6c75e6c7bad6b472cdc5fef7d",
+    "size_bytes": 47804
+  },
+  "source_id": "sentinel-3a_olci_mean_rsr_20160713",
+  "source_tier": "A",
+  "source_type": "official"
+}

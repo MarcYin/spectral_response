@@ -1,0 +1,234 @@
+{
+  "band_metrics": {
+    "B1": {
+      "band_index": 1,
+      "center_wavelength_nm": 532.0,
+      "fwhm_nm": 84.0,
+      "native_sampling_nm": 4.0,
+      "native_support_max_nm": 644.0,
+      "native_support_min_nm": 484.0,
+      "sample_count": 41
+    },
+    "B10": {
+      "band_index": 11,
+      "center_wavelength_nm": 8370.0,
+      "fwhm_nm": 340.0000000000009,
+      "native_sampling_nm": 10.0,
+      "native_support_max_nm": 8950.0,
+      "native_support_min_nm": 8029.999999999999,
+      "sample_count": 94
+    },
+    "B11": {
+      "band_index": 12,
+      "center_wavelength_nm": 8730.0,
+      "fwhm_nm": 340.0,
+      "native_sampling_nm": 10.0,
+      "native_support_max_nm": 9350.0,
+      "native_support_min_nm": 8370.0,
+      "sample_count": 101
+    },
+    "B12": {
+      "band_index": 13,
+      "center_wavelength_nm": 9080.0,
+      "fwhm_nm": 350.0,
+      "native_sampling_nm": 10.0,
+      "native_support_max_nm": 9880.0,
+      "native_support_min_nm": 8810.0,
+      "sample_count": 110
+    },
+    "B13": {
+      "band_index": 14,
+      "center_wavelength_nm": 10880.0,
+      "fwhm_nm": 650.0,
+      "native_sampling_nm": 10.0,
+      "native_support_max_nm": 11660.0,
+      "native_support_min_nm": 10160.0,
+      "sample_count": 152
+    },
+    "B14": {
+      "band_index": 15,
+      "center_wavelength_nm": 11120.0,
+      "fwhm_nm": 580.0,
+      "native_sampling_nm": 10.0,
+      "native_support_max_nm": 12000.0,
+      "native_support_min_nm": 10780.0,
+      "sample_count": 124
+    },
+    "B2": {
+      "band_index": 2,
+      "center_wavelength_nm": 638.0,
+      "fwhm_nm": 60.0,
+      "native_sampling_nm": 3.0,
+      "native_support_max_nm": 731.0,
+      "native_support_min_nm": 590.0,
+      "sample_count": 48
+    },
+    "B3B": {
+      "band_index": 4,
+      "center_wavelength_nm": 768.0,
+      "fwhm_nm": 108.0,
+      "native_sampling_nm": 4.0,
+      "native_support_max_nm": 904.0,
+      "native_support_min_nm": 720.0,
+      "sample_count": 47
+    },
+    "B3N": {
+      "band_index": 3,
+      "center_wavelength_nm": 760.0,
+      "fwhm_nm": 100.0,
+      "native_sampling_nm": 4.0,
+      "native_support_max_nm": 908.0,
+      "native_support_min_nm": 728.0,
+      "sample_count": 46
+    },
+    "B4": {
+      "band_index": 5,
+      "center_wavelength_nm": 1658.0,
+      "fwhm_nm": 90.0,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 1750.0,
+      "native_support_min_nm": 1570.0,
+      "sample_count": 55
+    },
+    "B5": {
+      "band_index": 6,
+      "center_wavelength_nm": 2170.0,
+      "fwhm_nm": 35.0,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 2284.0,
+      "native_support_min_nm": 2120.0,
+      "sample_count": 49
+    },
+    "B6": {
+      "band_index": 7,
+      "center_wavelength_nm": 2218.0,
+      "fwhm_nm": 40.0,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 2296.0,
+      "native_support_min_nm": 2150.0,
+      "sample_count": 47
+    },
+    "B7": {
+      "band_index": 8,
+      "center_wavelength_nm": 2273.0,
+      "fwhm_nm": 48.0,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 2392.0,
+      "native_support_min_nm": 2210.0,
+      "sample_count": 50
+    },
+    "B8": {
+      "band_index": 9,
+      "center_wavelength_nm": 2340.0,
+      "fwhm_nm": 68.0,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 2440.0,
+      "native_support_min_nm": 2248.0,
+      "sample_count": 50
+    },
+    "B9": {
+      "band_index": 10,
+      "center_wavelength_nm": 2403.0,
+      "fwhm_nm": 65.0,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 2536.0,
+      "native_support_min_nm": 2296.0,
+      "sample_count": 50
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_table": {
+    "band_count": 15,
+    "row_count": 1064,
+    "wavelength_max_nm": 12000.0,
+    "wavelength_min_nm": 484.0
+  },
+  "generated_at": "2026-03-16T17:40:07.727175+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "c3-master",
+    "file_sha256": "7f45c16ca2971c83c0bfc9564c93b10a17b6986f0c3f086abb55d5b2035c25e3",
+    "license_note": "USGS and ASTER mission terms apply",
+    "notes": [
+      "Canonical storage retains the official sampled curves from the USGS viewer export",
+      "No curve realization step is needed because sampled curves are already official"
+    ],
+    "parser": {
+      "entrypoint": "parse_usgs_json_directory",
+      "notes": [
+        "Raw source is a directory of official per-band JSON curves from the USGS Spectral Characteristics Viewer",
+        "Band metrics are derived from sampled curves because the raw bundle does not include a single summary table"
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_sampled_curve.py"
+    },
+    "raw_local_path": "sources/raw/usgs/terra/aster/c3-master",
+    "representation_variant": "band_average",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "terra_aster",
+    "source_id": "terra_aster_usgs_scv_c3_master",
+    "source_tier": "A",
+    "source_type": "official",
+    "title": "USGS Spectral Characteristics Viewer curves for Terra ASTER",
+    "url": "https://landsat.usgs.gov/spectral-characteristics-viewer",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 15,
+      "expected_domain": "VSWIR_TIR",
+      "monotonic_centers_required": false,
+      "plot_overlay_required": false,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_usgs_json_directory",
+    "function": "parse_usgs_json_directory",
+    "module": "rsrf.parsers.usgs_json",
+    "script": "scripts/ingest/ingest_sampled_curve.py"
+  },
+  "representation_variant": "band_average",
+  "sensor_unit_id": "terra_aster",
+  "source_artifact": {
+    "file_count": 15,
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/usgs/terra/aster/c3-master",
+    "sha256": "7f45c16ca2971c83c0bfc9564c93b10a17b6986f0c3f086abb55d5b2035c25e3",
+    "size_bytes": 63349
+  },
+  "source_id": "terra_aster_usgs_scv_c3_master",
+  "source_tier": "A",
+  "source_type": "official"
+}

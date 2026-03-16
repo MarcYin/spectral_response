@@ -1,0 +1,70 @@
+{
+  "source_id": "terra_modis_mcst_merged_in_band_oob",
+  "sensor_unit_id": "terra_modis",
+  "representation_variant": "band_average",
+  "source_tier": "A",
+  "source_type": "official",
+  "content_kind": "sampled_curve",
+  "title": "MODIS Terra merged in-band and out-of-band RSR workbook",
+  "url": "https://mcst.gsfc.nasa.gov/calibration/parameters",
+  "retrieved_at": "2026-03-16",
+  "doc_version": "merged-in-band-oob",
+  "raw_local_path": "sources/raw/nasa/modis/terra/modis/merged-in-band-oob/MODIS_PFM_IB_OOB_RSR_merged.xls",
+  "file_sha256": "ecf3a085a8f83df9ab06a87492d0fd8bc4dac3e8a08666f7ae2730b16f95164f",
+  "license_note": "NASA MCST terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_sampled_curve.py",
+    "entrypoint": "parse_modis_rsr_workbook",
+    "outputs": {
+      "canonical": [
+        "curves.parquet",
+        "metadata.json"
+      ],
+      "optional": []
+    },
+    "notes": [
+      "Use the official merged in-band and out-of-band MODIS workbooks from MCST",
+      "Aqua parsing uses the InbandPeakMethodRSR column from the merged workbook"
+    ]
+  },
+  "canonical": {
+    "kind": "sampled_curve",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "source_published_axis",
+    "normalization": "relative_response_peak_preserved",
+    "published_shape_type": "sampled"
+  },
+  "band_spec": {
+    "enabled": false,
+    "band_index_field": null,
+    "band_id_field": null,
+    "center_wavelength_field": null,
+    "fwhm_field": null,
+    "band_status_field": null,
+    "shape_param_fields": {}
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": null,
+    "profile_type": null,
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0"
+  },
+  "validation": {
+    "expected_band_count": 36,
+    "expected_domain": "VSWIR_TIR",
+    "require_band_spec": false,
+    "require_sampled_curve": true,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": false,
+    "monotonic_centers_required": false
+  },
+  "notes": [
+    "Canonical storage retains the official sampled curves from the MCST workbook",
+    "No curve realization step is needed because sampled curves are already official"
+  ]
+}

@@ -1,0 +1,270 @@
+[
+  {
+    "Landsat 8 OLI": 0.625,
+    "L8OLI-4": -0.000342
+  },
+  {
+    "Landsat 8 OLI": 0.626,
+    "L8OLI-4": 0.00027
+  },
+  {
+    "Landsat 8 OLI": 0.627,
+    "L8OLI-4": 0.000895
+  },
+  {
+    "Landsat 8 OLI": 0.628,
+    "L8OLI-4": 0.00185
+  },
+  {
+    "Landsat 8 OLI": 0.629,
+    "L8OLI-4": 0.003648
+  },
+  {
+    "Landsat 8 OLI": 0.63,
+    "L8OLI-4": 0.007197
+  },
+  {
+    "Landsat 8 OLI": 0.631,
+    "L8OLI-4": 0.014515
+  },
+  {
+    "Landsat 8 OLI": 0.632,
+    "L8OLI-4": 0.030432
+  },
+  {
+    "Landsat 8 OLI": 0.633,
+    "L8OLI-4": 0.066861
+  },
+  {
+    "Landsat 8 OLI": 0.634,
+    "L8OLI-4": 0.148518
+  },
+  {
+    "Landsat 8 OLI": 0.635,
+    "L8OLI-4": 0.299778
+  },
+  {
+    "Landsat 8 OLI": 0.636,
+    "L8OLI-4": 0.526812
+  },
+  {
+    "Landsat 8 OLI": 0.637,
+    "L8OLI-4": 0.764443
+  },
+  {
+    "Landsat 8 OLI": 0.638,
+    "L8OLI-4": 0.905473
+  },
+  {
+    "Landsat 8 OLI": 0.639,
+    "L8OLI-4": 0.947949
+  },
+  {
+    "Landsat 8 OLI": 0.64,
+    "L8OLI-4": 0.950823
+  },
+  {
+    "Landsat 8 OLI": 0.641,
+    "L8OLI-4": 0.947418
+  },
+  {
+    "Landsat 8 OLI": 0.642,
+    "L8OLI-4": 0.951831
+  },
+  {
+    "Landsat 8 OLI": 0.643,
+    "L8OLI-4": 0.962705
+  },
+  {
+    "Landsat 8 OLI": 0.644,
+    "L8OLI-4": 0.975075
+  },
+  {
+    "Landsat 8 OLI": 0.645,
+    "L8OLI-4": 0.984173
+  },
+  {
+    "Landsat 8 OLI": 0.646,
+    "L8OLI-4": 0.983613
+  },
+  {
+    "Landsat 8 OLI": 0.647,
+    "L8OLI-4": 0.983434
+  },
+  {
+    "Landsat 8 OLI": 0.648,
+    "L8OLI-4": 0.982911
+  },
+  {
+    "Landsat 8 OLI": 0.649,
+    "L8OLI-4": 0.973636
+  },
+  {
+    "Landsat 8 OLI": 0.65,
+    "L8OLI-4": 0.959441
+  },
+  {
+    "Landsat 8 OLI": 0.651,
+    "L8OLI-4": 0.955641
+  },
+  {
+    "Landsat 8 OLI": 0.652,
+    "L8OLI-4": 0.955548
+  },
+  {
+    "Landsat 8 OLI": 0.653,
+    "L8OLI-4": 0.953337
+  },
+  {
+    "Landsat 8 OLI": 0.654,
+    "L8OLI-4": 0.956628
+  },
+  {
+    "Landsat 8 OLI": 0.655,
+    "L8OLI-4": 0.981688
+  },
+  {
+    "Landsat 8 OLI": 0.656,
+    "L8OLI-4": 1
+  },
+  {
+    "Landsat 8 OLI": 0.657,
+    "L8OLI-4": 0.992388
+  },
+  {
+    "Landsat 8 OLI": 0.658,
+    "L8OLI-4": 0.984615
+  },
+  {
+    "Landsat 8 OLI": 0.659,
+    "L8OLI-4": 0.981568
+  },
+  {
+    "Landsat 8 OLI": 0.66,
+    "L8OLI-4": 0.97696
+  },
+  {
+    "Landsat 8 OLI": 0.661,
+    "L8OLI-4": 0.97298
+  },
+  {
+    "Landsat 8 OLI": 0.662,
+    "L8OLI-4": 0.98108
+  },
+  {
+    "Landsat 8 OLI": 0.663,
+    "L8OLI-4": 0.996804
+  },
+  {
+    "Landsat 8 OLI": 0.664,
+    "L8OLI-4": 0.992142
+  },
+  {
+    "Landsat 8 OLI": 0.665,
+    "L8OLI-4": 0.980678
+  },
+  {
+    "Landsat 8 OLI": 0.666,
+    "L8OLI-4": 0.964002
+  },
+  {
+    "Landsat 8 OLI": 0.667,
+    "L8OLI-4": 0.962154
+  },
+  {
+    "Landsat 8 OLI": 0.668,
+    "L8OLI-4": 0.970778
+  },
+  {
+    "Landsat 8 OLI": 0.669,
+    "L8OLI-4": 0.96718
+  },
+  {
+    "Landsat 8 OLI": 0.67,
+    "L8OLI-4": 0.966928
+  },
+  {
+    "Landsat 8 OLI": 0.671,
+    "L8OLI-4": 0.949928
+  },
+  {
+    "Landsat 8 OLI": 0.672,
+    "L8OLI-4": 0.848855
+  },
+  {
+    "Landsat 8 OLI": 0.673,
+    "L8OLI-4": 0.609359
+  },
+  {
+    "Landsat 8 OLI": 0.674,
+    "L8OLI-4": 0.31635
+  },
+  {
+    "Landsat 8 OLI": 0.675,
+    "L8OLI-4": 0.123946
+  },
+  {
+    "Landsat 8 OLI": 0.676,
+    "L8OLI-4": 0.046033
+  },
+  {
+    "Landsat 8 OLI": 0.677,
+    "L8OLI-4": 0.017702
+  },
+  {
+    "Landsat 8 OLI": 0.678,
+    "L8OLI-4": 0.007333
+  },
+  {
+    "Landsat 8 OLI": 0.679,
+    "L8OLI-4": 0.003205
+  },
+  {
+    "Landsat 8 OLI": 0.68,
+    "L8OLI-4": 0.001402
+  },
+  {
+    "Landsat 8 OLI": 0.681,
+    "L8OLI-4": 0.000554
+  },
+  {
+    "Landsat 8 OLI": 0.682,
+    "L8OLI-4": 0.000117
+  },
+  {
+    "Landsat 8 OLI": 0.683,
+    "L8OLI-4": -0.000122
+  },
+  {
+    "Landsat 8 OLI": 0.684,
+    "L8OLI-4": -0.000289
+  },
+  {
+    "Landsat 8 OLI": 0.685,
+    "L8OLI-4": -0.000376
+  },
+  {
+    "Landsat 8 OLI": 0.686,
+    "L8OLI-4": -0.000396
+  },
+  {
+    "Landsat 8 OLI": 0.687,
+    "L8OLI-4": -0.000458
+  },
+  {
+    "Landsat 8 OLI": 0.688,
+    "L8OLI-4": -0.000488
+  },
+  {
+    "Landsat 8 OLI": 0.689,
+    "L8OLI-4": -0.000457
+  },
+  {
+    "Landsat 8 OLI": 0.69,
+    "L8OLI-4": -0.000429
+  },
+  {
+    "Landsat 8 OLI": 0.691,
+    "L8OLI-4": -0.000417
+  }
+]

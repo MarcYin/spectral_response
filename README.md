@@ -17,7 +17,12 @@ The repository currently contains:
 - a shared `realize_curve()` helper used by runtime convolution and persisted realization
 - optional persisted realized curves for band-spec sources under `data/realized/`
 - regression fixtures for the reference validation reports
-- canonical sampled-curve coverage for Sentinel-2A, Sentinel-2B, and Sentinel-2C MSI
+- canonical sampled-curve coverage for:
+  - Sentinel-2A, Sentinel-2B, and Sentinel-2C MSI
+  - Landsat 1-5 MSS, Landsat 4-5 TM, Landsat 7 ETM+, Landsat 8 OLI/TIRS, and Landsat 9 OLI-2/TIRS-2
+  - Terra MODIS and Aqua MODIS
+  - S-NPP VIIRS, NOAA-20 VIIRS, and NOAA-21 VIIRS
+  - Sentinel-3A OLCI, Sentinel-3B OLCI, and Terra ASTER
 - canonical band-spec coverage for the hyperspectral example source
 - data, docs, scripts, sources, and tests directories aligned with the implementation plan
 
@@ -91,6 +96,7 @@ PYTHONPATH=src python3 -m rsrf export-validation hyperspec_example --variant met
 PYTHONPATH=src python3 -m rsrf validate-manifest rsrf_source_manifest_sentinel2c_v2.json
 PYTHONPATH=src python3 -m rsrf show-registry-rows rsrf_source_manifest_hyperspectral_band_spec_example.json
 PYTHONPATH=src python3 -m rsrf register-manifest rsrf_source_manifest_sentinel2c_v2.json
+python3 scripts/ingest/ingest_sampled_curve.py rsrf_source_manifest_noaa20_viirs_v2.json --dry-run
 python3 scripts/ingest/ingest_sentinel2_srf.py --dry-run
 python3 scripts/ingest/ingest_band_spec_table.py --dry-run
 python3 scripts/validate/generate_validation_report.py sentinel-2c_msi --variant band_average
@@ -111,5 +117,6 @@ rsrf --help
 
 ## Next implementation steps
 
-1. Add the next sensor family after Sentinel-2, starting with Landsat.
-2. Add configurable overlay tolerances and richer reference-source provenance for overlay validation.
+1. Add trusted overlay references for the new sensor families so sampled-curve QA can move beyond structural checks.
+2. Fill mission-family metadata in `data/registry/sensors.parquet` (`mission_family`, `platform`, `instrument`) instead of leaving those columns null.
+3. Add source-specific sensor notes under `docs/sensor-notes/` for parser quirks such as VIIRS M16 handling and MODIS merged-workbook normalization.

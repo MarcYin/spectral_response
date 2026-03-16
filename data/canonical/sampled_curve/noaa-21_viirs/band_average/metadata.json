@@ -1,0 +1,298 @@
+{
+  "band_metrics": {
+    "I1": {
+      "band_index": 1001,
+      "center_wavelength_nm": 673.866,
+      "fwhm_nm": 78.83100000000002,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 1104.495,
+      "native_support_min_nm": 346.994,
+      "sample_count": 442
+    },
+    "I2": {
+      "band_index": 1002,
+      "center_wavelength_nm": 872.513,
+      "fwhm_nm": 37.990999999999985,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 1101.505,
+      "native_support_min_nm": 352.0015,
+      "sample_count": 360
+    },
+    "I3": {
+      "band_index": 1003,
+      "center_wavelength_nm": 1605.217,
+      "fwhm_nm": 62.97199999999998,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 7066.02,
+      "native_support_min_nm": 989.998,
+      "sample_count": 532
+    },
+    "I4": {
+      "band_index": 1004,
+      "center_wavelength_nm": 3833.985,
+      "fwhm_nm": 380.0,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 7133.97,
+      "native_support_min_nm": 1000.01,
+      "sample_count": 364
+    },
+    "I5": {
+      "band_index": 1005,
+      "center_wavelength_nm": 10731.9,
+      "fwhm_nm": 1679.9500000000007,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 16121.95,
+      "native_support_min_nm": 1804.01,
+      "sample_count": 243
+    },
+    "M1": {
+      "band_index": 10,
+      "center_wavelength_nm": 418.601,
+      "fwhm_nm": 18.84499999999997,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 1101.505,
+      "native_support_min_nm": 342.9975,
+      "sample_count": 656
+    },
+    "M10": {
+      "band_index": 100,
+      "center_wavelength_nm": 1597.93,
+      "fwhm_nm": 61.847999999999956,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 7096.02,
+      "native_support_min_nm": 1001.985,
+      "sample_count": 509
+    },
+    "M11": {
+      "band_index": 110,
+      "center_wavelength_nm": 2266.695,
+      "fwhm_nm": 45.50500000000011,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 7200.935,
+      "native_support_min_nm": 993.985,
+      "sample_count": 282
+    },
+    "M12": {
+      "band_index": 120,
+      "center_wavelength_nm": 3744.255,
+      "fwhm_nm": 191.37000000000035,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 7186.975,
+      "native_support_min_nm": 1000.01,
+      "sample_count": 261
+    },
+    "M13": {
+      "band_index": 130,
+      "center_wavelength_nm": 4063.225,
+      "fwhm_nm": 144.42999999999984,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 7096.02,
+      "native_support_min_nm": 1000.01,
+      "sample_count": 238
+    },
+    "M14": {
+      "band_index": 140,
+      "center_wavelength_nm": 8595.055,
+      "fwhm_nm": 320.02000000000044,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 16014.95,
+      "native_support_min_nm": 1799.995,
+      "sample_count": 252
+    },
+    "M15": {
+      "band_index": 150,
+      "center_wavelength_nm": 10567.05,
+      "fwhm_nm": 899.9499999999989,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 16166.85,
+      "native_support_min_nm": 1799.995,
+      "sample_count": 230
+    },
+    "M16A": {
+      "band_index": 160,
+      "center_wavelength_nm": 11741.95,
+      "fwhm_nm": 910.0499999999993,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 16096.95,
+      "native_support_min_nm": 1799.995,
+      "sample_count": 221
+    },
+    "M16B": {
+      "band_index": 161,
+      "center_wavelength_nm": 11741.95,
+      "fwhm_nm": 910.0499999999993,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 16096.95,
+      "native_support_min_nm": 1799.995,
+      "sample_count": 221
+    },
+    "M2": {
+      "band_index": 20,
+      "center_wavelength_nm": 444.983,
+      "fwhm_nm": 16.863,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 1103.5,
+      "native_support_min_nm": 344.007,
+      "sample_count": 666
+    },
+    "M3": {
+      "band_index": 30,
+      "center_wavelength_nm": 495.118,
+      "fwhm_nm": 19.623000000000047,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 1099.495,
+      "native_support_min_nm": 350.0055,
+      "sample_count": 459
+    },
+    "M4": {
+      "band_index": 40,
+      "center_wavelength_nm": 559.683,
+      "fwhm_nm": 20.938999999999965,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 1101.505,
+      "native_support_min_nm": 354.0045,
+      "sample_count": 604
+    },
+    "M5": {
+      "band_index": 50,
+      "center_wavelength_nm": 674.773,
+      "fwhm_nm": 20.97300000000007,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 1099.495,
+      "native_support_min_nm": 348.9975,
+      "sample_count": 765
+    },
+    "M6": {
+      "band_index": 60,
+      "center_wavelength_nm": 747.269,
+      "fwhm_nm": 14.745000000000005,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 1104.0,
+      "native_support_min_nm": 348.9975,
+      "sample_count": 609
+    },
+    "M7": {
+      "band_index": 70,
+      "center_wavelength_nm": 871.851,
+      "fwhm_nm": 37.990999999999985,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 1101.505,
+      "native_support_min_nm": 350.997,
+      "sample_count": 610
+    },
+    "M8": {
+      "band_index": 80,
+      "center_wavelength_nm": 1239.972,
+      "fwhm_nm": 19.799999999999955,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 7207.96,
+      "native_support_min_nm": 995.993,
+      "sample_count": 451
+    },
+    "M9": {
+      "band_index": 90,
+      "center_wavelength_nm": 1377.4,
+      "fwhm_nm": 14.036000000000058,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 7199.04,
+      "native_support_min_nm": 989.998,
+      "sample_count": 362
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_table": {
+    "band_count": 22,
+    "row_count": 9337,
+    "wavelength_max_nm": 16166.85,
+    "wavelength_min_nm": 342.9975
+  },
+  "generated_at": "2026-03-16T17:40:10.872249+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "V2_Jul2019",
+    "file_sha256": "5139b0d70325dae13a9c267921806755e22b053a47df04ac85859750249ebce7",
+    "license_note": "NOAA NESDIS terms apply",
+    "notes": [
+      "Canonical storage retains the official sampled curves from the NOAA release bundle",
+      "No curve realization step is needed because sampled curves are already official"
+    ],
+    "parser": {
+      "entrypoint": "parse_viirs_band_average_zip",
+      "notes": [
+        "Only band-average VIIRS members are ingested; detector-specific files are excluded",
+        "DNB files are excluded from the current canonical inventory to keep the VIIRS set consistent across releases",
+        "When a zip contains superseded and current band-average files, the newest release is preferred per band"
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_sampled_curve.py"
+    },
+    "raw_local_path": "sources/raw/noaa/viirs/noaa-21/band-average/V2_Jul2019/J2_VIIRS_RSR_DAWG_At-Launch_Public_Release_V2_Jul2019.zip",
+    "representation_variant": "band_average",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "noaa-21_viirs",
+    "source_id": "noaa-21_viirs_noaa_band_average_v2",
+    "source_tier": "A",
+    "source_type": "official",
+    "title": "NOAA-21 VIIRS band-average RSR release V2 July 2019",
+    "url": "https://ncc.nesdis.noaa.gov/NOAA-21/J2VIIRS_SpectralResponseFunctions.php",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 22,
+      "expected_domain": "VSWIR_TIR",
+      "monotonic_centers_required": false,
+      "plot_overlay_required": false,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_viirs_band_average_zip",
+    "function": "parse_viirs_band_average_zip",
+    "module": "rsrf.parsers.viirs",
+    "script": "scripts/ingest/ingest_sampled_curve.py"
+  },
+  "representation_variant": "band_average",
+  "sensor_unit_id": "noaa-21_viirs",
+  "source_artifact": {
+    "file_count": 1,
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/noaa/viirs/noaa-21/band-average/V2_Jul2019/J2_VIIRS_RSR_DAWG_At-Launch_Public_Release_V2_Jul2019.zip",
+    "sha256": "5139b0d70325dae13a9c267921806755e22b053a47df04ac85859750249ebce7",
+    "size_bytes": 3687953
+  },
+  "source_id": "noaa-21_viirs_noaa_band_average_v2",
+  "source_tier": "A",
+  "source_type": "official"
+}

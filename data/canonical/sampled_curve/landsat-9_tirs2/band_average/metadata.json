@@ -1,0 +1,117 @@
+{
+  "band_metrics": {
+    "B10": {
+      "band_index": 10,
+      "center_wavelength_nm": 11050.0,
+      "fwhm_nm": 650.0,
+      "native_sampling_nm": 50.0,
+      "native_support_max_nm": 11800.0,
+      "native_support_min_nm": 9800.0,
+      "sample_count": 41
+    },
+    "B11": {
+      "band_index": 11,
+      "center_wavelength_nm": 12000.0,
+      "fwhm_nm": 850.0,
+      "native_sampling_nm": 50.0,
+      "native_support_max_nm": 13000.0,
+      "native_support_min_nm": 11000.0,
+      "sample_count": 41
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_table": {
+    "band_count": 2,
+    "row_count": 82,
+    "wavelength_max_nm": 13000.0,
+    "wavelength_min_nm": 9800.0
+  },
+  "generated_at": "2026-03-16T17:40:07.185148+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "2026-03-16",
+    "file_sha256": "72af7625caf52688db077a5014ea93d98fa9eaeb68b65059bf1d7316d20c1bb1",
+    "license_note": "USGS terms apply",
+    "notes": [
+      "Canonical storage retains the official sampled curves from the TIRS band-average workbook",
+      "No curve realization step is needed because sampled curves are already official"
+    ],
+    "parser": {
+      "entrypoint": "parse_landsat_tirs_workbook",
+      "notes": [
+        "Use the official Landsat TIRS band-average workbook tabs as published by USGS",
+        "Band metrics are derived directly from the sampled curves written to canonical storage"
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_sampled_curve.py"
+    },
+    "raw_local_path": "sources/raw/usgs/landsat/landsat-9/tirs2/2026-03-16/L9_TIRS2_RSR.xlsx",
+    "representation_variant": "band_average",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "landsat-9_tirs2",
+    "source_id": "landsat-9_tirs2_usgs_workbook_2026_03_16",
+    "source_tier": "A",
+    "source_type": "official",
+    "title": "USGS workbook curves for Landsat 9 TIRS-2 band-average response",
+    "url": "https://landsat.usgs.gov/spectral-characteristics-viewer",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 2,
+      "expected_domain": "TIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_landsat_tirs_workbook",
+    "function": "parse_landsat_tirs_workbook",
+    "module": "rsrf.parsers.landsat_tirs",
+    "script": "scripts/ingest/ingest_sampled_curve.py"
+  },
+  "representation_variant": "band_average",
+  "sensor_unit_id": "landsat-9_tirs2",
+  "source_artifact": {
+    "file_count": 1,
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/usgs/landsat/landsat-9/tirs2/2026-03-16/L9_TIRS2_RSR.xlsx",
+    "sha256": "72af7625caf52688db077a5014ea93d98fa9eaeb68b65059bf1d7316d20c1bb1",
+    "size_bytes": 34274
+  },
+  "source_id": "landsat-9_tirs2_usgs_workbook_2026_03_16",
+  "source_tier": "A",
+  "source_type": "official"
+}

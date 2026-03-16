@@ -1,0 +1,638 @@
+[
+  {
+    "Landsat 4 MSS": 0.583,
+    "L4MSS-2": 0.001
+  },
+  {
+    "Landsat 4 MSS": 0.584,
+    "L4MSS-2": 0.003
+  },
+  {
+    "Landsat 4 MSS": 0.585,
+    "L4MSS-2": 0.008
+  },
+  {
+    "Landsat 4 MSS": 0.586,
+    "L4MSS-2": 0.013
+  },
+  {
+    "Landsat 4 MSS": 0.587,
+    "L4MSS-2": 0.016
+  },
+  {
+    "Landsat 4 MSS": 0.588,
+    "L4MSS-2": 0.018
+  },
+  {
+    "Landsat 4 MSS": 0.589,
+    "L4MSS-2": 0.021
+  },
+  {
+    "Landsat 4 MSS": 0.59,
+    "L4MSS-2": 0.033
+  },
+  {
+    "Landsat 4 MSS": 0.591,
+    "L4MSS-2": 0.05
+  },
+  {
+    "Landsat 4 MSS": 0.592,
+    "L4MSS-2": 0.082
+  },
+  {
+    "Landsat 4 MSS": 0.593,
+    "L4MSS-2": 0.112
+  },
+  {
+    "Landsat 4 MSS": 0.594,
+    "L4MSS-2": 0.148
+  },
+  {
+    "Landsat 4 MSS": 0.595,
+    "L4MSS-2": 0.19
+  },
+  {
+    "Landsat 4 MSS": 0.596,
+    "L4MSS-2": 0.226
+  },
+  {
+    "Landsat 4 MSS": 0.597,
+    "L4MSS-2": 0.255
+  },
+  {
+    "Landsat 4 MSS": 0.598,
+    "L4MSS-2": 0.291
+  },
+  {
+    "Landsat 4 MSS": 0.599,
+    "L4MSS-2": 0.329
+  },
+  {
+    "Landsat 4 MSS": 0.6,
+    "L4MSS-2": 0.371
+  },
+  {
+    "Landsat 4 MSS": 0.601,
+    "L4MSS-2": 0.409
+  },
+  {
+    "Landsat 4 MSS": 0.602,
+    "L4MSS-2": 0.443
+  },
+  {
+    "Landsat 4 MSS": 0.603,
+    "L4MSS-2": 0.487
+  },
+  {
+    "Landsat 4 MSS": 0.604,
+    "L4MSS-2": 0.527
+  },
+  {
+    "Landsat 4 MSS": 0.605,
+    "L4MSS-2": 0.568
+  },
+  {
+    "Landsat 4 MSS": 0.606,
+    "L4MSS-2": 0.61
+  },
+  {
+    "Landsat 4 MSS": 0.607,
+    "L4MSS-2": 0.651
+  },
+  {
+    "Landsat 4 MSS": 0.608,
+    "L4MSS-2": 0.691
+  },
+  {
+    "Landsat 4 MSS": 0.609,
+    "L4MSS-2": 0.733
+  },
+  {
+    "Landsat 4 MSS": 0.61,
+    "L4MSS-2": 0.77
+  },
+  {
+    "Landsat 4 MSS": 0.611,
+    "L4MSS-2": 0.8
+  },
+  {
+    "Landsat 4 MSS": 0.612,
+    "L4MSS-2": 0.82
+  },
+  {
+    "Landsat 4 MSS": 0.613,
+    "L4MSS-2": 0.834
+  },
+  {
+    "Landsat 4 MSS": 0.614,
+    "L4MSS-2": 0.854
+  },
+  {
+    "Landsat 4 MSS": 0.615,
+    "L4MSS-2": 0.87
+  },
+  {
+    "Landsat 4 MSS": 0.616,
+    "L4MSS-2": 0.883
+  },
+  {
+    "Landsat 4 MSS": 0.617,
+    "L4MSS-2": 0.898
+  },
+  {
+    "Landsat 4 MSS": 0.618,
+    "L4MSS-2": 0.911
+  },
+  {
+    "Landsat 4 MSS": 0.619,
+    "L4MSS-2": 0.927
+  },
+  {
+    "Landsat 4 MSS": 0.62,
+    "L4MSS-2": 0.944
+  },
+  {
+    "Landsat 4 MSS": 0.621,
+    "L4MSS-2": 0.952
+  },
+  {
+    "Landsat 4 MSS": 0.622,
+    "L4MSS-2": 0.959
+  },
+  {
+    "Landsat 4 MSS": 0.623,
+    "L4MSS-2": 0.962
+  },
+  {
+    "Landsat 4 MSS": 0.624,
+    "L4MSS-2": 0.966
+  },
+  {
+    "Landsat 4 MSS": 0.625,
+    "L4MSS-2": 0.97
+  },
+  {
+    "Landsat 4 MSS": 0.626,
+    "L4MSS-2": 0.974
+  },
+  {
+    "Landsat 4 MSS": 0.627,
+    "L4MSS-2": 0.976
+  },
+  {
+    "Landsat 4 MSS": 0.628,
+    "L4MSS-2": 0.982
+  },
+  {
+    "Landsat 4 MSS": 0.629,
+    "L4MSS-2": 0.985
+  },
+  {
+    "Landsat 4 MSS": 0.63,
+    "L4MSS-2": 0.988
+  },
+  {
+    "Landsat 4 MSS": 0.631,
+    "L4MSS-2": 0.989
+  },
+  {
+    "Landsat 4 MSS": 0.632,
+    "L4MSS-2": 0.99
+  },
+  {
+    "Landsat 4 MSS": 0.633,
+    "L4MSS-2": 0.991
+  },
+  {
+    "Landsat 4 MSS": 0.634,
+    "L4MSS-2": 0.992
+  },
+  {
+    "Landsat 4 MSS": 0.635,
+    "L4MSS-2": 0.992
+  },
+  {
+    "Landsat 4 MSS": 0.636,
+    "L4MSS-2": 0.992
+  },
+  {
+    "Landsat 4 MSS": 0.637,
+    "L4MSS-2": 0.993
+  },
+  {
+    "Landsat 4 MSS": 0.638,
+    "L4MSS-2": 0.993
+  },
+  {
+    "Landsat 4 MSS": 0.639,
+    "L4MSS-2": 0.992
+  },
+  {
+    "Landsat 4 MSS": 0.64,
+    "L4MSS-2": 0.992
+  },
+  {
+    "Landsat 4 MSS": 0.641,
+    "L4MSS-2": 0.991
+  },
+  {
+    "Landsat 4 MSS": 0.642,
+    "L4MSS-2": 0.987
+  },
+  {
+    "Landsat 4 MSS": 0.643,
+    "L4MSS-2": 0.983
+  },
+  {
+    "Landsat 4 MSS": 0.644,
+    "L4MSS-2": 0.98
+  },
+  {
+    "Landsat 4 MSS": 0.645,
+    "L4MSS-2": 0.977
+  },
+  {
+    "Landsat 4 MSS": 0.646,
+    "L4MSS-2": 0.972
+  },
+  {
+    "Landsat 4 MSS": 0.647,
+    "L4MSS-2": 0.968
+  },
+  {
+    "Landsat 4 MSS": 0.648,
+    "L4MSS-2": 0.963
+  },
+  {
+    "Landsat 4 MSS": 0.649,
+    "L4MSS-2": 0.96
+  },
+  {
+    "Landsat 4 MSS": 0.65,
+    "L4MSS-2": 0.956
+  },
+  {
+    "Landsat 4 MSS": 0.651,
+    "L4MSS-2": 0.953
+  },
+  {
+    "Landsat 4 MSS": 0.652,
+    "L4MSS-2": 0.949
+  },
+  {
+    "Landsat 4 MSS": 0.653,
+    "L4MSS-2": 0.944
+  },
+  {
+    "Landsat 4 MSS": 0.654,
+    "L4MSS-2": 0.94
+  },
+  {
+    "Landsat 4 MSS": 0.655,
+    "L4MSS-2": 0.937
+  },
+  {
+    "Landsat 4 MSS": 0.656,
+    "L4MSS-2": 0.934
+  },
+  {
+    "Landsat 4 MSS": 0.657,
+    "L4MSS-2": 0.931
+  },
+  {
+    "Landsat 4 MSS": 0.658,
+    "L4MSS-2": 0.926
+  },
+  {
+    "Landsat 4 MSS": 0.659,
+    "L4MSS-2": 0.92
+  },
+  {
+    "Landsat 4 MSS": 0.66,
+    "L4MSS-2": 0.919
+  },
+  {
+    "Landsat 4 MSS": 0.661,
+    "L4MSS-2": 0.917
+  },
+  {
+    "Landsat 4 MSS": 0.662,
+    "L4MSS-2": 0.917
+  },
+  {
+    "Landsat 4 MSS": 0.663,
+    "L4MSS-2": 0.915
+  },
+  {
+    "Landsat 4 MSS": 0.664,
+    "L4MSS-2": 0.913
+  },
+  {
+    "Landsat 4 MSS": 0.665,
+    "L4MSS-2": 0.91
+  },
+  {
+    "Landsat 4 MSS": 0.666,
+    "L4MSS-2": 0.907
+  },
+  {
+    "Landsat 4 MSS": 0.667,
+    "L4MSS-2": 0.906
+  },
+  {
+    "Landsat 4 MSS": 0.668,
+    "L4MSS-2": 0.905
+  },
+  {
+    "Landsat 4 MSS": 0.669,
+    "L4MSS-2": 0.903
+  },
+  {
+    "Landsat 4 MSS": 0.67,
+    "L4MSS-2": 0.902
+  },
+  {
+    "Landsat 4 MSS": 0.671,
+    "L4MSS-2": 0.897
+  },
+  {
+    "Landsat 4 MSS": 0.672,
+    "L4MSS-2": 0.891
+  },
+  {
+    "Landsat 4 MSS": 0.673,
+    "L4MSS-2": 0.887
+  },
+  {
+    "Landsat 4 MSS": 0.674,
+    "L4MSS-2": 0.883
+  },
+  {
+    "Landsat 4 MSS": 0.675,
+    "L4MSS-2": 0.878
+  },
+  {
+    "Landsat 4 MSS": 0.676,
+    "L4MSS-2": 0.872
+  },
+  {
+    "Landsat 4 MSS": 0.677,
+    "L4MSS-2": 0.868
+  },
+  {
+    "Landsat 4 MSS": 0.678,
+    "L4MSS-2": 0.862
+  },
+  {
+    "Landsat 4 MSS": 0.679,
+    "L4MSS-2": 0.856
+  },
+  {
+    "Landsat 4 MSS": 0.68,
+    "L4MSS-2": 0.852
+  },
+  {
+    "Landsat 4 MSS": 0.681,
+    "L4MSS-2": 0.846
+  },
+  {
+    "Landsat 4 MSS": 0.682,
+    "L4MSS-2": 0.84
+  },
+  {
+    "Landsat 4 MSS": 0.683,
+    "L4MSS-2": 0.834
+  },
+  {
+    "Landsat 4 MSS": 0.684,
+    "L4MSS-2": 0.83
+  },
+  {
+    "Landsat 4 MSS": 0.685,
+    "L4MSS-2": 0.823
+  },
+  {
+    "Landsat 4 MSS": 0.686,
+    "L4MSS-2": 0.817
+  },
+  {
+    "Landsat 4 MSS": 0.687,
+    "L4MSS-2": 0.811
+  },
+  {
+    "Landsat 4 MSS": 0.688,
+    "L4MSS-2": 0.805
+  },
+  {
+    "Landsat 4 MSS": 0.689,
+    "L4MSS-2": 0.795
+  },
+  {
+    "Landsat 4 MSS": 0.69,
+    "L4MSS-2": 0.779
+  },
+  {
+    "Landsat 4 MSS": 0.691,
+    "L4MSS-2": 0.748
+  },
+  {
+    "Landsat 4 MSS": 0.692,
+    "L4MSS-2": 0.708
+  },
+  {
+    "Landsat 4 MSS": 0.693,
+    "L4MSS-2": 0.67
+  },
+  {
+    "Landsat 4 MSS": 0.694,
+    "L4MSS-2": 0.631
+  },
+  {
+    "Landsat 4 MSS": 0.695,
+    "L4MSS-2": 0.585
+  },
+  {
+    "Landsat 4 MSS": 0.696,
+    "L4MSS-2": 0.542
+  },
+  {
+    "Landsat 4 MSS": 0.697,
+    "L4MSS-2": 0.502
+  },
+  {
+    "Landsat 4 MSS": 0.698,
+    "L4MSS-2": 0.465
+  },
+  {
+    "Landsat 4 MSS": 0.699,
+    "L4MSS-2": 0.418
+  },
+  {
+    "Landsat 4 MSS": 0.7,
+    "L4MSS-2": 0.384
+  },
+  {
+    "Landsat 4 MSS": 0.701,
+    "L4MSS-2": 0.349
+  },
+  {
+    "Landsat 4 MSS": 0.702,
+    "L4MSS-2": 0.33
+  },
+  {
+    "Landsat 4 MSS": 0.703,
+    "L4MSS-2": 0.299
+  },
+  {
+    "Landsat 4 MSS": 0.704,
+    "L4MSS-2": 0.277
+  },
+  {
+    "Landsat 4 MSS": 0.705,
+    "L4MSS-2": 0.254
+  },
+  {
+    "Landsat 4 MSS": 0.706,
+    "L4MSS-2": 0.232
+  },
+  {
+    "Landsat 4 MSS": 0.707,
+    "L4MSS-2": 0.205
+  },
+  {
+    "Landsat 4 MSS": 0.708,
+    "L4MSS-2": 0.176
+  },
+  {
+    "Landsat 4 MSS": 0.709,
+    "L4MSS-2": 0.157
+  },
+  {
+    "Landsat 4 MSS": 0.71,
+    "L4MSS-2": 0.141
+  },
+  {
+    "Landsat 4 MSS": 0.711,
+    "L4MSS-2": 0.124
+  },
+  {
+    "Landsat 4 MSS": 0.712,
+    "L4MSS-2": 0.117
+  },
+  {
+    "Landsat 4 MSS": 0.713,
+    "L4MSS-2": 0.101
+  },
+  {
+    "Landsat 4 MSS": 0.714,
+    "L4MSS-2": 0.095
+  },
+  {
+    "Landsat 4 MSS": 0.715,
+    "L4MSS-2": 0.087
+  },
+  {
+    "Landsat 4 MSS": 0.716,
+    "L4MSS-2": 0.075
+  },
+  {
+    "Landsat 4 MSS": 0.717,
+    "L4MSS-2": 0.063
+  },
+  {
+    "Landsat 4 MSS": 0.718,
+    "L4MSS-2": 0.057
+  },
+  {
+    "Landsat 4 MSS": 0.719,
+    "L4MSS-2": 0.043
+  },
+  {
+    "Landsat 4 MSS": 0.72,
+    "L4MSS-2": 0.038
+  },
+  {
+    "Landsat 4 MSS": 0.721,
+    "L4MSS-2": 0.032
+  },
+  {
+    "Landsat 4 MSS": 0.722,
+    "L4MSS-2": 0.029
+  },
+  {
+    "Landsat 4 MSS": 0.723,
+    "L4MSS-2": 0.027
+  },
+  {
+    "Landsat 4 MSS": 0.724,
+    "L4MSS-2": 0.025
+  },
+  {
+    "Landsat 4 MSS": 0.725,
+    "L4MSS-2": 0.024
+  },
+  {
+    "Landsat 4 MSS": 0.726,
+    "L4MSS-2": 0.022
+  },
+  {
+    "Landsat 4 MSS": 0.727,
+    "L4MSS-2": 0.019
+  },
+  {
+    "Landsat 4 MSS": 0.728,
+    "L4MSS-2": 0.014
+  },
+  {
+    "Landsat 4 MSS": 0.729,
+    "L4MSS-2": 0.01
+  },
+  {
+    "Landsat 4 MSS": 0.73,
+    "L4MSS-2": 0.011
+  },
+  {
+    "Landsat 4 MSS": 0.731,
+    "L4MSS-2": 0.01
+  },
+  {
+    "Landsat 4 MSS": 0.732,
+    "L4MSS-2": 0.009
+  },
+  {
+    "Landsat 4 MSS": 0.733,
+    "L4MSS-2": 0.009
+  },
+  {
+    "Landsat 4 MSS": 0.734,
+    "L4MSS-2": 0.009
+  },
+  {
+    "Landsat 4 MSS": 0.735,
+    "L4MSS-2": 0.008
+  },
+  {
+    "Landsat 4 MSS": 0.736,
+    "L4MSS-2": 0.007
+  },
+  {
+    "Landsat 4 MSS": 0.737,
+    "L4MSS-2": 0.005
+  },
+  {
+    "Landsat 4 MSS": 0.738,
+    "L4MSS-2": 0.004
+  },
+  {
+    "Landsat 4 MSS": 0.739,
+    "L4MSS-2": 0.003
+  },
+  {
+    "Landsat 4 MSS": 0.74,
+    "L4MSS-2": 0.004
+  },
+  {
+    "Landsat 4 MSS": 0.741,
+    "L4MSS-2": 0.002
+  }
+]

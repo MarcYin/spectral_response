@@ -1,0 +1,135 @@
+{
+  "band_metrics": {
+    "B4": {
+      "band_index": 4,
+      "center_wavelength_nm": 550.0,
+      "fwhm_nm": 96.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 653.0,
+      "native_support_min_nm": 449.0,
+      "sample_count": 205
+    },
+    "B5": {
+      "band_index": 5,
+      "center_wavelength_nm": 643.0,
+      "fwhm_nm": 101.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 752.0,
+      "native_support_min_nm": 554.0,
+      "sample_count": 199
+    },
+    "B6": {
+      "band_index": 6,
+      "center_wavelength_nm": 726.0,
+      "fwhm_nm": 100.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 850.0,
+      "native_support_min_nm": 653.0,
+      "sample_count": 198
+    },
+    "B7": {
+      "band_index": 7,
+      "center_wavelength_nm": 865.0,
+      "fwhm_nm": 167.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 1165.0,
+      "native_support_min_nm": 790.0,
+      "sample_count": 376
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_table": {
+    "band_count": 4,
+    "row_count": 978,
+    "wavelength_max_nm": 1165.0,
+    "wavelength_min_nm": 449.0
+  },
+  "generated_at": "2026-03-16T17:40:02.368089+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "c3-master",
+    "file_sha256": "df55477d34af0e0536d83dd8cb95b8b78cb2210c79dce5d019a83c4f44aad275",
+    "license_note": "USGS terms apply",
+    "notes": [
+      "Canonical storage retains the official sampled curves from the USGS viewer export",
+      "No curve realization step is needed because sampled curves are already official"
+    ],
+    "parser": {
+      "entrypoint": "parse_usgs_json_directory",
+      "notes": [
+        "Raw source is a directory of official per-band JSON curves from the USGS Spectral Characteristics Viewer",
+        "Band metrics are derived from sampled curves because the raw bundle does not include a single summary table"
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_sampled_curve.py"
+    },
+    "raw_local_path": "sources/raw/usgs/landsat/landsat-3/mss/c3-master",
+    "representation_variant": "band_average",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "landsat-3_mss",
+    "source_id": "landsat-3_mss_usgs_scv_c3_master",
+    "source_tier": "A",
+    "source_type": "official",
+    "title": "USGS Spectral Characteristics Viewer curves for Landsat 3 MSS",
+    "url": "https://landsat.usgs.gov/spectral-characteristics-viewer",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 4,
+      "expected_domain": "VSWIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_usgs_json_directory",
+    "function": "parse_usgs_json_directory",
+    "module": "rsrf.parsers.usgs_json",
+    "script": "scripts/ingest/ingest_sampled_curve.py"
+  },
+  "representation_variant": "band_average",
+  "sensor_unit_id": "landsat-3_mss",
+  "source_artifact": {
+    "file_count": 4,
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/usgs/landsat/landsat-3/mss/c3-master",
+    "sha256": "df55477d34af0e0536d83dd8cb95b8b78cb2210c79dce5d019a83c4f44aad275",
+    "size_bytes": 59852
+  },
+  "source_id": "landsat-3_mss_usgs_scv_c3_master",
+  "source_tier": "A",
+  "source_type": "official"
+}
