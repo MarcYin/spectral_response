@@ -24,6 +24,33 @@ from rsrf.models import BandSpec, SampledCurve
 from rsrf.parsers.band_spec_table import parse_band_spec_table
 from rsrf.validate import parse_manifest_dict
 
+EXPECTED_CANONICAL_VARIANTS = {
+    ("aqua_modis", "band_average"),
+    ("hyperspec_example", "metadata_band_spec"),
+    ("landsat-1_mss", "band_average"),
+    ("landsat-2_mss", "band_average"),
+    ("landsat-3_mss", "band_average"),
+    ("landsat-4_mss", "band_average"),
+    ("landsat-4_tm", "band_average"),
+    ("landsat-5_mss", "band_average"),
+    ("landsat-5_tm", "band_average"),
+    ("landsat-7_etm_plus", "band_average"),
+    ("landsat-8_oli", "band_average"),
+    ("landsat-8_tirs", "band_average"),
+    ("landsat-9_oli2", "band_average"),
+    ("landsat-9_tirs2", "band_average"),
+    ("noaa-20_viirs", "band_average"),
+    ("noaa-21_viirs", "band_average"),
+    ("sentinel-2a_msi", "band_average"),
+    ("sentinel-2b_msi", "band_average"),
+    ("sentinel-2c_msi", "band_average"),
+    ("sentinel-3a_olci", "band_average"),
+    ("sentinel-3b_olci", "band_average"),
+    ("snpp_viirs", "band_average"),
+    ("terra_aster", "band_average"),
+    ("terra_modis", "band_average"),
+}
+
 
 class ApiTests(unittest.TestCase):
     def test_list_sensors_returns_registered_canonical_forms(self) -> None:
@@ -32,15 +59,7 @@ class ApiTests(unittest.TestCase):
             (row["sensor_unit_id"], row["representation_variant"])
             for row in sensors
         }
-        self.assertEqual(
-            variants,
-            {
-                ("sentinel-2a_msi", "band_average"),
-                ("sentinel-2b_msi", "band_average"),
-                ("sentinel-2c_msi", "band_average"),
-                ("hyperspec_example", "metadata_band_spec"),
-            },
-        )
+        self.assertEqual(variants, EXPECTED_CANONICAL_VARIANTS)
 
     def test_load_curve_reads_canonical_sampled_data(self) -> None:
         curve = load_curve("sentinel-2c_msi", "B01", "band_average", root=ROOT)
@@ -56,6 +75,18 @@ class ApiTests(unittest.TestCase):
         self.assertIsInstance(curve_b, SampledCurve)
         self.assertEqual(len(curve_a.wavelength_nm), 2301)
         self.assertEqual(len(curve_b.wavelength_nm), 2301)
+
+    def test_load_curve_reads_new_sensor_families(self) -> None:
+        landsat_tirs = load_curve("landsat-8_tirs", "B10", "band_average", root=ROOT)
+        viirs = load_curve("noaa-20_viirs", "M1", "band_average", root=ROOT)
+        olci = load_curve("sentinel-3a_olci", "B01", "band_average", root=ROOT)
+
+        self.assertIsInstance(landsat_tirs, SampledCurve)
+        self.assertIsInstance(viirs, SampledCurve)
+        self.assertIsInstance(olci, SampledCurve)
+        self.assertGreater(len(landsat_tirs.wavelength_nm), 10)
+        self.assertGreater(len(viirs.wavelength_nm), 10)
+        self.assertEqual(len(olci.wavelength_nm), 200)
 
     def test_load_band_spec_reads_canonical_band_spec(self) -> None:
         band_spec = load_band_spec(

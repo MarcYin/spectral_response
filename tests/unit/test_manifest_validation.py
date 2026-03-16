@@ -20,11 +20,10 @@ class ManifestValidationTests(unittest.TestCase):
         payload = read_json(ROOT / "rsrf_source_manifest_sentinel2c_v2.json")
         self.assertEqual(validate_manifest_dict(payload), [])
 
-    def test_additional_sentinel_manifests_are_valid(self) -> None:
-        for manifest_name in (
-            "rsrf_source_manifest_sentinel2a_v2.json",
-            "rsrf_source_manifest_sentinel2b_v2.json",
-        ):
+    def test_all_versioned_manifests_are_valid(self) -> None:
+        for manifest_name in sorted(path.name for path in ROOT.glob("rsrf_source_manifest_*_v2.json")):
+            if manifest_name == "rsrf_source_manifest_template_v2.json":
+                continue
             payload = read_json(ROOT / manifest_name)
             self.assertEqual(validate_manifest_dict(payload), [])
 

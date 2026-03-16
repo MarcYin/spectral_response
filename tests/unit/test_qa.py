@@ -37,6 +37,13 @@ class QaTests(unittest.TestCase):
         self.assertTrue(report["overlay_checks"]["available"])
         self.assertEqual(report["summary"]["band_count"], 13)
 
+    def test_validate_new_sensor_family_passes_without_overlay_requirement(self) -> None:
+        report = validate_sensor("sentinel-3a_olci", "band_average", root=ROOT)
+
+        self.assertTrue(report["passed"])
+        self.assertFalse(report["overlay_checks"]["available"])
+        self.assertEqual(report["summary"]["band_count"], 21)
+
     def test_validate_sampled_curve_variant_fails_when_required_overlay_is_missing(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             tmp_root = Path(tmpdir)
