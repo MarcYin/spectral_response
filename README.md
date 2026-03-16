@@ -16,6 +16,7 @@ The repository currently contains:
 - working ingest entrypoints for sampled-curve and band-spec workflows
 - a shared `realize_curve()` helper used by runtime convolution and persisted realization
 - optional persisted realized curves for band-spec sources under `data/realized/`
+- regression fixtures for the reference validation reports
 - data, docs, scripts, sources, and tests directories aligned with the implementation plan
 
 ## Repository layout
@@ -57,6 +58,7 @@ The repository currently contains:
 - `rsrf.resample`: linear resampling helpers
 - `rsrf.convolve`: basic convolution helpers
 - `rsrf.validate`: manifest validation and bootstrap checks
+- `rsrf.qa`: sensor-level validation reports and QA artifact export
 - `rsrf.plotting`: simple curve plotting helpers
 - `rsrf.cli`: command-line entrypoints
 - `rsrf.registry`: normalized registry row builders and table definitions
@@ -77,10 +79,14 @@ PYTHONPATH=src python3 -m rsrf show-registry-rows rsrf_source_manifest_hyperspec
 PYTHONPATH=src python3 -m rsrf register-manifest rsrf_source_manifest_sentinel2c_v2.json
 python3 scripts/ingest/ingest_sentinel2_srf.py --dry-run
 python3 scripts/ingest/ingest_band_spec_table.py --dry-run
+python3 scripts/validate/generate_validation_report.py sentinel-2c_msi --variant band_average
+python3 scripts/validate/generate_validation_report.py hyperspec_example --variant metadata_band_spec
+python3 scripts/validate/refresh_validation_fixtures.py
 PYTHONPATH=src python3 - <<'PY'
-from rsrf.api import list_sensors, load_response_definition
+from rsrf import list_sensors, load_response_definition, validate_sensor
 print(list_sensors())
 print(type(load_response_definition('sentinel-2c_msi', 'B01', 'band_average')).__name__)
+print(validate_sensor('hyperspec_example', 'metadata_band_spec')['passed'])
 PY
 ```
 
@@ -92,5 +98,5 @@ rsrf --help
 
 ## Next implementation steps
 
-1. Add sensor-specific validation plots and richer regression fixtures.
-2. Expand from the two reference sources to the wider P0 sensor set.
+1. Expand from the two reference sources to the wider P0 sensor set.
+2. Add source-overlay validation when a trusted reference figure or alternate published curve is available.

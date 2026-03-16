@@ -4,6 +4,7 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
 from .api import get_metadata, list_bands, list_sensors, load_band_spec, load_curve, load_response_definition
+from .qa import validate_sensor, write_validation_artifacts
 from .realize import realize_curve
 
 PACKAGE_ROOT = Path(__file__).resolve().parent
@@ -23,4 +24,6 @@ __all__ = [
     "load_curve",
     "load_response_definition",
     "realize_curve",
+    "validate_sensor",
+    "write_validation_artifacts",
 ]
