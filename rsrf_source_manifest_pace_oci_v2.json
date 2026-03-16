@@ -1,0 +1,71 @@
+{
+  "source_id": "pace_oci_obpg_l1b_bandpass_1_1_1",
+  "sensor_unit_id": "pace_oci",
+  "representation_variant": "l1b_band_spec",
+  "source_tier": "A",
+  "source_type": "official_metadata",
+  "content_kind": "band_spec",
+  "title": "PACE OCI Level-1B bandpass summary baseline 1.1.1",
+  "url": "https://oceancolor.gsfc.nasa.gov/data/pace/characterization/",
+  "retrieved_at": "2026-03-16",
+  "doc_version": "1.1.1",
+  "raw_local_path": "sources/raw/nasa/pace/oci/1.1.1/oci_l1b_bandpass.csv",
+  "file_sha256": "d9006489e47a8e4bd406f8063ef225f6803409fea6afe2239f4db42d466e01e3",
+  "license_note": "NASA OBPG / PACE characterization terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_band_spec_table.py",
+    "entrypoint": "parse_obpg_bandpass_csv",
+    "outputs": {
+      "canonical": [
+        "band_specs.parquet",
+        "metadata.json"
+      ],
+      "optional": []
+    },
+    "notes": [
+      "The OBPG bandpass table publishes band number, center wavelength, and FWHM for the standard Level-1B OCI ordering",
+      "This representation captures the official bandpass summary rather than the full sampled OCI netCDF curves",
+      "The standard Level-1B ordering is not strictly monotonic because overlapping focal-plane and SWIR gain variants are retained"
+    ]
+  },
+  "canonical": {
+    "kind": "band_spec",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "band_center_grid",
+    "normalization": "not_applicable",
+    "published_shape_type": "unknown"
+  },
+  "band_spec": {
+    "enabled": true,
+    "band_index_field": "Band Number",
+    "band_id_field": null,
+    "center_wavelength_field": "Center Wavelength",
+    "fwhm_field": "Width (FWHM)",
+    "band_status_field": null,
+    "shape_param_fields": {}
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": null,
+    "profile_type": null,
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0"
+  },
+  "validation": {
+    "expected_band_count": 291,
+    "expected_domain": "UVSWIR",
+    "require_band_spec": true,
+    "require_sampled_curve": false,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": false,
+    "monotonic_centers_required": false
+  },
+  "notes": [
+    "Use this official bandpass table as the current low-friction OCI representation in the registry",
+    "A future sampled_curve OCI representation can ingest the full OBPG RSR netCDF alongside this band-spec view"
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "band_metrics": {
+    "B01": {
+      "band_index": 1,
+      "center_wavelength_nm": 418.0,
+      "fwhm_nm": 19.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 1100.0,
+      "native_support_min_nm": 380.0,
+      "sample_count": 721
+    },
+    "B02": {
+      "band_index": 2,
+      "center_wavelength_nm": 446.0,
+      "fwhm_nm": 18.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 1100.0,
+      "native_support_min_nm": 380.0,
+      "sample_count": 721
+    },
+    "B03": {
+      "band_index": 3,
+      "center_wavelength_nm": 487.0,
+      "fwhm_nm": 20.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 1100.0,
+      "native_support_min_nm": 380.0,
+      "sample_count": 721
+    },
+    "B04": {
+      "band_index": 4,
+      "center_wavelength_nm": 514.0,
+      "fwhm_nm": 22.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 1100.0,
+      "native_support_min_nm": 380.0,
+      "sample_count": 721
+    },
+    "B05": {
+      "band_index": 5,
+      "center_wavelength_nm": 558.0,
+      "fwhm_nm": 17.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 1100.0,
+      "native_support_min_nm": 380.0,
+      "sample_count": 721
+    },
+    "B06": {
+      "band_index": 6,
+      "center_wavelength_nm": 671.0,
+      "fwhm_nm": 19.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 1100.0,
+      "native_support_min_nm": 380.0,
+      "sample_count": 721
+    },
+    "B07": {
+      "band_index": 7,
+      "center_wavelength_nm": 775.0,
+      "fwhm_nm": 40.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 1100.0,
+      "native_support_min_nm": 380.0,
+      "sample_count": 721
+    },
+    "B08": {
+      "band_index": 8,
+      "center_wavelength_nm": 858.0,
+      "fwhm_nm": 41.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 1100.0,
+      "native_support_min_nm": 380.0,
+      "sample_count": 721
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_table": {
+    "band_count": 8,
+    "row_count": 5768,
+    "wavelength_max_nm": 1100.0,
+    "wavelength_min_nm": 380.0
+  },
+  "generated_at": "2026-03-16T18:23:06.032013+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "unversioned_obpg_rsr_tables",
+    "file_sha256": "b6a8a6bb62116e7021c527ad4eda2e88a80b5c3a6ab1449cd3af81724c1974bd",
+    "license_note": "NASA OBPG curated table terms apply; original mission terms may also apply",
+    "notes": [
+      "Canonical storage retains the sampled RSR curves distributed by NASA OBPG",
+      "No curve realization step is needed because sampled curves are already available"
+    ],
+    "parser": {
+      "entrypoint": "parse_obpg_rsr_netcdf",
+      "notes": [
+        "Use the NASA OBPG curated RSR netCDF as the current public sampled-curve source for SeaWiFS",
+        "Band centers are taken from the published OBPG band coordinate"
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_sampled_curve.py"
+    },
+    "raw_local_path": "sources/raw/nasa/obpg/orbview-2/seawifs/rsr_tables/orbview-2_seawifs_RSR.nc",
+    "representation_variant": "band_average",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "orbview-2_seawifs",
+    "source_id": "orbview-2_seawifs_obpg_rsr_tables",
+    "source_tier": "B",
+    "source_type": "alternative",
+    "title": "OrbView-2 SeaWiFS spectral response functions from NASA OBPG RSR tables",
+    "url": "https://oceancolor.gsfc.nasa.gov/resources/docs/rsr_tables/",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 8,
+      "expected_domain": "VSWIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "obpg_rsr": {
+    "band_coordinate_count": 8,
+    "band_coordinate_units": "nm",
+    "negative_values_clipped": 0
+  },
+  "parser": {
+    "entrypoint": "parse_obpg_rsr_netcdf",
+    "function": "parse_obpg_rsr_netcdf",
+    "module": "rsrf.parsers.obpg",
+    "script": "scripts/ingest/ingest_sampled_curve.py"
+  },
+  "representation_variant": "band_average",
+  "sensor_unit_id": "orbview-2_seawifs",
+  "source_artifact": {
+    "file_count": 1,
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/nasa/obpg/orbview-2/seawifs/rsr_tables/orbview-2_seawifs_RSR.nc",
+    "sha256": "b6a8a6bb62116e7021c527ad4eda2e88a80b5c3a6ab1449cd3af81724c1974bd",
+    "size_bytes": 39389
+  },
+  "source_id": "orbview-2_seawifs_obpg_rsr_tables",
+  "source_tier": "B",
+  "source_type": "alternative"
+}

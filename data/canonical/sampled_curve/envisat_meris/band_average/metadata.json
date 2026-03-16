@@ -1,0 +1,239 @@
+{
+  "band_metrics": {
+    "B01": {
+      "band_index": 1,
+      "center_wavelength_nm": 414.3999938964844,
+      "fwhm_nm": 9.79998779296875,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 419.70001220703125,
+      "native_support_min_nm": 405.20001220703125,
+      "sample_count": 5023
+    },
+    "B02": {
+      "band_index": 2,
+      "center_wavelength_nm": 444.3999938964844,
+      "fwhm_nm": 9.79998779296875,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 449.79998779296875,
+      "native_support_min_nm": 435.1000061035156,
+      "sample_count": 5023
+    },
+    "B03": {
+      "band_index": 3,
+      "center_wavelength_nm": 491.8999938964844,
+      "fwhm_nm": 9.79998779296875,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 497.29998779296875,
+      "native_support_min_nm": 482.5,
+      "sample_count": 5023
+    },
+    "B04": {
+      "band_index": 4,
+      "center_wavelength_nm": 511.8999938964844,
+      "fwhm_nm": 9.800018310546875,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 517.2999877929688,
+      "native_support_min_nm": 502.5,
+      "sample_count": 5023
+    },
+    "B05": {
+      "band_index": 5,
+      "center_wavelength_nm": 558.0999755859375,
+      "fwhm_nm": 9.800048828125,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 567.2999877929688,
+      "native_support_min_nm": 552.5,
+      "sample_count": 5023
+    },
+    "B06": {
+      "band_index": 6,
+      "center_wavelength_nm": 618.0999755859375,
+      "fwhm_nm": 9.800048828125,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 627.4000244140625,
+      "native_support_min_nm": 612.5999755859375,
+      "sample_count": 5023
+    },
+    "B07": {
+      "band_index": 7,
+      "center_wavelength_nm": 663.0999755859375,
+      "fwhm_nm": 9.800048828125,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 672.2000122070312,
+      "native_support_min_nm": 657.5,
+      "sample_count": 5023
+    },
+    "B08": {
+      "band_index": 8,
+      "center_wavelength_nm": 680.5999755859375,
+      "fwhm_nm": 7.300048828125,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 687.2000122070312,
+      "native_support_min_nm": 675.0,
+      "sample_count": 5023
+    },
+    "B09": {
+      "band_index": 9,
+      "center_wavelength_nm": 706.9000244140625,
+      "fwhm_nm": 9.9000244140625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 716.0,
+      "native_support_min_nm": 701.2999877929688,
+      "sample_count": 5023
+    },
+    "B10": {
+      "band_index": 10,
+      "center_wavelength_nm": 753.0999755859375,
+      "fwhm_nm": 7.300048828125,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 759.7000122070312,
+      "native_support_min_nm": 747.5999755859375,
+      "sample_count": 5023
+    },
+    "B11": {
+      "band_index": 11,
+      "center_wavelength_nm": 761.9000244140625,
+      "fwhm_nm": 3.60003662109375,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 766.0,
+      "native_support_min_nm": 757.5999755859375,
+      "sample_count": 5023
+    },
+    "B12": {
+      "band_index": 12,
+      "center_wavelength_nm": 774.4000244140625,
+      "fwhm_nm": 14.9000244140625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 788.5,
+      "native_support_min_nm": 768.9000244140625,
+      "sample_count": 5023
+    },
+    "B13": {
+      "band_index": 13,
+      "center_wavelength_nm": 858.0999755859375,
+      "fwhm_nm": 19.9000244140625,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 877.2000122070312,
+      "native_support_min_nm": 852.7000122070312,
+      "sample_count": 5023
+    },
+    "B14": {
+      "band_index": 14,
+      "center_wavelength_nm": 883.0999755859375,
+      "fwhm_nm": 9.800048828125,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 892.2000122070312,
+      "native_support_min_nm": 877.7000122070312,
+      "sample_count": 5023
+    },
+    "B15": {
+      "band_index": 15,
+      "center_wavelength_nm": 898.0999755859375,
+      "fwhm_nm": 9.800048828125,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 907.2000122070312,
+      "native_support_min_nm": 892.7000122070312,
+      "sample_count": 5023
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_table": {
+    "band_count": 15,
+    "row_count": 75345,
+    "wavelength_max_nm": 907.2000122070312,
+    "wavelength_min_nm": 405.0
+  },
+  "generated_at": "2026-03-16T18:23:06.606898+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "unversioned_obpg_rsr_tables",
+    "file_sha256": "984ad54f7bddb6fb3b3a1d2e0634d1127019e39bf1af425ad7e699347f84613b",
+    "license_note": "NASA OBPG curated table terms apply; original mission terms may also apply",
+    "notes": [
+      "Canonical storage retains the sampled RSR curves distributed by NASA OBPG",
+      "No curve realization step is needed because sampled curves are already available"
+    ],
+    "parser": {
+      "entrypoint": "parse_obpg_rsr_netcdf",
+      "notes": [
+        "Use the NASA OBPG curated RSR netCDF as the current public sampled-curve source for MERIS",
+        "Band centers are taken from the published OBPG band coordinate"
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_sampled_curve.py"
+    },
+    "raw_local_path": "sources/raw/nasa/obpg/envisat/meris/rsr_tables/envisat_meris_RSR.nc",
+    "representation_variant": "band_average",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "envisat_meris",
+    "source_id": "envisat_meris_obpg_rsr_tables",
+    "source_tier": "B",
+    "source_type": "alternative",
+    "title": "Envisat MERIS spectral response functions from NASA OBPG RSR tables",
+    "url": "https://oceancolor.gsfc.nasa.gov/resources/docs/rsr_tables/",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 15,
+      "expected_domain": "VSWIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "obpg_rsr": {
+    "band_coordinate_count": 15,
+    "band_coordinate_units": "nm",
+    "negative_values_clipped": 0
+  },
+  "parser": {
+    "entrypoint": "parse_obpg_rsr_netcdf",
+    "function": "parse_obpg_rsr_netcdf",
+    "module": "rsrf.parsers.obpg",
+    "script": "scripts/ingest/ingest_sampled_curve.py"
+  },
+  "representation_variant": "band_average",
+  "sensor_unit_id": "envisat_meris",
+  "source_artifact": {
+    "file_count": 1,
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/nasa/obpg/envisat/meris/rsr_tables/envisat_meris_RSR.nc",
+    "sha256": "984ad54f7bddb6fb3b3a1d2e0634d1127019e39bf1af425ad7e699347f84613b",
+    "size_bytes": 334923
+  },
+  "source_id": "envisat_meris_obpg_rsr_tables",
+  "source_tier": "B",
+  "source_type": "alternative"
+}

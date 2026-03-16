@@ -1,0 +1,114 @@
+{
+  "band_spec_table": {
+    "monotonic_centers": false,
+    "row_count": 291
+  },
+  "content_kind": "band_spec",
+  "field_mapping": {
+    "band_id_field": null,
+    "band_index_field": "Band Number",
+    "band_status_field": null,
+    "center_wavelength_field": "Center Wavelength",
+    "enabled": true,
+    "fwhm_field": "Width (FWHM)",
+    "shape_param_fields": {}
+  },
+  "generated_at": "2026-03-16T18:23:07.214025+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": "Band Number",
+      "band_status_field": null,
+      "center_wavelength_field": "Center Wavelength",
+      "enabled": true,
+      "fwhm_field": "Width (FWHM)",
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "band_center_grid",
+      "kind": "band_spec",
+      "normalization": "not_applicable",
+      "published_shape_type": "unknown",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "band_spec",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "1.1.1",
+    "file_sha256": "d9006489e47a8e4bd406f8063ef225f6803409fea6afe2239f4db42d466e01e3",
+    "license_note": "NASA OBPG / PACE characterization terms apply",
+    "notes": [
+      "Use this official bandpass table as the current low-friction OCI representation in the registry",
+      "A future sampled_curve OCI representation can ingest the full OBPG RSR netCDF alongside this band-spec view"
+    ],
+    "parser": {
+      "entrypoint": "parse_obpg_bandpass_csv",
+      "notes": [
+        "The OBPG bandpass table publishes band number, center wavelength, and FWHM for the standard Level-1B OCI ordering",
+        "This representation captures the official bandpass summary rather than the full sampled OCI netCDF curves",
+        "The standard Level-1B ordering is not strictly monotonic because overlapping focal-plane and SWIR gain variants are retained"
+      ],
+      "outputs": {
+        "canonical": [
+          "band_specs.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_band_spec_table.py"
+    },
+    "raw_local_path": "sources/raw/nasa/pace/oci/1.1.1/oci_l1b_bandpass.csv",
+    "representation_variant": "l1b_band_spec",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "pace_oci",
+    "source_id": "pace_oci_obpg_l1b_bandpass_1_1_1",
+    "source_tier": "A",
+    "source_type": "official_metadata",
+    "title": "PACE OCI Level-1B bandpass summary baseline 1.1.1",
+    "url": "https://oceancolor.gsfc.nasa.gov/data/pace/characterization/",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 291,
+      "expected_domain": "UVSWIR",
+      "monotonic_centers_required": false,
+      "plot_overlay_required": false,
+      "require_band_spec": true,
+      "require_sampled_curve": false
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_obpg_bandpass_csv",
+    "function": "parse_obpg_bandpass_csv",
+    "module": "rsrf.parsers.obpg",
+    "script": "scripts/ingest/ingest_band_spec_table.py"
+  },
+  "realization": {
+    "approximation": false,
+    "approximation_reason": null,
+    "enabled": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0",
+    "output_representation_variant": null,
+    "persist_realized_curves": false,
+    "profile_type": null
+  },
+  "representation_variant": "l1b_band_spec",
+  "sensor_unit_id": "pace_oci",
+  "source_artifact": {
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/nasa/pace/oci/1.1.1/oci_l1b_bandpass.csv",
+    "sha256": "d9006489e47a8e4bd406f8063ef225f6803409fea6afe2239f4db42d466e01e3",
+    "size_bytes": 29304
+  },
+  "source_id": "pace_oci_obpg_l1b_bandpass_1_1_1",
+  "source_tier": "A",
+  "source_type": "official_metadata"
+}

@@ -23,7 +23,10 @@ The repository currently contains:
   - Terra MODIS and Aqua MODIS
   - S-NPP VIIRS, NOAA-20 VIIRS, and NOAA-21 VIIRS
   - Sentinel-3A OLCI, Sentinel-3B OLCI, and Terra ASTER
-- canonical band-spec coverage for the hyperspectral example source
+  - NASA OBPG legacy ocean-colour sensors: Nimbus-7 CZCS, ADEOS OCTS, OrbView-2 SeaWiFS, and Envisat MERIS
+- canonical band-spec coverage for:
+  - the hyperspectral example source
+  - PACE OCI Level-1B bandpass metadata
 - data, docs, scripts, sources, and tests directories aligned with the implementation plan
 
 Trusted sampled-curve overlays can be stored at:
@@ -119,4 +122,4 @@ rsrf --help
 
 1. Add trusted overlay references for the new sensor families so sampled-curve QA can move beyond structural checks.
 2. Fill mission-family metadata in `data/registry/sensors.parquet` (`mission_family`, `platform`, `instrument`) instead of leaving those columns null.
-3. Add source-specific sensor notes under `docs/sensor-notes/` for parser quirks such as VIIRS M16 handling and MODIS merged-workbook normalization.
+3. Expand the metadata-driven backlog from the original plan with the next P1 families, such as EnMAP, DESIS, EMIT, and PROBA-V.

@@ -1,0 +1,70 @@
+{
+  "source_id": "nimbus-7_czcs_obpg_rsr_tables",
+  "sensor_unit_id": "nimbus-7_czcs",
+  "representation_variant": "band_average",
+  "source_tier": "B",
+  "source_type": "alternative",
+  "content_kind": "sampled_curve",
+  "title": "Nimbus-7 CZCS spectral response functions from NASA OBPG RSR tables",
+  "url": "https://oceancolor.gsfc.nasa.gov/resources/docs/rsr_tables/",
+  "retrieved_at": "2026-03-16",
+  "doc_version": "unversioned_obpg_rsr_tables",
+  "raw_local_path": "sources/raw/nasa/obpg/nimbus-7/czcs/rsr_tables/nimbus-7_czcs_RSR.nc",
+  "file_sha256": "19d5a8aa22d4e8756057900e517c8a71a06040c8a4cd76b79cc5dc17d5f870f8",
+  "license_note": "NASA OBPG curated table terms apply; original mission terms may also apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_sampled_curve.py",
+    "entrypoint": "parse_obpg_rsr_netcdf",
+    "outputs": {
+      "canonical": [
+        "curves.parquet",
+        "metadata.json"
+      ],
+      "optional": []
+    },
+    "notes": [
+      "Use the NASA OBPG curated RSR netCDF as the current public sampled-curve source for CZCS",
+      "Band centers are taken from the published OBPG band coordinate"
+    ]
+  },
+  "canonical": {
+    "kind": "sampled_curve",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "source_published_axis",
+    "normalization": "relative_response_peak_preserved",
+    "published_shape_type": "sampled"
+  },
+  "band_spec": {
+    "enabled": false,
+    "band_index_field": null,
+    "band_id_field": null,
+    "center_wavelength_field": null,
+    "fwhm_field": null,
+    "band_status_field": null,
+    "shape_param_fields": {}
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": null,
+    "profile_type": null,
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0"
+  },
+  "validation": {
+    "expected_band_count": 4,
+    "expected_domain": "VSWIR",
+    "require_band_spec": false,
+    "require_sampled_curve": true,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": false,
+    "monotonic_centers_required": true
+  },
+  "notes": [
+    "Canonical storage retains the sampled RSR curves distributed by NASA OBPG",
+    "No curve realization step is needed because sampled curves are already available"
+  ]
+}
