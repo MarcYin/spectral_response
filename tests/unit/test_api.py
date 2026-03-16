@@ -25,7 +25,9 @@ from rsrf.parsers.band_spec_table import parse_band_spec_table
 from rsrf.validate import parse_manifest_dict
 
 EXPECTED_CANONICAL_VARIANTS = {
+    ("adeos_octs", "band_average"),
     ("aqua_modis", "band_average"),
+    ("envisat_meris", "band_average"),
     ("hyperspec_example", "metadata_band_spec"),
     ("landsat-1_mss", "band_average"),
     ("landsat-2_mss", "band_average"),
@@ -39,8 +41,11 @@ EXPECTED_CANONICAL_VARIANTS = {
     ("landsat-8_tirs", "band_average"),
     ("landsat-9_oli2", "band_average"),
     ("landsat-9_tirs2", "band_average"),
+    ("nimbus-7_czcs", "band_average"),
     ("noaa-20_viirs", "band_average"),
     ("noaa-21_viirs", "band_average"),
+    ("orbview-2_seawifs", "band_average"),
+    ("pace_oci", "l1b_band_spec"),
     ("sentinel-2a_msi", "band_average"),
     ("sentinel-2b_msi", "band_average"),
     ("sentinel-2c_msi", "band_average"),
@@ -80,13 +85,16 @@ class ApiTests(unittest.TestCase):
         landsat_tirs = load_curve("landsat-8_tirs", "B10", "band_average", root=ROOT)
         viirs = load_curve("noaa-20_viirs", "M1", "band_average", root=ROOT)
         olci = load_curve("sentinel-3a_olci", "B01", "band_average", root=ROOT)
+        seawifs = load_curve("orbview-2_seawifs", "B01", "band_average", root=ROOT)
 
         self.assertIsInstance(landsat_tirs, SampledCurve)
         self.assertIsInstance(viirs, SampledCurve)
         self.assertIsInstance(olci, SampledCurve)
+        self.assertIsInstance(seawifs, SampledCurve)
         self.assertGreater(len(landsat_tirs.wavelength_nm), 10)
         self.assertGreater(len(viirs.wavelength_nm), 10)
         self.assertEqual(len(olci.wavelength_nm), 200)
+        self.assertGreater(len(seawifs.wavelength_nm), 10)
 
     def test_load_band_spec_reads_canonical_band_spec(self) -> None:
         band_spec = load_band_spec(
@@ -98,6 +106,13 @@ class ApiTests(unittest.TestCase):
         self.assertIsInstance(band_spec, BandSpec)
         self.assertEqual(band_spec.band_id, "B001")
         self.assertAlmostEqual(band_spec.center_wavelength_nm, 410.0)
+
+    def test_load_band_spec_reads_pace_oci_bandpass(self) -> None:
+        band_spec = load_band_spec("pace_oci", "B001", "l1b_band_spec", root=ROOT)
+
+        self.assertIsInstance(band_spec, BandSpec)
+        self.assertEqual(band_spec.band_id, "B001")
+        self.assertAlmostEqual(band_spec.center_wavelength_nm, 314.55, places=2)
 
     def test_load_response_definition_dispatches_by_content_kind(self) -> None:
         sampled = load_response_definition("sentinel-2c_msi", "B02", "band_average", root=ROOT)

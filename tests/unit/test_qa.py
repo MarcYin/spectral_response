@@ -44,6 +44,13 @@ class QaTests(unittest.TestCase):
         self.assertFalse(report["overlay_checks"]["available"])
         self.assertEqual(report["summary"]["band_count"], 21)
 
+    def test_validate_obpg_legacy_sensor_passes_without_overlay_requirement(self) -> None:
+        report = validate_sensor("orbview-2_seawifs", "band_average", root=ROOT)
+
+        self.assertTrue(report["passed"])
+        self.assertFalse(report["overlay_checks"]["available"])
+        self.assertEqual(report["summary"]["band_count"], 8)
+
     def test_validate_sampled_curve_variant_fails_when_required_overlay_is_missing(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             tmp_root = Path(tmpdir)

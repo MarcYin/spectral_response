@@ -20,7 +20,9 @@ from rsrf.parsers.band_spec_table import parse_band_spec_table
 from rsrf.validate import parse_manifest_dict
 
 EXPECTED_CANONICAL_VARIANTS = {
+    ("adeos_octs", "band_average"),
     ("aqua_modis", "band_average"),
+    ("envisat_meris", "band_average"),
     ("hyperspec_example", "metadata_band_spec"),
     ("landsat-1_mss", "band_average"),
     ("landsat-2_mss", "band_average"),
@@ -34,8 +36,11 @@ EXPECTED_CANONICAL_VARIANTS = {
     ("landsat-8_tirs", "band_average"),
     ("landsat-9_oli2", "band_average"),
     ("landsat-9_tirs2", "band_average"),
+    ("nimbus-7_czcs", "band_average"),
     ("noaa-20_viirs", "band_average"),
     ("noaa-21_viirs", "band_average"),
+    ("orbview-2_seawifs", "band_average"),
+    ("pace_oci", "l1b_band_spec"),
     ("sentinel-2a_msi", "band_average"),
     ("sentinel-2b_msi", "band_average"),
     ("sentinel-2c_msi", "band_average"),
@@ -163,6 +168,25 @@ class CliTests(unittest.TestCase):
         self.assertEqual(payload["band_id"], "B004")
         self.assertAlmostEqual(payload["center_wavelength_nm"], 441.5)
         self.assertAlmostEqual(payload["fwhm_nm"], 9.5)
+
+    def test_show_response_summarizes_pace_oci_band_spec(self) -> None:
+        exit_code, stdout = self._run_main(
+            [
+                "show-response",
+                "pace_oci",
+                "B001",
+                "--variant",
+                "l1b_band_spec",
+                "--root",
+                str(ROOT),
+            ]
+        )
+
+        self.assertEqual(exit_code, 0)
+        payload = json.loads(stdout)
+        self.assertEqual(payload["content_kind"], "band_spec")
+        self.assertEqual(payload["band_id"], "B001")
+        self.assertAlmostEqual(payload["center_wavelength_nm"], 314.55, places=2)
 
     def test_validate_sensor_prints_qa_report_json(self) -> None:
         exit_code, stdout = self._run_main(
