@@ -16,6 +16,7 @@ from rsrf.models import ManifestSummary, ManifestValidationError
 from rsrf.parsers import (
     parse_landsat_tirs_workbook,
     parse_modis_rsr_workbook,
+    parse_obpg_rsr_netcdf,
     parse_olci_mean_rsr_nc4,
     parse_usgs_json_directory,
     parse_viirs_band_average_zip,
@@ -25,6 +26,7 @@ from rsrf.validate import parse_manifest_file
 PARSER_FUNCTIONS = {
     "parse_landsat_tirs_workbook": parse_landsat_tirs_workbook,
     "parse_modis_rsr_workbook": parse_modis_rsr_workbook,
+    "parse_obpg_rsr_netcdf": parse_obpg_rsr_netcdf,
     "parse_olci_mean_rsr_nc4": parse_olci_mean_rsr_nc4,
     "parse_usgs_json_directory": parse_usgs_json_directory,
     "parse_viirs_band_average_zip": parse_viirs_band_average_zip,

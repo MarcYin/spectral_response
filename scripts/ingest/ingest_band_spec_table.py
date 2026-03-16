@@ -13,8 +13,13 @@ if str(SRC) not in sys.path:
 
 from rsrf.ingest import write_band_spec_artifacts
 from rsrf.models import ManifestSummary, ManifestValidationError
-from rsrf.parsers.band_spec_table import parse_band_spec_table
+from rsrf.parsers import parse_band_spec_table, parse_obpg_bandpass_csv
 from rsrf.validate import parse_manifest_file
+
+PARSER_FUNCTIONS = {
+    "parse_band_spec_table": parse_band_spec_table,
+    "parse_obpg_bandpass_csv": parse_obpg_bandpass_csv,
+}
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -49,8 +54,13 @@ def main() -> int:
         return 1
 
     table_path = args.table_path or ROOT / manifest.raw_local_path
+    parser_function = PARSER_FUNCTIONS.get(manifest.parser.entrypoint)
+    if parser_function is None:
+        print(f"unsupported band-spec parser entrypoint: {manifest.parser.entrypoint}")
+        return 1
+
     try:
-        artifacts = parse_band_spec_table(table_path, manifest)
+        artifacts = parser_function(table_path, manifest)
     except (FileNotFoundError, ValueError) as exc:
         print(str(exc))
         return 1
