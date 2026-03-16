@@ -7,3 +7,4 @@ Examples:
 - batch sensor validation
 - QA report generation
 - plot export utilities
+- regression fixture refresh

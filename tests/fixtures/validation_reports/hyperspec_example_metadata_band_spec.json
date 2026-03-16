@@ -1,0 +1,86 @@
+{
+  "band_metrics": {
+    "B001": {
+      "band_index": 1,
+      "band_status": "nominal",
+      "center_wavelength_nm": 410.0,
+      "fwhm_nm": 8.0
+    },
+    "B002": {
+      "band_index": 2,
+      "band_status": "nominal",
+      "center_wavelength_nm": 420.5,
+      "fwhm_nm": 8.5
+    },
+    "B003": {
+      "band_index": 3,
+      "band_status": "recommended",
+      "center_wavelength_nm": 431.0,
+      "fwhm_nm": 9.0
+    },
+    "B004": {
+      "band_index": 4,
+      "band_status": "masked",
+      "center_wavelength_nm": 441.5,
+      "fwhm_nm": 9.5
+    },
+    "B005": {
+      "band_index": 5,
+      "band_status": "nominal",
+      "center_wavelength_nm": 452.0,
+      "fwhm_nm": 10.0
+    },
+    "B006": {
+      "band_index": 6,
+      "band_status": "nominal",
+      "center_wavelength_nm": 462.5,
+      "fwhm_nm": 10.5
+    }
+  },
+  "content_kind": "band_spec",
+  "failure_count": 0,
+  "failures": [],
+  "passed": true,
+  "realization_checks": {
+    "center_tolerance_nm": 1.0,
+    "enabled": true,
+    "fwhm_tolerance_nm": 2.0,
+    "max_center_abs_error_nm": 0.0,
+    "max_fwhm_abs_error_nm": 0.5,
+    "output_representation_variant": "gaussian_from_fwhm",
+    "per_band": {
+      "B001": {
+        "center_abs_error_nm": 0.0,
+        "fwhm_abs_error_nm": 0.0
+      },
+      "B002": {
+        "center_abs_error_nm": 0.0,
+        "fwhm_abs_error_nm": 0.0
+      },
+      "B003": {
+        "center_abs_error_nm": 0.0,
+        "fwhm_abs_error_nm": 0.0
+      },
+      "B004": {
+        "center_abs_error_nm": 0.0,
+        "fwhm_abs_error_nm": 0.0
+      },
+      "B005": {
+        "center_abs_error_nm": 0.0,
+        "fwhm_abs_error_nm": 0.0
+      },
+      "B006": {
+        "center_abs_error_nm": 0.0,
+        "fwhm_abs_error_nm": 0.5
+      }
+    },
+    "profile_type": "gaussian"
+  },
+  "representation_variant": "metadata_band_spec",
+  "sensor_unit_id": "hyperspec_example",
+  "summary": {
+    "band_count": 6,
+    "expected_band_count": 6,
+    "monotonic_centers": true
+  }
+}

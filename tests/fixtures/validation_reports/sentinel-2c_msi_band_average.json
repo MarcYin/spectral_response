@@ -1,0 +1,105 @@
+{
+  "band_metrics": {
+    "B01": {
+      "area": 19.048043,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    },
+    "B02": {
+      "area": 59.020621,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    },
+    "B03": {
+      "area": 34.216823,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    },
+    "B04": {
+      "area": 29.782504,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    },
+    "B05": {
+      "area": 15.186494,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    },
+    "B06": {
+      "area": 15.322277,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    },
+    "B07": {
+      "area": 19.868548,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    },
+    "B08": {
+      "area": 79.380126,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    },
+    "B09": {
+      "area": 19.029948,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    },
+    "B10": {
+      "area": 32.893822,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    },
+    "B11": {
+      "area": 89.42852,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    },
+    "B12": {
+      "area": 173.886792,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    },
+    "B8A": {
+      "area": 19.575794,
+      "peak_response": 1.0,
+      "sample_count": 2301,
+      "wavelength_max_nm": 2600.0,
+      "wavelength_min_nm": 300.0
+    }
+  },
+  "content_kind": "sampled_curve",
+  "failure_count": 0,
+  "failures": [],
+  "passed": true,
+  "representation_variant": "band_average",
+  "sensor_unit_id": "sentinel-2c_msi",
+  "summary": {
+    "band_count": 13,
+    "expected_band_count": 13
+  }
+}
