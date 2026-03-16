@@ -1,0 +1,80 @@
+{
+  "source_id": "<source_id>",
+  "sensor_unit_id": "<sensor_unit_id>",
+  "representation_variant": "<representation_variant>",
+  "source_tier": "<A|B|C|D|E>",
+  "source_type": "<official|official_metadata|alternative|literature>",
+  "content_kind": "<sampled_curve|band_spec|hybrid>",
+  "title": "<human_readable_title>",
+  "url": "<source_url>",
+  "retrieved_at": "YYYY-MM-DD",
+  "doc_version": "<source_doc_version>",
+  "raw_local_path": "sources/raw/<agency>/<mission>/<platform>/<instrument>/<doc_version>/<filename>",
+  "file_sha256": "<fill_after_download>",
+  "license_note": "<license_note>",
+  "parser": {
+    "script": "scripts/ingest/<script_name>.py",
+    "entrypoint": "<parser_function>",
+    "outputs": {
+      "canonical": [
+        "<curves.parquet or band_specs.parquet>",
+        "metadata.json"
+      ],
+      "optional": [
+        "<realized_curves.parquet>",
+        "<common_grid.nc>"
+      ]
+    },
+    "notes": [
+      "<parser_note_1>",
+      "<parser_note_2>"
+    ]
+  },
+  "canonical": {
+    "kind": "<sampled_curve|band_spec>",
+    "spectral_calibration_scope": "<mission_average|sensor_unit|camera|detector|scene_product|pixel>",
+    "axis_policy": "<source_published_axis|band_center_grid|per_band_native_axis>",
+    "normalization": "<relative_response_peak_preserved|not_applicable>",
+    "published_shape_type": "<sampled|gaussian|super_gaussian|top_hat|triangular|asymmetric_gaussian|unknown>"
+  },
+  "band_spec": {
+    "enabled": false,
+    "band_index_field": "<field_name_or_null>",
+    "band_id_field": "<field_name_or_null>",
+    "center_wavelength_field": "<field_name_or_null>",
+    "fwhm_field": "<field_name_or_null>",
+    "band_status_field": "<field_name_or_null>",
+    "shape_param_fields": {
+      "<shape_param_name>": "<field_name>"
+    }
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": "<gaussian_from_fwhm|official_parametric|other>",
+    "profile_type": "<gaussian|top_hat|super_gaussian|other>",
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": {
+      "kind": "<adaptive_per_band|target_grid_only|fixed_step>",
+      "samples_per_fwhm": 10,
+      "max_step_nm": 1.0,
+      "truncate_sigma": 4.0
+    },
+    "normalization": "peak_1.0"
+  },
+  "validation": {
+    "expected_band_count": "<integer>",
+    "expected_domain": "<VSWIR|TIR|VSWIR_TIR|other>",
+    "require_band_spec": false,
+    "require_sampled_curve": true,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": true,
+    "curve_checks_if_realized": true,
+    "monotonic_centers_required": true
+  },
+  "notes": [
+    "<note_1>",
+    "<note_2>"
+  ]
+}

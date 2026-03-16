@@ -1,0 +1,32 @@
+{
+  "source_id": "sentinel-2c_msi_srf_v4_0",
+  "sensor_unit_id": "sentinel-2c_msi",
+  "representation_variant": "band_average",
+  "source_tier": "A",
+  "source_type": "official",
+  "title": "Sentinel-2 Spectral Response Functions 2024 - 4.0",
+  "url": "https://sentiwiki.copernicus.eu/web/s2-documents",
+  "retrieved_at": "2026-03-15",
+  "doc_version": "4.0",
+  "raw_local_path": "sources/raw/esa/sentinel-2/s2c/msi/4.0/S2-SRF-4.0.xlsx",
+  "file_sha256": "<fill-after-download>",
+  "license_note": "Copernicus/ESA terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_sentinel2_srf.py",
+    "entrypoint": "parse_s2_srf_xlsx",
+    "notes": [
+      "band-average SRFs",
+      "retain S2C pixel-variation summary as metadata"
+    ]
+  },
+  "validation": {
+    "expected_band_count": 13,
+    "expected_domain": "VSWIR",
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": true
+  },
+  "notes": [
+    "Use source-published wavelength axis for canonical storage",
+    "Derived reflective_300_2500_1nm product built after native ingest"
+  ]
+}

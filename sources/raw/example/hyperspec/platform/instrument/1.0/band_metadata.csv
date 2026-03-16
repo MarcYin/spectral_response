@@ -1,0 +1,7 @@
+band_index,band_id,center_wavelength_nm,fwhm_nm,band_status
+1,B001,410.0,8.0,nominal
+2,B002,420.5,8.5,nominal
+3,B003,431.0,9.0,recommended
+4,B004,441.5,9.5,masked
+5,B005,452.0,10.0,nominal
+6,B006,462.5,10.5,nominal

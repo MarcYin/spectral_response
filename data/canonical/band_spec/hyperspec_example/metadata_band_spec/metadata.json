@@ -1,0 +1,132 @@
+{
+  "band_spec_table": {
+    "monotonic_centers": true,
+    "row_count": 6,
+    "status_counts": {
+      "masked": 1,
+      "nominal": 4,
+      "recommended": 1
+    }
+  },
+  "content_kind": "band_spec",
+  "field_mapping": {
+    "band_id_field": "band_id",
+    "band_index_field": "band_index",
+    "band_status_field": "band_status",
+    "center_wavelength_field": "center_wavelength_nm",
+    "enabled": true,
+    "fwhm_field": "fwhm_nm",
+    "shape_param_fields": {}
+  },
+  "generated_at": "2026-03-16T09:25:00.312026+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": "band_id",
+      "band_index_field": "band_index",
+      "band_status_field": "band_status",
+      "center_wavelength_field": "center_wavelength_nm",
+      "enabled": true,
+      "fwhm_field": "fwhm_nm",
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "band_center_grid",
+      "kind": "band_spec",
+      "normalization": "not_applicable",
+      "published_shape_type": "unknown",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "band_spec",
+    "curve_realization": {
+      "approximation": true,
+      "approximation_reason": "Official source provides center wavelengths and FWHM only; band shape is not published",
+      "enabled": true,
+      "grid_policy": {
+        "kind": "adaptive_per_band",
+        "max_step_nm": 1.0,
+        "samples_per_fwhm": 10,
+        "truncate_sigma": 4.0
+      },
+      "normalization": "peak_1.0",
+      "output_representation_variant": "gaussian_from_fwhm",
+      "persist_realized_curves": false,
+      "profile_type": "gaussian"
+    },
+    "doc_version": "1.0",
+    "file_sha256": "5276cba0008eef84d416d29a4d7ae91c1569a6e1f838b0f3ef95a3ffbb075b12",
+    "license_note": "Official mission terms apply",
+    "notes": [
+      "Canonical storage is the official band specification, not a synthesized curve",
+      "Convolution should realize weights on the user spectrum grid when possible",
+      "Dense common-grid products are optional for high-band-count sensors"
+    ],
+    "parser": {
+      "entrypoint": "parse_band_spec_table",
+      "notes": [
+        "Source provides center wavelength grid and FWHM per band",
+        "No official sampled SRF curve is published",
+        "Band status flags should be retained if available"
+      ],
+      "outputs": {
+        "canonical": [
+          "band_specs.parquet",
+          "metadata.json"
+        ],
+        "optional": [
+          "realized_curves.parquet"
+        ]
+      },
+      "script": "scripts/ingest/ingest_band_spec_table.py"
+    },
+    "raw_local_path": "sources/raw/example/hyperspec/platform/instrument/1.0/band_metadata.csv",
+    "representation_variant": "metadata_band_spec",
+    "retrieved_at": "2026-03-15",
+    "sensor_unit_id": "hyperspec_example",
+    "source_id": "hyperspec_example_band_spec_v1",
+    "source_tier": "B",
+    "source_type": "official_metadata",
+    "title": "Hyperspectral sensor wavelength grid and FWHM table",
+    "url": "<official_metadata_url>",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": true,
+      "expected_band_count": 6,
+      "expected_domain": "VSWIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": true,
+      "require_sampled_curve": false
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_band_spec_table",
+    "function": "parse_band_spec_table",
+    "module": "rsrf.parsers.band_spec_table",
+    "script": "scripts/ingest/ingest_band_spec_table.py"
+  },
+  "realization": {
+    "approximation": true,
+    "approximation_reason": "Official source provides center wavelengths and FWHM only; band shape is not published",
+    "enabled": true,
+    "grid_policy": {
+      "kind": "adaptive_per_band",
+      "max_step_nm": 1.0,
+      "samples_per_fwhm": 10,
+      "truncate_sigma": 4.0
+    },
+    "normalization": "peak_1.0",
+    "output_representation_variant": "gaussian_from_fwhm",
+    "persist_realized_curves": false,
+    "profile_type": "gaussian"
+  },
+  "representation_variant": "metadata_band_spec",
+  "sensor_unit_id": "hyperspec_example",
+  "source_artifact": {
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/example/hyperspec/platform/instrument/1.0/band_metadata.csv",
+    "sha256": "5276cba0008eef84d416d29a4d7ae91c1569a6e1f838b0f3ef95a3ffbb075b12",
+    "size_bytes": 215
+  },
+  "source_id": "hyperspec_example_band_spec_v1",
+  "source_tier": "B",
+  "source_type": "official_metadata"
+}

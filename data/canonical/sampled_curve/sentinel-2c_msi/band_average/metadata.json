@@ -1,0 +1,194 @@
+{
+  "band_metrics": {
+    "B01": {
+      "bandwidth_nm": 21.0,
+      "equivalent_wavelength_nm": 444.2237332768198,
+      "mid_bandwidth_wa_nm": 444.5,
+      "native_support_max_nm": 474.0,
+      "native_support_min_nm": 414.0
+    },
+    "B02": {
+      "bandwidth_nm": 65.0,
+      "equivalent_wavelength_nm": 489.0283277587316,
+      "mid_bandwidth_wa_nm": 489.5,
+      "native_support_max_nm": 543.0,
+      "native_support_min_nm": 436.0
+    },
+    "B03": {
+      "bandwidth_nm": 36.0,
+      "equivalent_wavelength_nm": 560.6320581843734,
+      "mid_bandwidth_wa_nm": 561.0,
+      "native_support_max_nm": 599.0,
+      "native_support_min_nm": 522.0
+    },
+    "B04": {
+      "bandwidth_nm": 30.0,
+      "equivalent_wavelength_nm": 666.52913094711,
+      "mid_bandwidth_wa_nm": 667.0,
+      "native_support_max_nm": 703.0,
+      "native_support_min_nm": 630.0
+    },
+    "B05": {
+      "bandwidth_nm": 15.0,
+      "equivalent_wavelength_nm": 707.0653331505376,
+      "mid_bandwidth_wa_nm": 707.5,
+      "native_support_max_nm": 736.0,
+      "native_support_min_nm": 678.0
+    },
+    "B06": {
+      "bandwidth_nm": 15.0,
+      "equivalent_wavelength_nm": 741.0705525345559,
+      "mid_bandwidth_wa_nm": 741.5,
+      "native_support_max_nm": 770.0,
+      "native_support_min_nm": 712.0
+    },
+    "B07": {
+      "bandwidth_nm": 21.0,
+      "equivalent_wavelength_nm": 784.6601930607897,
+      "mid_bandwidth_wa_nm": 785.5,
+      "native_support_max_nm": 816.0,
+      "native_support_min_nm": 753.0
+    },
+    "B08": {
+      "bandwidth_nm": 114.0,
+      "equivalent_wavelength_nm": 834.6126030984999,
+      "mid_bandwidth_wa_nm": 844.0,
+      "native_support_max_nm": 923.0,
+      "native_support_min_nm": 761.0
+    },
+    "B09": {
+      "bandwidth_nm": 20.0,
+      "equivalent_wavelength_nm": 947.2019282098956,
+      "mid_bandwidth_wa_nm": 948.0,
+      "native_support_max_nm": 979.0,
+      "native_support_min_nm": 916.0
+    },
+    "B10": {
+      "bandwidth_nm": 33.0,
+      "equivalent_wavelength_nm": 1372.1765695554327,
+      "mid_bandwidth_wa_nm": 1372.5,
+      "native_support_max_nm": 1413.0,
+      "native_support_min_nm": 1332.0
+    },
+    "B11": {
+      "bandwidth_nm": 89.0,
+      "equivalent_wavelength_nm": 1612.004342894852,
+      "mid_bandwidth_wa_nm": 1611.5,
+      "native_support_max_nm": 1679.0,
+      "native_support_min_nm": 1540.0
+    },
+    "B12": {
+      "bandwidth_nm": 182.0,
+      "equivalent_wavelength_nm": 2191.270345209345,
+      "mid_bandwidth_wa_nm": 2193.0,
+      "native_support_max_nm": 2312.0,
+      "native_support_min_nm": 2066.0
+    },
+    "B8A": {
+      "bandwidth_nm": 20.0,
+      "equivalent_wavelength_nm": 865.573961250513,
+      "mid_bandwidth_wa_nm": 866.0,
+      "native_support_max_nm": 898.0,
+      "native_support_min_nm": 834.0
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_table": {
+    "band_count": 13,
+    "row_count": 29913,
+    "wavelength_max_nm": 2600.0,
+    "wavelength_min_nm": 300.0,
+    "wavelength_sampling_nm": 1.0
+  },
+  "generated_at": "2026-03-16T09:19:24.996379+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "4.0",
+    "file_sha256": "1a9edc27d692a570911a460d589f188da0fc3e27f0b0bd1ad322059c380519b0",
+    "license_note": "Copernicus/ESA terms apply",
+    "notes": [
+      "Use source-published wavelength axis for canonical storage",
+      "Derived reflective_300_2500_1nm product built after native ingest",
+      "No curve realization step is needed because sampled curves are already official"
+    ],
+    "parser": {
+      "entrypoint": "parse_s2_srf_xlsx",
+      "notes": [
+        "band-average SRFs",
+        "retain S2C pixel-variation summary as metadata",
+        "extract band summary rows into bands.parquet for center/FWHM QA"
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": [
+          "common_grid/reflective_300_2500_1nm.nc"
+        ]
+      },
+      "script": "scripts/ingest/ingest_sentinel2_srf.py"
+    },
+    "raw_local_path": "sources/raw/esa/sentinel-2/s2c/msi/4.0/S2-SRF-4.0.xlsx",
+    "representation_variant": "band_average",
+    "retrieved_at": "2026-03-15",
+    "sensor_unit_id": "sentinel-2c_msi",
+    "source_id": "sentinel-2c_msi_srf_v4_0",
+    "source_tier": "A",
+    "source_type": "official",
+    "title": "Sentinel-2 Spectral Response Functions 2024 - 4.0",
+    "url": "https://sentiwiki.copernicus.eu/web/s2-documents",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 13,
+      "expected_domain": "VSWIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": true,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_s2_srf_xlsx",
+    "function": "parse_s2_srf_xlsx",
+    "module": "rsrf.parsers.sentinel2",
+    "script": "scripts/ingest/ingest_sentinel2_srf.py"
+  },
+  "representation_variant": "band_average",
+  "sensor_unit_id": "sentinel-2c_msi",
+  "source_artifact": {
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/esa/sentinel-2/s2c/msi/4.0/S2-SRF-4.0.xlsx",
+    "sha256": "1a9edc27d692a570911a460d589f188da0fc3e27f0b0bd1ad322059c380519b0",
+    "size_bytes": 1339179
+  },
+  "source_id": "sentinel-2c_msi_srf_v4_0",
+  "source_tier": "A",
+  "source_type": "official"
+}

@@ -1,0 +1,74 @@
+{
+  "source_id": "sentinel-2c_msi_srf_v4_0",
+  "sensor_unit_id": "sentinel-2c_msi",
+  "representation_variant": "band_average",
+  "source_tier": "A",
+  "source_type": "official",
+  "content_kind": "sampled_curve",
+  "title": "Sentinel-2 Spectral Response Functions 2024 - 4.0",
+  "url": "https://sentiwiki.copernicus.eu/web/s2-documents",
+  "retrieved_at": "2026-03-15",
+  "doc_version": "4.0",
+  "raw_local_path": "sources/raw/esa/sentinel-2/s2c/msi/4.0/S2-SRF-4.0.xlsx",
+  "file_sha256": "1a9edc27d692a570911a460d589f188da0fc3e27f0b0bd1ad322059c380519b0",
+  "license_note": "Copernicus/ESA terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_sentinel2_srf.py",
+    "entrypoint": "parse_s2_srf_xlsx",
+    "outputs": {
+      "canonical": [
+        "curves.parquet",
+        "metadata.json"
+      ],
+      "optional": [
+        "common_grid/reflective_300_2500_1nm.nc"
+      ]
+    },
+    "notes": [
+      "band-average SRFs",
+      "retain S2C pixel-variation summary as metadata",
+      "extract band summary rows into bands.parquet for center/FWHM QA"
+    ]
+  },
+  "canonical": {
+    "kind": "sampled_curve",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "source_published_axis",
+    "normalization": "relative_response_peak_preserved",
+    "published_shape_type": "sampled"
+  },
+  "band_spec": {
+    "enabled": false,
+    "band_index_field": null,
+    "band_id_field": null,
+    "center_wavelength_field": null,
+    "fwhm_field": null,
+    "band_status_field": null,
+    "shape_param_fields": {}
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": null,
+    "profile_type": null,
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0"
+  },
+  "validation": {
+    "expected_band_count": 13,
+    "expected_domain": "VSWIR",
+    "require_band_spec": false,
+    "require_sampled_curve": true,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": true,
+    "curve_checks_if_realized": false,
+    "monotonic_centers_required": true
+  },
+  "notes": [
+    "Use source-published wavelength axis for canonical storage",
+    "Derived reflective_300_2500_1nm product built after native ingest",
+    "No curve realization step is needed because sampled curves are already official"
+  ]
+}
