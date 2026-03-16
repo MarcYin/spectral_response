@@ -43,6 +43,44 @@ def file_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def artifact_sha256(path: Path) -> str:
+    """Compute a stable SHA-256 digest for a file or directory."""
+
+    if path.is_file():
+        return file_sha256(path)
+    if path.is_dir():
+        digest = hashlib.sha256()
+        for child in sorted(candidate for candidate in path.rglob("*") if candidate.is_file()):
+            relative_path = child.relative_to(path).as_posix().encode("utf-8")
+            digest.update(relative_path)
+            digest.update(b"\0")
+            with child.open("rb") as handle:
+                for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                    digest.update(chunk)
+        return digest.hexdigest()
+    raise FileNotFoundError(f"artifact not found: {path}")
+
+
+def artifact_size_bytes(path: Path) -> int:
+    """Return the total size for a file or directory artifact."""
+
+    if path.is_file():
+        return int(path.stat().st_size)
+    if path.is_dir():
+        return sum(int(child.stat().st_size) for child in path.rglob("*") if child.is_file())
+    raise FileNotFoundError(f"artifact not found: {path}")
+
+
+def artifact_file_count(path: Path) -> int:
+    """Return the number of files contained in an artifact."""
+
+    if path.is_file():
+        return 1
+    if path.is_dir():
+        return sum(1 for child in path.rglob("*") if child.is_file())
+    raise FileNotFoundError(f"artifact not found: {path}")
+
+
 def parquet_engine() -> str | None:
     """Return the available parquet engine name, if any."""
 
