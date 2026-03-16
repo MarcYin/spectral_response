@@ -84,6 +84,56 @@ def plot_curve_collection(
     return output_path
 
 
+def plot_curve_overlays(
+    curve_pairs: Sequence[tuple[SampledCurve, SampledCurve]],
+    *,
+    output_path: Path,
+    title: str | None = None,
+) -> Path:
+    """Plot canonical curves against trusted overlay references."""
+
+    if not curve_pairs:
+        raise ValueError("at least one curve pair is required")
+
+    plt = _load_pyplot()
+    figure, axis = plt.subplots(figsize=(9, 5))
+    color_map = plt.get_cmap("tab20")
+
+    for index, (curve, reference_curve) in enumerate(curve_pairs):
+        color = color_map(index % 20)
+        curve_wavelength_nm = np.asarray(curve.wavelength_nm, dtype=float)
+        curve_response = np.asarray(curve.response, dtype=float)
+        reference_wavelength_nm = np.asarray(reference_curve.wavelength_nm, dtype=float)
+        reference_response = np.asarray(reference_curve.response, dtype=float)
+        axis.plot(
+            curve_wavelength_nm,
+            curve_response,
+            linewidth=1.5,
+            color=color,
+            label=f"{curve.band_id} canonical",
+        )
+        axis.plot(
+            reference_wavelength_nm,
+            reference_response,
+            linewidth=1.0,
+            linestyle="--",
+            color=color,
+            label=f"{reference_curve.band_id} reference",
+        )
+
+    axis.set_xlabel("Wavelength (nm)")
+    axis.set_ylabel("Relative response")
+    axis.set_title(title or "Curve overlay")
+    axis.grid(True, alpha=0.25)
+    axis.legend(ncol=2, fontsize=8)
+    figure.tight_layout()
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    figure.savefig(output_path, dpi=150)
+    plt.close(figure)
+    return output_path
+
+
 def plot_band_spec_summary(
     band_specs: Sequence[BandSpec],
     *,

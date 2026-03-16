@@ -17,7 +17,19 @@ The repository currently contains:
 - a shared `realize_curve()` helper used by runtime convolution and persisted realization
 - optional persisted realized curves for band-spec sources under `data/realized/`
 - regression fixtures for the reference validation reports
+- canonical sampled-curve coverage for Sentinel-2A, Sentinel-2B, and Sentinel-2C MSI
+- canonical band-spec coverage for the hyperspectral example source
 - data, docs, scripts, sources, and tests directories aligned with the implementation plan
+
+Trusted sampled-curve overlays can be stored at:
+
+- `sources/extracted/<sensor_unit_id>/<representation_variant>/overlay_reference.csv`
+
+The current implementation uses a long-form CSV with columns:
+
+- `band_id`
+- `wavelength_nm`
+- `response`
 
 ## Repository layout
 
@@ -99,5 +111,5 @@ rsrf --help
 
 ## Next implementation steps
 
-1. Expand from the two reference sources to the wider P0 sensor set.
-2. Add source-overlay validation when a trusted reference figure or alternate published curve is available.
+1. Add the next sensor family after Sentinel-2, starting with Landsat.
+2. Add configurable overlay tolerances and richer reference-source provenance for overlay validation.

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 from pathlib import Path
 from typing import Any
 
@@ -10,10 +11,13 @@ import numpy as np
 from .api import get_metadata, list_bands, load_band_spec, load_curve
 from .convolve import response_area
 from .io import write_json
-from .models import BandSpec, ContentKind, GridPolicy
-from .plotting import plot_band_spec_summary, plot_curve_collection
+from .models import BandSpec, ContentKind, GridPolicy, SampledCurve
+from .plotting import plot_band_spec_summary, plot_curve_collection, plot_curve_overlays
 from .realize import estimate_center_wavelength, estimate_fwhm, realize_curve
 from .registry import build_repo_layout
+
+OVERLAY_REFERENCE_FILENAME = "overlay_reference.csv"
+OVERLAY_MAX_ABS_TOLERANCE = 0.02
 
 
 def validate_sensor(
@@ -138,6 +142,14 @@ def validate_sampled_curve_variant(
             "area": response_area(curve),
         }
 
+    overlay_checks = _validate_sampled_curve_overlay(
+        sensor_unit_id,
+        representation_variant,
+        metadata,
+        failures,
+        root=root,
+    )
+
     report = {
         "sensor_unit_id": sensor_unit_id,
         "representation_variant": representation_variant,
@@ -150,6 +162,7 @@ def validate_sampled_curve_variant(
             "expected_band_count": expected_band_count,
         },
         "band_metrics": band_metrics,
+        "overlay_checks": overlay_checks,
         "metadata_generated_at": metadata.get("generated_at"),
     }
     return report
@@ -322,6 +335,24 @@ def write_validation_artifacts(
             output_path=plot_path,
             title=f"{sensor_unit_id} / {resolved_variant}",
         )
+        overlay_checks = report.get("overlay_checks", {})
+        if overlay_checks.get("available"):
+            overlay_curve_pairs = _load_overlay_curve_pairs(
+                sensor_unit_id,
+                resolved_variant,
+                root=root,
+            )
+            if overlay_curve_pairs:
+                overlay_path = destination / "overlay.png"
+                plot_curve_overlays(
+                    overlay_curve_pairs,
+                    output_path=overlay_path,
+                    title=f"{sensor_unit_id} / {resolved_variant} overlay",
+                )
+            else:
+                overlay_path = None
+        else:
+            overlay_path = None
     else:
         band_specs = [
             load_band_spec(sensor_unit_id, str(band_row["band_id"]), resolved_variant, root=root)
@@ -332,11 +363,15 @@ def write_validation_artifacts(
             output_path=plot_path,
             title=f"{sensor_unit_id} / {resolved_variant}",
         )
+        overlay_path = None
 
-    return {
+    written = {
         "report": report_path,
         "plot": plot_path,
     }
+    if overlay_path is not None:
+        written["overlay_plot"] = overlay_path
+    return written
 
 
 def _validate_band_spec_realization(
@@ -440,6 +475,194 @@ def _validate_band_spec_realization(
         "max_fwhm_abs_error_nm": max_fwhm_error,
         "per_band": per_band,
     }
+
+
+def _validate_sampled_curve_overlay(
+    sensor_unit_id: str,
+    representation_variant: str,
+    metadata: dict[str, Any],
+    failures: list[dict[str, Any]],
+    *,
+    root: Path | None,
+) -> dict[str, Any]:
+    required = bool(metadata.get("manifest", {}).get("validation", {}).get("plot_overlay_required"))
+    reference_path = _overlay_reference_path(sensor_unit_id, representation_variant, root=root)
+    if not reference_path.exists():
+        if required:
+            failures.append(
+                _failure(
+                    sensor_unit_id,
+                    representation_variant,
+                    None,
+                    "overlay_reference_missing",
+                    f"overlay reference file not found: {reference_path}",
+                )
+            )
+        return {
+            "required": required,
+            "available": False,
+            "reference_path": str(reference_path),
+            "band_count": 0,
+        }
+
+    reference_curves = _load_overlay_reference_curves(reference_path)
+    if not reference_curves:
+        failures.append(
+            _failure(
+                sensor_unit_id,
+                representation_variant,
+                None,
+                "overlay_reference_empty",
+                f"overlay reference file is empty: {reference_path}",
+            )
+        )
+        return {
+            "required": required,
+            "available": False,
+            "reference_path": str(reference_path),
+            "band_count": 0,
+        }
+
+    per_band: dict[str, dict[str, Any]] = {}
+    max_abs_diff = 0.0
+    rmse_max = 0.0
+    for band_id, reference_curve in reference_curves.items():
+        try:
+            curve = load_curve(sensor_unit_id, band_id, representation_variant, root=root)
+        except KeyError as exc:
+            failures.append(
+                _failure(
+                    sensor_unit_id,
+                    representation_variant,
+                    band_id,
+                    "overlay_reference_band_missing",
+                    str(exc),
+                )
+            )
+            per_band[band_id] = {"error": str(exc)}
+            continue
+        reference_wavelength_nm = np.asarray(reference_curve.wavelength_nm, dtype=float)
+        reference_response = np.asarray(reference_curve.response, dtype=float)
+        curve_wavelength_nm = np.asarray(curve.wavelength_nm, dtype=float)
+        curve_response = np.asarray(curve.response, dtype=float)
+        sampled_response = np.interp(
+            reference_wavelength_nm,
+            curve_wavelength_nm,
+            curve_response,
+            left=np.nan,
+            right=np.nan,
+        )
+        overlap_mask = np.isfinite(sampled_response)
+        if not np.any(overlap_mask):
+            failures.append(
+                _failure(
+                    sensor_unit_id,
+                    representation_variant,
+                    band_id,
+                    "overlay_reference_no_overlap",
+                    "overlay reference wavelengths do not overlap the canonical curve support",
+                )
+            )
+            per_band[band_id] = {"error": "no overlap"}
+            continue
+
+        diff = sampled_response[overlap_mask] - reference_response[overlap_mask]
+        band_max_abs_diff = float(np.max(np.abs(diff)))
+        band_rmse = float(np.sqrt(np.mean(diff**2)))
+        band_mean_abs_diff = float(np.mean(np.abs(diff)))
+        max_abs_diff = max(max_abs_diff, band_max_abs_diff)
+        rmse_max = max(rmse_max, band_rmse)
+        if band_max_abs_diff > OVERLAY_MAX_ABS_TOLERANCE:
+            failures.append(
+                _failure(
+                    sensor_unit_id,
+                    representation_variant,
+                    band_id,
+                    "overlay_max_abs_diff",
+                    (
+                        f"overlay max absolute difference {band_max_abs_diff:.4f} exceeds "
+                        f"tolerance {OVERLAY_MAX_ABS_TOLERANCE:.4f}"
+                    ),
+                )
+            )
+
+        per_band[band_id] = {
+            "sample_count": int(reference_wavelength_nm.size),
+            "max_abs_diff": band_max_abs_diff,
+            "mean_abs_diff": band_mean_abs_diff,
+            "rmse": band_rmse,
+        }
+
+    return {
+        "required": required,
+        "available": True,
+        "reference_path": str(reference_path),
+        "band_count": len(reference_curves),
+        "max_abs_tolerance": OVERLAY_MAX_ABS_TOLERANCE,
+        "max_abs_diff": max_abs_diff,
+        "max_rmse": rmse_max,
+        "per_band": per_band,
+    }
+
+
+def _overlay_reference_path(
+    sensor_unit_id: str,
+    representation_variant: str,
+    *,
+    root: Path | None,
+) -> Path:
+    layout = build_repo_layout(root)
+    return (
+        layout.extracted_sources_root
+        / sensor_unit_id
+        / representation_variant
+        / OVERLAY_REFERENCE_FILENAME
+    )
+
+
+def _load_overlay_curve_pairs(
+    sensor_unit_id: str,
+    representation_variant: str,
+    *,
+    root: Path | None,
+) -> list[tuple[SampledCurve, SampledCurve]]:
+    reference_path = _overlay_reference_path(sensor_unit_id, representation_variant, root=root)
+    if not reference_path.exists():
+        return []
+    reference_curves = _load_overlay_reference_curves(reference_path)
+    curve_pairs: list[tuple[SampledCurve, SampledCurve]] = []
+    for band_id in sorted(reference_curves):
+        try:
+            curve = load_curve(sensor_unit_id, band_id, representation_variant, root=root)
+        except KeyError:
+            continue
+        curve_pairs.append((curve, reference_curves[band_id]))
+    return curve_pairs
+
+
+def _load_overlay_reference_curves(reference_path: Path) -> dict[str, SampledCurve]:
+    rows_by_band: dict[str, list[tuple[float, float]]] = {}
+    with reference_path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        for row in reader:
+            band_id = str(row["band_id"]).strip()
+            rows_by_band.setdefault(band_id, []).append(
+                (
+                    float(row["wavelength_nm"]),
+                    float(row["response"]),
+                )
+            )
+
+    curves: dict[str, SampledCurve] = {}
+    for band_id, rows in rows_by_band.items():
+        rows.sort(key=lambda item: item[0])
+        curves[band_id] = SampledCurve(
+            band_id=band_id,
+            wavelength_nm=np.asarray([item[0] for item in rows], dtype=float),
+            response=np.asarray([item[1] for item in rows], dtype=float),
+            source_variant="overlay_reference",
+        )
+    return curves
 
 
 def _expected_band_count(metadata: dict[str, Any]) -> int | None:
