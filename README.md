@@ -74,13 +74,14 @@ PYTHONPATH=src python3 -m rsrf list-sensors
 PYTHONPATH=src python3 -m rsrf list-bands sentinel-2c_msi --variant band_average
 PYTHONPATH=src python3 -m rsrf show-metadata hyperspec_example --variant metadata_band_spec
 PYTHONPATH=src python3 -m rsrf show-response sentinel-2c_msi B03 --variant band_average
+PYTHONPATH=src python3 -m rsrf validate-sensor sentinel-2c_msi --variant band_average
+PYTHONPATH=src python3 -m rsrf export-validation hyperspec_example --variant metadata_band_spec
 PYTHONPATH=src python3 -m rsrf validate-manifest rsrf_source_manifest_sentinel2c_v2.json
 PYTHONPATH=src python3 -m rsrf show-registry-rows rsrf_source_manifest_hyperspectral_band_spec_example.json
 PYTHONPATH=src python3 -m rsrf register-manifest rsrf_source_manifest_sentinel2c_v2.json
 python3 scripts/ingest/ingest_sentinel2_srf.py --dry-run
 python3 scripts/ingest/ingest_band_spec_table.py --dry-run
 python3 scripts/validate/generate_validation_report.py sentinel-2c_msi --variant band_average
-python3 scripts/validate/generate_validation_report.py hyperspec_example --variant metadata_band_spec
 python3 scripts/validate/refresh_validation_fixtures.py
 PYTHONPATH=src python3 - <<'PY'
 from rsrf import list_sensors, load_response_definition, validate_sensor

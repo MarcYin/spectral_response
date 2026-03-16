@@ -14,6 +14,10 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from rsrf.cli import main
+from rsrf.ingest import write_band_spec_artifacts
+from rsrf.io import read_json
+from rsrf.parsers.band_spec_table import parse_band_spec_table
+from rsrf.validate import parse_manifest_dict
 
 
 class CliTests(unittest.TestCase):
@@ -138,6 +142,75 @@ class CliTests(unittest.TestCase):
         self.assertEqual(payload["band_id"], "B004")
         self.assertAlmostEqual(payload["center_wavelength_nm"], 441.5)
         self.assertAlmostEqual(payload["fwhm_nm"], 9.5)
+
+    def test_validate_sensor_prints_qa_report_json(self) -> None:
+        exit_code, stdout = self._run_main(
+            [
+                "validate-sensor",
+                "sentinel-2c_msi",
+                "--variant",
+                "band_average",
+                "--root",
+                str(ROOT),
+            ]
+        )
+
+        self.assertEqual(exit_code, 0)
+        payload = json.loads(stdout)
+        self.assertTrue(payload["passed"])
+        self.assertEqual(payload["content_kind"], "sampled_curve")
+        self.assertEqual(payload["summary"]["band_count"], 13)
+
+    def test_validate_sensor_returns_nonzero_when_report_has_failures(self) -> None:
+        payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
+        manifest = parse_manifest_dict(payload)
+        artifacts = parse_band_spec_table(ROOT / manifest.raw_local_path, manifest)
+        artifacts.band_spec_rows[0] = dict(artifacts.band_spec_rows[0])
+        artifacts.band_rows[0] = dict(artifacts.band_rows[0])
+        artifacts.band_spec_rows[0]["fwhm_nm"] = 0.0
+        artifacts.band_rows[0]["fwhm_nm"] = 0.0
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_root = Path(tmpdir)
+            write_band_spec_artifacts(tmp_root, manifest, artifacts)
+            exit_code, stdout = self._run_main(
+                [
+                    "validate-sensor",
+                    "hyperspec_example",
+                    "--variant",
+                    "metadata_band_spec",
+                    "--root",
+                    str(tmp_root),
+                ]
+            )
+
+        self.assertEqual(exit_code, 1)
+        payload = json.loads(stdout)
+        self.assertFalse(payload["passed"])
+        checks = {failure["check"] for failure in payload["failures"]}
+        self.assertIn("positive_fwhm", checks)
+
+    def test_export_validation_writes_report_and_plot(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir) / "validation"
+            exit_code, stdout = self._run_main(
+                [
+                    "export-validation",
+                    "hyperspec_example",
+                    "--variant",
+                    "metadata_band_spec",
+                    "--root",
+                    str(ROOT),
+                    "--output-dir",
+                    str(output_dir),
+                ]
+            )
+
+            self.assertEqual(exit_code, 0)
+            self.assertIn("report:", stdout)
+            self.assertIn("plot:", stdout)
+            self.assertTrue((output_dir / "validation_report.json").exists())
+            self.assertTrue((output_dir / "overview.png").exists())
 
 
 if __name__ == "__main__":

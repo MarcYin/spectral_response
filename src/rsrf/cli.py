@@ -10,6 +10,7 @@ from typing import Any, Sequence
 from .api import get_metadata, list_bands, list_sensors, load_response_definition
 from .convolve import response_area
 from .models import BandSpec, ManifestSummary, ManifestValidationError, SampledCurve
+from .qa import validate_sensor, write_validation_artifacts
 from .registry import build_repo_layout, manifest_registry_rows, register_manifest
 from .validate import parse_manifest_file
 
@@ -95,6 +96,48 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=None,
         help="repository root; defaults to the discovered current repository",
+    )
+
+    validate_sensor_cmd = subparsers.add_parser(
+        "validate-sensor",
+        help="validate a sensor representation and print the QA report",
+    )
+    validate_sensor_cmd.add_argument("sensor_unit_id")
+    validate_sensor_cmd.add_argument(
+        "--variant",
+        dest="representation_variant",
+        default=None,
+        help="representation variant; required only when multiple variants exist",
+    )
+    validate_sensor_cmd.add_argument(
+        "--root",
+        type=Path,
+        default=None,
+        help="repository root; defaults to the discovered current repository",
+    )
+
+    export_validation_cmd = subparsers.add_parser(
+        "export-validation",
+        help="write a validation_report.json and overview.png for a sensor representation",
+    )
+    export_validation_cmd.add_argument("sensor_unit_id")
+    export_validation_cmd.add_argument(
+        "--variant",
+        dest="representation_variant",
+        default=None,
+        help="representation variant; required only when multiple variants exist",
+    )
+    export_validation_cmd.add_argument(
+        "--root",
+        type=Path,
+        default=None,
+        help="repository root; defaults to the discovered current repository",
+    )
+    export_validation_cmd.add_argument(
+        "--output-dir",
+        type=Path,
+        default=None,
+        help="directory for validation artifacts; defaults to docs/sensor-notes/<sensor>/<variant>",
     )
 
     validate_manifest = subparsers.add_parser(
@@ -280,6 +323,45 @@ def _handle_show_response(
     return _print_json(payload)
 
 
+def _handle_validate_sensor(
+    sensor_unit_id: str,
+    representation_variant: str | None,
+    root: Path | None,
+) -> int:
+    try:
+        report = validate_sensor(
+            sensor_unit_id,
+            representation_variant,
+            root=root,
+        )
+    except (FileNotFoundError, KeyError, RuntimeError, ValueError, NotImplementedError) as exc:
+        print(_exception_message(exc))
+        return 1
+    _print_json(report)
+    return 0 if report.get("passed") else 1
+
+
+def _handle_export_validation(
+    sensor_unit_id: str,
+    representation_variant: str | None,
+    root: Path | None,
+    output_dir: Path | None,
+) -> int:
+    try:
+        written = write_validation_artifacts(
+            sensor_unit_id,
+            representation_variant,
+            root=root,
+            output_dir=output_dir,
+        )
+    except (FileNotFoundError, KeyError, RuntimeError, ValueError, NotImplementedError) as exc:
+        print(_exception_message(exc))
+        return 1
+    for label, path in written.items():
+        print(f"{label}: {path}")
+    return 0
+
+
 def _handle_validate_manifest(manifest_path: Path) -> int:
     try:
         manifest = parse_manifest_file(manifest_path)
@@ -363,6 +445,19 @@ def main(argv: Sequence[str] | None = None) -> int:
             args.band_id,
             args.representation_variant,
             args.root,
+        )
+    if args.command == "validate-sensor":
+        return _handle_validate_sensor(
+            args.sensor_unit_id,
+            args.representation_variant,
+            args.root,
+        )
+    if args.command == "export-validation":
+        return _handle_export_validation(
+            args.sensor_unit_id,
+            args.representation_variant,
+            args.root,
+            args.output_dir,
         )
     if args.command == "validate-manifest":
         return _handle_validate_manifest(args.manifest_path)
