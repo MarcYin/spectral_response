@@ -49,6 +49,8 @@ class CliTests(unittest.TestCase):
         self.assertEqual(
             variants,
             {
+                ("sentinel-2a_msi", "band_average"),
+                ("sentinel-2b_msi", "band_average"),
                 ("sentinel-2c_msi", "band_average"),
                 ("hyperspec_example", "metadata_band_spec"),
             },
@@ -160,6 +162,7 @@ class CliTests(unittest.TestCase):
         self.assertTrue(payload["passed"])
         self.assertEqual(payload["content_kind"], "sampled_curve")
         self.assertEqual(payload["summary"]["band_count"], 13)
+        self.assertTrue(payload["overlay_checks"]["available"])
 
     def test_validate_sensor_returns_nonzero_when_report_has_failures(self) -> None:
         payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
@@ -196,9 +199,9 @@ class CliTests(unittest.TestCase):
             exit_code, stdout = self._run_main(
                 [
                     "export-validation",
-                    "hyperspec_example",
+                    "sentinel-2c_msi",
                     "--variant",
-                    "metadata_band_spec",
+                    "band_average",
                     "--root",
                     str(ROOT),
                     "--output-dir",
@@ -209,8 +212,10 @@ class CliTests(unittest.TestCase):
             self.assertEqual(exit_code, 0)
             self.assertIn("report:", stdout)
             self.assertIn("plot:", stdout)
+            self.assertIn("overlay_plot:", stdout)
             self.assertTrue((output_dir / "validation_report.json").exists())
             self.assertTrue((output_dir / "overview.png").exists())
+            self.assertTrue((output_dir / "overlay.png").exists())
 
 
 if __name__ == "__main__":

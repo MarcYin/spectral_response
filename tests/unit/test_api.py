@@ -26,7 +26,7 @@ from rsrf.validate import parse_manifest_dict
 
 
 class ApiTests(unittest.TestCase):
-    def test_list_sensors_returns_both_canonical_forms(self) -> None:
+    def test_list_sensors_returns_registered_canonical_forms(self) -> None:
         sensors = list_sensors(ROOT)
         variants = {
             (row["sensor_unit_id"], row["representation_variant"])
@@ -35,6 +35,8 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(
             variants,
             {
+                ("sentinel-2a_msi", "band_average"),
+                ("sentinel-2b_msi", "band_average"),
                 ("sentinel-2c_msi", "band_average"),
                 ("hyperspec_example", "metadata_band_spec"),
             },
@@ -45,6 +47,15 @@ class ApiTests(unittest.TestCase):
         self.assertIsInstance(curve, SampledCurve)
         self.assertEqual(curve.band_id, "B01")
         self.assertEqual(len(curve.wavelength_nm), 2301)
+
+    def test_load_curve_reads_new_sentinel_platforms(self) -> None:
+        curve_a = load_curve("sentinel-2a_msi", "B01", "band_average", root=ROOT)
+        curve_b = load_curve("sentinel-2b_msi", "B01", "band_average", root=ROOT)
+
+        self.assertIsInstance(curve_a, SampledCurve)
+        self.assertIsInstance(curve_b, SampledCurve)
+        self.assertEqual(len(curve_a.wavelength_nm), 2301)
+        self.assertEqual(len(curve_b.wavelength_nm), 2301)
 
     def test_load_band_spec_reads_canonical_band_spec(self) -> None:
         band_spec = load_band_spec(

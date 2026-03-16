@@ -20,6 +20,14 @@ class ManifestValidationTests(unittest.TestCase):
         payload = read_json(ROOT / "rsrf_source_manifest_sentinel2c_v2.json")
         self.assertEqual(validate_manifest_dict(payload), [])
 
+    def test_additional_sentinel_manifests_are_valid(self) -> None:
+        for manifest_name in (
+            "rsrf_source_manifest_sentinel2a_v2.json",
+            "rsrf_source_manifest_sentinel2b_v2.json",
+        ):
+            payload = read_json(ROOT / manifest_name)
+            self.assertEqual(validate_manifest_dict(payload), [])
+
     def test_band_spec_manifest_is_valid(self) -> None:
         payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
         self.assertEqual(validate_manifest_dict(payload), [])

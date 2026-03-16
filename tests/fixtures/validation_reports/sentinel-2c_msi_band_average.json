@@ -95,6 +95,95 @@
   "content_kind": "sampled_curve",
   "failure_count": 0,
   "failures": [],
+  "overlay_checks": {
+    "available": true,
+    "band_count": 13,
+    "max_abs_diff": 0.0,
+    "max_abs_tolerance": 0.02,
+    "max_rmse": 0.0,
+    "per_band": {
+      "B01": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      },
+      "B02": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      },
+      "B03": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      },
+      "B04": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      },
+      "B05": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      },
+      "B06": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      },
+      "B07": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      },
+      "B08": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      },
+      "B09": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      },
+      "B10": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      },
+      "B11": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      },
+      "B12": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      },
+      "B8A": {
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "rmse": 0.0,
+        "sample_count": 2301
+      }
+    },
+    "reference_path": "sources/extracted/sentinel-2c_msi/band_average/overlay_reference.csv",
+    "required": true
+  },
   "passed": true,
   "representation_variant": "band_average",
   "sensor_unit_id": "sentinel-2c_msi",

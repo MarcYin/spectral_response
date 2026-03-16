@@ -40,17 +40,22 @@ def _load_fixture(name: str) -> dict[str, Any]:
         return json.load(handle)
 
 
-def _normalize_value(value: Any) -> Any:
+def _normalize_value(value: Any, *, key: str | None = None) -> Any:
     if isinstance(value, dict):
         return {
-            key: _normalize_value(item)
-            for key, item in sorted(value.items())
-            if key != "metadata_generated_at"
+            child_key: _normalize_value(item, key=child_key)
+            for child_key, item in sorted(value.items())
+            if child_key != "metadata_generated_at"
         }
     if isinstance(value, list):
-        return [_normalize_value(item) for item in value]
+        return [_normalize_value(item, key=key) for item in value]
     if isinstance(value, float):
         return round(value, 6)
+    if key == "reference_path" and isinstance(value, str):
+        try:
+            return str(Path(value).resolve().relative_to(ROOT))
+        except ValueError:
+            return value
     return value
 
 
