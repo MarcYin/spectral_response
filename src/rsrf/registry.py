@@ -237,6 +237,44 @@ def canonical_variant_dir(
     )
 
 
+def realized_variant_dir(
+    root: Path | None,
+    sensor_unit_id: str,
+    representation_variant: str,
+) -> Path:
+    """Return the realized output directory for a derived sampled-curve variant."""
+
+    layout = build_repo_layout(root)
+    return layout.realized_root / sensor_unit_id / representation_variant
+
+
+def representation_variant_dir(
+    root: Path | None,
+    *,
+    sensor_unit_id: str,
+    representation_variant: str,
+    content_kind: str,
+    realization_kind: str = "none",
+) -> Path:
+    """Return the storage directory for a sensor representation."""
+
+    if realization_kind != "none":
+        return realized_variant_dir(root, sensor_unit_id, representation_variant)
+    return canonical_variant_dir(root, content_kind, sensor_unit_id, representation_variant)
+
+
+def realization_id_from_manifest(manifest: SourceManifest) -> str | None:
+    """Build the canonical realization identifier for a manifest."""
+
+    if not manifest.curve_realization.enabled:
+        return None
+    return (
+        f"{manifest.sensor_unit_id}."
+        f"{manifest.representation_variant}."
+        f"{manifest.curve_realization.output_representation_variant}"
+    )
+
+
 def sensor_row_from_manifest(
     manifest: SourceManifest,
     *,
@@ -309,11 +347,7 @@ def realization_row_from_manifest(manifest: SourceManifest) -> dict[str, Any] | 
         if truncate_sigma is not None
         else "manifest_defined"
     )
-    realization_id = (
-        f"{manifest.sensor_unit_id}."
-        f"{manifest.representation_variant}."
-        f"{manifest.curve_realization.output_representation_variant}"
-    )
+    realization_id = realization_id_from_manifest(manifest)
 
     return {
         "realization_id": realization_id,

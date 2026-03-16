@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 
 from .models import BandSpec, SampledCurve
-from .realize import gaussian_curve_from_band_spec
+from .realize import realize_curve
 
 
 def response_area(curve: SampledCurve) -> float:
@@ -74,7 +74,7 @@ def _as_curve(response_definition: SampledCurve | BandSpec) -> SampledCurve:
     if isinstance(response_definition, SampledCurve):
         return response_definition
     if isinstance(response_definition, BandSpec):
-        return gaussian_curve_from_band_spec(response_definition)
+        return realize_curve(response_definition)
     raise TypeError(f"unsupported response definition type: {type(response_definition)!r}")
 
 

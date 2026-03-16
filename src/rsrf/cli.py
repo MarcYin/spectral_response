@@ -5,9 +5,11 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import Sequence
+from typing import Any, Sequence
 
-from .models import ManifestSummary, ManifestValidationError
+from .api import get_metadata, list_bands, list_sensors, load_response_definition
+from .convolve import response_area
+from .models import BandSpec, ManifestSummary, ManifestValidationError, SampledCurve
 from .registry import build_repo_layout, manifest_registry_rows, register_manifest
 from .validate import parse_manifest_file
 
@@ -23,6 +25,72 @@ def build_parser() -> argparse.ArgumentParser:
 
     show_layout = subparsers.add_parser("show-layout", help="print the repository layout")
     show_layout.add_argument(
+        "--root",
+        type=Path,
+        default=None,
+        help="repository root; defaults to the discovered current repository",
+    )
+
+    list_sensors_cmd = subparsers.add_parser(
+        "list-sensors",
+        help="list registered sensor representations with canonical artifacts",
+    )
+    list_sensors_cmd.add_argument(
+        "--root",
+        type=Path,
+        default=None,
+        help="repository root; defaults to the discovered current repository",
+    )
+
+    list_bands_cmd = subparsers.add_parser(
+        "list-bands",
+        help="list canonical band rows for a sensor representation",
+    )
+    list_bands_cmd.add_argument("sensor_unit_id")
+    list_bands_cmd.add_argument(
+        "--variant",
+        dest="representation_variant",
+        default=None,
+        help="representation variant; required only when multiple variants exist",
+    )
+    list_bands_cmd.add_argument(
+        "--root",
+        type=Path,
+        default=None,
+        help="repository root; defaults to the discovered current repository",
+    )
+
+    show_metadata_cmd = subparsers.add_parser(
+        "show-metadata",
+        help="print canonical metadata for a sensor representation",
+    )
+    show_metadata_cmd.add_argument("sensor_unit_id")
+    show_metadata_cmd.add_argument(
+        "--variant",
+        dest="representation_variant",
+        default=None,
+        help="representation variant; required only when multiple variants exist",
+    )
+    show_metadata_cmd.add_argument(
+        "--root",
+        type=Path,
+        default=None,
+        help="repository root; defaults to the discovered current repository",
+    )
+
+    show_response_cmd = subparsers.add_parser(
+        "show-response",
+        help="print a compact band-level response summary",
+    )
+    show_response_cmd.add_argument("sensor_unit_id")
+    show_response_cmd.add_argument("band_id")
+    show_response_cmd.add_argument(
+        "--variant",
+        dest="representation_variant",
+        default=None,
+        help="representation variant; required only when multiple variants exist",
+    )
+    show_response_cmd.add_argument(
         "--root",
         type=Path,
         default=None,
@@ -79,6 +147,137 @@ def _print_manifest_errors(manifest_path: Path, errors: Sequence[str]) -> int:
     for error in errors:
         print(f"- {error}")
     return 1
+
+
+def _normalize_json_value(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {str(key): _normalize_json_value(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_normalize_json_value(item) for item in value]
+    if isinstance(value, Path):
+        return str(value)
+    if hasattr(value, "item") and callable(value.item):
+        return _normalize_json_value(value.item())
+    if value is None:
+        return None
+    if isinstance(value, float) and value != value:
+        return None
+    return value
+
+
+def _print_json(payload: Any) -> int:
+    normalized = _normalize_json_value(payload)
+    print(json.dumps(normalized, indent=2, sort_keys=True, allow_nan=False))
+    return 0
+
+
+def _exception_message(exc: Exception) -> str:
+    if exc.args:
+        return str(exc.args[0])
+    return str(exc)
+
+
+def _handle_list_sensors(root: Path | None) -> int:
+    try:
+        sensors = list_sensors(root=root)
+    except (FileNotFoundError, KeyError, RuntimeError, ValueError) as exc:
+        print(_exception_message(exc))
+        return 1
+    return _print_json(sensors)
+
+
+def _handle_list_bands(
+    sensor_unit_id: str,
+    representation_variant: str | None,
+    root: Path | None,
+) -> int:
+    try:
+        bands = list_bands(
+            sensor_unit_id,
+            representation_variant,
+            root=root,
+        )
+    except (FileNotFoundError, KeyError, RuntimeError, ValueError) as exc:
+        print(_exception_message(exc))
+        return 1
+    return _print_json(bands)
+
+
+def _handle_show_metadata(
+    sensor_unit_id: str,
+    representation_variant: str | None,
+    root: Path | None,
+) -> int:
+    try:
+        metadata = get_metadata(
+            sensor_unit_id,
+            representation_variant,
+            root=root,
+        )
+    except (FileNotFoundError, KeyError, RuntimeError, ValueError) as exc:
+        print(_exception_message(exc))
+        return 1
+    return _print_json(metadata)
+
+
+def _summarize_response_definition(
+    sensor_unit_id: str,
+    representation_variant: str,
+    response_definition: SampledCurve | BandSpec,
+) -> dict[str, Any]:
+    if isinstance(response_definition, SampledCurve):
+        return {
+            "content_kind": "sampled_curve",
+            "sensor_unit_id": sensor_unit_id,
+            "representation_variant": representation_variant,
+            "band_id": response_definition.band_id,
+            "source_variant": response_definition.source_variant,
+            "sample_count": len(response_definition.wavelength_nm),
+            "wavelength_min_nm": float(min(response_definition.wavelength_nm)),
+            "wavelength_max_nm": float(max(response_definition.wavelength_nm)),
+            "peak_response": float(max(response_definition.response)),
+            "area": response_area(response_definition),
+        }
+    return {
+        "content_kind": "band_spec",
+        "sensor_unit_id": sensor_unit_id,
+        "representation_variant": representation_variant,
+        "band_id": response_definition.band_id,
+        "band_index": response_definition.band_index,
+        "band_name": response_definition.band_name,
+        "band_status": response_definition.band_status,
+        "center_wavelength_nm": response_definition.center_wavelength_nm,
+        "fwhm_nm": response_definition.fwhm_nm,
+        "published_shape_type": response_definition.published_shape_type,
+        "shape_param_json": dict(response_definition.shape_param_json),
+    }
+
+
+def _handle_show_response(
+    sensor_unit_id: str,
+    band_id: str,
+    representation_variant: str | None,
+    root: Path | None,
+) -> int:
+    try:
+        metadata = get_metadata(sensor_unit_id, representation_variant, root=root)
+        resolved_variant = str(metadata["representation_variant"])
+        response_definition = load_response_definition(
+            sensor_unit_id,
+            band_id,
+            resolved_variant,
+            root=root,
+        )
+    except (FileNotFoundError, KeyError, RuntimeError, ValueError) as exc:
+        print(_exception_message(exc))
+        return 1
+
+    payload = _summarize_response_definition(
+        sensor_unit_id,
+        resolved_variant,
+        response_definition,
+    )
+    return _print_json(payload)
 
 
 def _handle_validate_manifest(manifest_path: Path) -> int:
@@ -144,6 +343,27 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if args.command == "show-layout":
         return _handle_show_layout(args.root)
+    if args.command == "list-sensors":
+        return _handle_list_sensors(args.root)
+    if args.command == "list-bands":
+        return _handle_list_bands(
+            args.sensor_unit_id,
+            args.representation_variant,
+            args.root,
+        )
+    if args.command == "show-metadata":
+        return _handle_show_metadata(
+            args.sensor_unit_id,
+            args.representation_variant,
+            args.root,
+        )
+    if args.command == "show-response":
+        return _handle_show_response(
+            args.sensor_unit_id,
+            args.band_id,
+            args.representation_variant,
+            args.root,
+        )
     if args.command == "validate-manifest":
         return _handle_validate_manifest(args.manifest_path)
     if args.command == "show-registry-rows":

@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 import math
 
 import numpy as np
 
-from .models import BandSpec, SampledCurve
+from .models import BandSpec, GridPolicy, SampledCurve
 
 
 def sigma_from_fwhm(fwhm_nm: float) -> float:
@@ -62,6 +63,34 @@ def gaussian_curve_from_band_spec(
         response=response,
         source_variant="gaussian_from_fwhm",
     )
+
+
+def realize_curve(
+    band_spec: BandSpec,
+    *,
+    profile_type: str = "gaussian",
+    grid_policy: GridPolicy | None = None,
+    normalization: str | None = "peak_1.0",
+    source_variant: str | None = None,
+) -> SampledCurve:
+    """Realize a sampled curve from a band specification."""
+
+    if profile_type != "gaussian":
+        raise NotImplementedError(f"unsupported profile_type: {profile_type}")
+    if normalization not in (None, "peak_1.0"):
+        raise NotImplementedError(f"unsupported normalization: {normalization}")
+    if grid_policy is not None and grid_policy.kind != "adaptive_per_band":
+        raise NotImplementedError(f"unsupported grid policy: {grid_policy.kind}")
+
+    curve = gaussian_curve_from_band_spec(
+        band_spec,
+        truncate_sigma=4.0 if grid_policy is None else grid_policy.truncate_sigma,
+        samples_per_fwhm=10 if grid_policy is None else grid_policy.samples_per_fwhm,
+        max_step_nm=1.0 if grid_policy is None else grid_policy.max_step_nm,
+    )
+    if source_variant is not None:
+        return replace(curve, source_variant=source_variant)
+    return curve
 
 
 def estimate_center_wavelength(curve: SampledCurve) -> float:

@@ -8,7 +8,7 @@ from typing import Any
 
 from .io import read_json
 from .models import BandSpec, ContentKind, SampledCurve
-from .registry import canonical_variant_dir, read_registry_table
+from .registry import read_registry_table, representation_variant_dir
 
 
 def list_sensors(root: Path | None = None) -> list[dict[str, Any]]:
@@ -27,11 +27,12 @@ def list_bands(
 ) -> list[dict[str, Any]]:
     """List bands for a sensor representation."""
 
-    resolved_variant, _ = _resolve_sensor_variant(
+    sensor_row = _resolve_sensor_variant(
         sensor_unit_id,
         representation_variant,
         root=root,
     )
+    resolved_variant = str(sensor_row["representation_variant"])
     frame = read_registry_table(root, "bands")
     frame = frame[
         (frame["sensor_unit_id"] == sensor_unit_id)
@@ -50,13 +51,13 @@ def get_metadata(
 ) -> dict[str, Any]:
     """Load the canonical metadata sidecar for a sensor representation."""
 
-    resolved_variant, content_kind = _resolve_sensor_variant(
+    sensor_row = _resolve_sensor_variant(
         sensor_unit_id,
         representation_variant,
         root=root,
     )
     metadata_path = (
-        canonical_variant_dir(root, content_kind.value, sensor_unit_id, resolved_variant)
+        _representation_dir(root, sensor_row)
         / "metadata.json"
     )
     return read_json(metadata_path)
@@ -71,18 +72,20 @@ def load_curve(
 ) -> SampledCurve:
     """Load a canonical sampled curve for a band."""
 
-    resolved_variant, content_kind = _resolve_sensor_variant(
+    sensor_row = _resolve_sensor_variant(
         sensor_unit_id,
         representation_variant,
         root=root,
     )
+    resolved_variant = str(sensor_row["representation_variant"])
+    content_kind = ContentKind(str(sensor_row["content_kind"]))
     if content_kind != ContentKind.SAMPLED_CURVE:
         raise ValueError(
             f"{sensor_unit_id}/{resolved_variant} is {content_kind.value}, not sampled_curve"
         )
 
     curves_path = (
-        canonical_variant_dir(root, content_kind.value, sensor_unit_id, resolved_variant)
+        _representation_dir(root, sensor_row)
         / "curves.parquet"
     )
     frame = _read_parquet(curves_path)
@@ -111,16 +114,18 @@ def load_band_spec(
 ) -> BandSpec:
     """Load a canonical band specification for a band."""
 
-    resolved_variant, content_kind = _resolve_sensor_variant(
+    sensor_row = _resolve_sensor_variant(
         sensor_unit_id,
         representation_variant,
         root=root,
     )
+    resolved_variant = str(sensor_row["representation_variant"])
+    content_kind = ContentKind(str(sensor_row["content_kind"]))
     if content_kind != ContentKind.BAND_SPEC:
         raise ValueError(f"{sensor_unit_id}/{resolved_variant} is not a band_spec representation")
 
     band_specs_path = (
-        canonical_variant_dir(root, content_kind.value, sensor_unit_id, resolved_variant)
+        _representation_dir(root, sensor_row)
         / "band_specs.parquet"
     )
     frame = _read_parquet(band_specs_path)
@@ -158,11 +163,13 @@ def load_response_definition(
 ) -> SampledCurve | BandSpec:
     """Load either a sampled curve or a canonical band spec for a band."""
 
-    resolved_variant, content_kind = _resolve_sensor_variant(
+    sensor_row = _resolve_sensor_variant(
         sensor_unit_id,
         representation_variant,
         root=root,
     )
+    resolved_variant = str(sensor_row["representation_variant"])
+    content_kind = ContentKind(str(sensor_row["content_kind"]))
     if content_kind == ContentKind.SAMPLED_CURVE:
         return load_curve(sensor_unit_id, band_id, resolved_variant, root=root)
     if content_kind == ContentKind.BAND_SPEC:
@@ -175,7 +182,7 @@ def _resolve_sensor_variant(
     representation_variant: str | None,
     *,
     root: Path | None = None,
-) -> tuple[str, ContentKind]:
+) -> Any:
     sensors = _available_sensor_rows(root)
     frame = sensors[sensors["sensor_unit_id"] == sensor_unit_id]
     if representation_variant is not None:
@@ -186,8 +193,7 @@ def _resolve_sensor_variant(
         raise ValueError(
             f"multiple representations found for {sensor_unit_id}; representation_variant is required"
         )
-    row = frame.iloc[0]
-    return str(row["representation_variant"]), ContentKind(str(row["content_kind"]))
+    return frame.iloc[0]
 
 
 def _available_sensor_rows(root: Path | None):
@@ -201,16 +207,18 @@ def _row_has_backing_artifact(row, *, root: Path | None) -> bool:
     artifact_name = _primary_artifact_name(content_kind)
     if artifact_name is None:
         return False
-    artifact_path = (
-        canonical_variant_dir(
-            root,
-            content_kind.value,
-            str(row["sensor_unit_id"]),
-            str(row["representation_variant"]),
-        )
-        / artifact_name
-    )
+    artifact_path = _representation_dir(root, row) / artifact_name
     return artifact_path.exists()
+
+
+def _representation_dir(root: Path | None, row) -> Path:
+    return representation_variant_dir(
+        root,
+        sensor_unit_id=str(row["sensor_unit_id"]),
+        representation_variant=str(row["representation_variant"]),
+        content_kind=str(row["content_kind"]),
+        realization_kind=str(row.get("realization_kind", "none")),
+    )
 
 
 def _primary_artifact_name(content_kind: ContentKind) -> str | None:
