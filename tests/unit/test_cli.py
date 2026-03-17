@@ -58,6 +58,7 @@ EXPECTED_CANONICAL_VARIANTS = {
     ("probav_vgt", "center_camera"),
     ("probav_vgt", "left_camera"),
     ("probav_vgt", "right_camera"),
+    ("prisma_hsi", "metadata_band_spec"),
     ("rapideye_msi", "official_rsr"),
     ("satellogic_newsat_hsi", "mark_iv_band_spec"),
     ("satellogic_newsat_msi", "mark_iv_band_spec"),
@@ -105,6 +106,14 @@ class CliTests(unittest.TestCase):
         self.assertIn("Manifest validation failed", stdout)
         self.assertIn("manifest file is not valid JSON", stdout)
 
+    def test_version_flag_reports_package_version(self) -> None:
+        output = io.StringIO()
+        with redirect_stdout(output), self.assertRaises(SystemExit) as context:
+            main(["--version"])
+
+        self.assertEqual(context.exception.code, 0)
+        self.assertIn("rsrf 0.1.0", output.getvalue())
+
     def test_list_sensors_returns_available_sensor_representations(self) -> None:
         exit_code, stdout = self._run_main(["list-sensors", "--root", str(ROOT)])
 
@@ -121,11 +130,7 @@ class CliTests(unittest.TestCase):
 
         self.assertEqual(exit_code, 0)
         rows = json.loads(stdout)
-        sensor_ids = {row["sensor_unit_id"] for row in rows}
-        self.assertEqual(len(rows), 1)
-        self.assertEqual(sensor_ids, {"prisma_hsi"})
-        self.assertNotIn("pleiades_msi", sensor_ids)
-        self.assertNotIn("formosat-5_rsi", sensor_ids)
+        self.assertEqual(rows, [])
 
     def test_list_bands_returns_canonical_band_rows(self) -> None:
         exit_code, stdout = self._run_main(
@@ -299,6 +304,26 @@ class CliTests(unittest.TestCase):
         self.assertEqual(enmap_payload["band_id"], "B001")
         self.assertEqual(emit_payload["band_id"], "B001")
 
+    def test_show_response_summarizes_prisma_band_spec(self) -> None:
+        exit_code, stdout = self._run_main(
+            [
+                "show-response",
+                "prisma_hsi",
+                "B001",
+                "--variant",
+                "metadata_band_spec",
+                "--root",
+                str(ROOT),
+            ]
+        )
+
+        self.assertEqual(exit_code, 0)
+        payload = json.loads(stdout)
+        self.assertEqual(payload["content_kind"], "band_spec")
+        self.assertEqual(payload["band_id"], "B001")
+        self.assertEqual(payload["band_name"], "VNIR001")
+        self.assertAlmostEqual(payload["center_wavelength_nm"], 1003.6806030273438)
+
     def test_show_response_summarizes_promoted_public_interval_band_specs(self) -> None:
         neo_exit_code, neo_stdout = self._run_main(
             [
@@ -467,7 +492,7 @@ class CliTests(unittest.TestCase):
             )
 
         self.assertEqual(exit_code, 0)
-        self.assertIn("sensors:", stdout)
+        self.assertIn("No planned sensor rows were written.", stdout)
 
 
 if __name__ == "__main__":

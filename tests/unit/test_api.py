@@ -63,6 +63,7 @@ EXPECTED_CANONICAL_VARIANTS = {
     ("probav_vgt", "center_camera"),
     ("probav_vgt", "left_camera"),
     ("probav_vgt", "right_camera"),
+    ("prisma_hsi", "metadata_band_spec"),
     ("rapideye_msi", "official_rsr"),
     ("satellogic_newsat_hsi", "mark_iv_band_spec"),
     ("satellogic_newsat_msi", "mark_iv_band_spec"),
@@ -172,6 +173,15 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(emit.band_id, "B001")
         self.assertGreater(enmap.center_wavelength_nm, 400.0)
         self.assertGreater(emit.center_wavelength_nm, 300.0)
+
+    def test_load_band_spec_reads_prisma_band_spec(self) -> None:
+        prisma = load_band_spec("prisma_hsi", "B001", "metadata_band_spec", root=ROOT)
+
+        self.assertIsInstance(prisma, BandSpec)
+        self.assertEqual(prisma.band_id, "B001")
+        self.assertEqual(prisma.band_name, "VNIR001")
+        self.assertAlmostEqual(prisma.center_wavelength_nm, 1003.6806030273438)
+        self.assertEqual(prisma.shape_param_json["subsystem"], "VNIR")
 
     def test_load_band_spec_reads_satellogic_variants(self) -> None:
         mark_iv = load_band_spec("satellogic_newsat_msi", "Blue", "mark_iv_band_spec", root=ROOT)

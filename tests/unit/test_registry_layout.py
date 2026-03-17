@@ -1,15 +1,18 @@
 from __future__ import annotations
 
+import os
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from rsrf.registry import REGISTRY_TABLES, build_repo_layout, registry_table_path
+from rsrf.registry import RSRF_ROOT_ENV_VAR, REGISTRY_TABLES, build_repo_layout, registry_table_path
 
 
 class RegistryLayoutTests(unittest.TestCase):
@@ -25,6 +28,14 @@ class RegistryLayoutTests(unittest.TestCase):
                 registry_table_path(ROOT, table_name),
                 ROOT / "data" / "registry" / f"{table_name}.parquet",
             )
+
+    def test_build_repo_layout_honors_rsrf_root_environment_variable(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            expected_root = Path(tmpdir).resolve()
+            with patch.dict(os.environ, {RSRF_ROOT_ENV_VAR: str(expected_root)}, clear=False):
+                layout = build_repo_layout()
+
+        self.assertEqual(layout.root, expected_root)
 
 
 if __name__ == "__main__":

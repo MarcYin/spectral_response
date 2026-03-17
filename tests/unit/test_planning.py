@@ -10,8 +10,9 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from rsrf.io import write_parquet_table
 from rsrf.planning import list_planned_sensors, load_planned_sensor_catalog, register_planned_sensor_catalog
-from rsrf.registry import read_registry_table
+from rsrf.registry import read_registry_table, registry_table_columns, registry_table_path
 
 
 class PlanningTests(unittest.TestCase):
@@ -20,19 +21,12 @@ class PlanningTests(unittest.TestCase):
         entries = catalog["entries"]
 
         self.assertEqual(catalog["bucket"], "P2")
-        self.assertEqual(len(entries), 1)
-        sensor_ids = {entry.sensor_unit_id for entry in entries}
-        self.assertIn("prisma_hsi", sensor_ids)
-        self.assertNotIn("pleiades_msi", sensor_ids)
-        self.assertNotIn("formosat-5_rsi", sensor_ids)
+        self.assertEqual(entries, [])
 
     def test_list_planned_sensors_returns_json_friendly_rows(self) -> None:
         rows = list_planned_sensors(ROOT)
 
-        self.assertEqual(len(rows), 1)
-        row = next(row for row in rows if row["sensor_unit_id"] == "prisma_hsi")
-        self.assertEqual(row["content_kind"], "band_spec")
-        self.assertEqual(row["status"], "planned")
+        self.assertEqual(rows, [])
 
     def test_register_planned_sensor_catalog_writes_sensor_rows(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -41,14 +35,42 @@ class PlanningTests(unittest.TestCase):
                 tmp_root,
                 catalog_path=ROOT / "sources" / "manifests" / "p2_planned_optical_sensors.json",
             )
+        self.assertIsNone(written)
+        with self.assertRaises(FileNotFoundError):
+            read_registry_table(tmp_root, "sensors")
+
+    def test_register_planned_sensor_catalog_removes_stale_planned_rows(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_root = Path(tmpdir)
+            sensors_path = registry_table_path(tmp_root, "sensors")
+            write_parquet_table(
+                sensors_path,
+                [
+                    {
+                        "sensor_unit_id": "sentinel-2c_msi",
+                        "representation_variant": "band_average",
+                        "content_kind": "sampled_curve",
+                        "status": "registered",
+                    },
+                    {
+                        "sensor_unit_id": "prisma_hsi",
+                        "representation_variant": "metadata_band_spec",
+                        "content_kind": "band_spec",
+                        "status": "planned",
+                    },
+                ],
+                columns=registry_table_columns("sensors"),
+            )
+
+            written = register_planned_sensor_catalog(
+                tmp_root,
+                catalog_path=ROOT / "sources" / "manifests" / "p2_planned_optical_sensors.json",
+            )
             sensors = read_registry_table(tmp_root, "sensors")
 
         self.assertIsNotNone(written)
-        self.assertEqual(len(sensors), 1)
-        sensor_ids = set(sensors["sensor_unit_id"].tolist())
-        self.assertEqual(sensor_ids, {"prisma_hsi"})
-        planned = sensors[sensors["status"] == "planned"]
-        self.assertEqual(len(planned), 1)
+        self.assertEqual(set(sensors["sensor_unit_id"].tolist()), {"sentinel-2c_msi"})
+        self.assertTrue((sensors["status"] != "planned").all())
 
 
 if __name__ == "__main__":
