@@ -10,9 +10,13 @@ from .realize import realize_curve
 
 PACKAGE_ROOT = Path(__file__).resolve().parent
 
-try:
-    __version__ = version("spectral-response-function")
-except PackageNotFoundError:
+for _distribution_name in ("RSRF", "spectral-response-function"):
+    try:
+        __version__ = version(_distribution_name)
+        break
+    except PackageNotFoundError:
+        continue
+else:
     __version__ = "0.1.0"
 
 __all__ = [

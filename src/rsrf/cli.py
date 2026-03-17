@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 from typing import Any, Sequence
 
+from . import __version__
 from .api import get_metadata, list_bands, list_sensors, load_response_definition
 from .convolve import response_area
 from .models import BandSpec, ManifestSummary, ManifestValidationError, SampledCurve
@@ -21,7 +22,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     parser = argparse.ArgumentParser(
         prog="rsrf",
-        description="Bootstrap tools for the spectral response function repository.",
+        description="Canonical spectral response function repository toolkit.",
+    )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"%(prog)s {__version__}",
     )
     subparsers = parser.add_subparsers(dest="command")
 

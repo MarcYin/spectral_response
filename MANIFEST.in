@@ -1,0 +1,10 @@
+include README.md
+include mkdocs.yml
+graft src
+graft docs
+graft scripts
+prune data
+prune sources
+prune tests
+global-exclude __pycache__
+global-exclude *.py[cod]

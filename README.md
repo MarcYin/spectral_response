@@ -1,53 +1,71 @@
-# Spectral Response Function Repository
+# RSRF
 
-This repository bootstraps a Python package and data layout for storing canonical spectral response definitions for satellite sensors.
+`RSRF` is a Python toolkit and repository layout for canonical spectral response definitions for optical satellite sensors.
 
-The active design baseline is documented in:
+It provides:
 
-- `rsrf_repo_plan_v3_hyperspectral_support.md`
-- `rsrf_implementation_plan.md`
+- a registry-backed read API for sampled curves and metadata-only band specs
+- ingest tooling for official source artifacts
+- QA reporting and validation plots
+- a CLI for discovery, inspection, and release workflows
 
-## Current status
+The distribution name is `RSRF`. The import package is `rsrf`.
 
-The repository currently contains:
+## What ships in the package
 
-- a registry-backed read API for canonical sampled curves and band specs
-- a CLI for repository inspection, manifest validation, and canonical data discovery
-- working ingest entrypoints for sampled-curve and band-spec workflows
-- a shared `realize_curve()` helper used by runtime convolution and persisted realization
-- optional persisted realized curves for band-spec sources under `data/realized/`
-- regression fixtures for the reference validation reports
-- canonical sampled-curve coverage for:
-  - Sentinel-2A, Sentinel-2B, and Sentinel-2C MSI
-  - Landsat 1-5 MSS, Landsat 4-5 TM, Landsat 7 ETM+, Landsat 8 OLI/TIRS, and Landsat 9 OLI-2/TIRS-2
-  - Terra MODIS and Aqua MODIS
-  - S-NPP VIIRS, NOAA-20 VIIRS, and NOAA-21 VIIRS
-  - Sentinel-3A OLCI, Sentinel-3B OLCI, and Terra ASTER
-  - NASA OBPG legacy ocean-colour sensors: Nimbus-7 CZCS, ADEOS OCTS, OrbView-2 SeaWiFS, and Envisat MERIS
-  - Planet support-article RSR families: RapidEye, PlanetScope PS2 grouped variants, PlanetScope Dove-R, PlanetScope SuperDove, and SkySat 1-13 plus the shared SkySat 14-19 response
-  - PROBA-V VGT center, left, and right camera SRFs
-- canonical band-spec coverage for:
-  - the hyperspectral example source
-  - PACE OCI Level-1B bandpass metadata
-  - EnMAP HSI published band centers and FWHM values
-  - EMIT HSI official wavelength, FWHM, and good-wavelength metadata
-  - Satellogic NewSat Mark IV HSI exact center/FWHM metadata
-  - Satellogic NewSat Mark IV and Mark V MSI official support-range proxies
-  - Pleiades HiRI, Pleiades-Neo, SPOT-6/7, and FORMOSAT-5 official support-range proxies from WMO OSCAR
-  - Amazonia-1 WFI and CBERS-4A MUX, WFI, and WPM official support-range proxies from INPE
-- a remaining planning-only optical backlog for:
-  - PRISMA
-- data, docs, scripts, sources, and tests directories aligned with the implementation plan
+The PyPI package is code-focused. It does not bundle the full canonical data repository, raw source files, or large parquet registries. Install the package to get the API, CLI, ingest logic, QA helpers, and release tooling.
 
-Trusted sampled-curve overlays can be stored at:
+To work against a repository checkout or a generated data root, either:
 
-- `sources/extracted/<sensor_unit_id>/<representation_variant>/overlay_reference.csv`
+- run commands from the repository root
+- pass `--root /path/to/repo`
+- set `RSRF_ROOT=/path/to/repo`
 
-The current implementation uses a long-form CSV with columns:
+## Current coverage
 
-- `band_id`
-- `wavelength_nm`
-- `response`
+The repository currently covers:
+
+- sampled-curve families including Sentinel-2, Landsat MSS/TM/ETM+/OLI/TIRS, MODIS, VIIRS, OLCI, ASTER, legacy NASA OBPG ocean-colour sensors, Planet RSR families, and PROBA-V
+- band-spec families including PACE OCI, EnMAP, EMIT, PRISMA, Satellogic NewSat, Pleiades, Pleiades-Neo, SPOT-6/7, FORMOSAT-5, Amazonia-1, and CBERS-4A
+- realized Gaussian approximations for metadata-only sources when official full curves are not published
+
+The remaining notable gap in the original roadmap is `DESIS`.
+
+## Installation
+
+Install from source during development:
+
+```bash
+python3 -m pip install -e ".[dev]"
+```
+
+Once the project is published to PyPI, the intended install command is:
+
+```bash
+python3 -m pip install RSRF
+```
+
+## Quick start
+
+From a repository checkout:
+
+```bash
+export RSRF_ROOT="$PWD"
+rsrf --help
+rsrf list-sensors
+rsrf list-bands sentinel-2c_msi --variant band_average
+rsrf show-response prisma_hsi B001 --variant metadata_band_spec
+rsrf validate-sensor sentinel-2c_msi --variant band_average
+```
+
+From Python:
+
+```python
+from rsrf import list_sensors, load_response_definition
+
+sensors = list_sensors()
+response = load_response_definition("sentinel-2c_msi", "B01", "band_average")
+```
 
 ## Repository layout
 
@@ -59,80 +77,52 @@ The current implementation uses a long-form CSV with columns:
 |   |-- realized/
 |   `-- registry/
 |-- docs/
-|   |-- decisions/
-|   `-- sensor-notes/
 |-- scripts/
-|   |-- build/
-|   |-- ingest/
-|   `-- validate/
 |-- sources/
-|   |-- extracted/
-|   |-- manifests/
-|   `-- raw/
 |-- src/rsrf/
-|-- tests/
-|   |-- fixtures/
-|   |-- regression/
-|   `-- unit/
-`-- rsrf_*.md / rsrf_*.json planning artifacts
+`-- tests/
 ```
 
-## Package modules
+Trusted sampled-curve overlays live at:
 
-- `rsrf.api`: registry-backed read API for canonical curves and band specs
-- `rsrf.models`: core enums and lightweight data classes
-- `rsrf.registry`: repository path conventions
-- `rsrf.io`: JSON and metadata helpers
-- `rsrf.band_specs`: helpers for metadata-only band definitions
-- `rsrf.realize`: Gaussian realization from center wavelength and FWHM
-- `rsrf.resample`: linear resampling helpers
-- `rsrf.convolve`: basic convolution helpers
-- `rsrf.validate`: manifest validation and bootstrap checks
-- `rsrf.qa`: sensor-level validation reports and QA artifact export
-- `rsrf.plotting`: simple curve plotting helpers
-- `rsrf.cli`: command-line entrypoints
-- `rsrf.registry`: normalized registry row builders and table definitions
+```text
+sources/extracted/<sensor_unit_id>/<representation_variant>/overlay_reference.csv
+```
 
-## Bootstrap commands
+## Documentation
 
-Without installing the package:
+Documentation source lives in `docs/` and is built with MkDocs. The intended published site URL is:
+
+- [https://marcyin.github.io/spectral_response/](https://marcyin.github.io/spectral_response/)
+
+Key pages:
+
+- getting started: [`docs/getting-started.md`](docs/getting-started.md)
+- CLI reference: [`docs/cli.md`](docs/cli.md)
+- data model: [`docs/data-model.md`](docs/data-model.md)
+- release guide: [`docs/releasing.md`](docs/releasing.md)
+
+## Development
+
+Run the full local validation stack with:
 
 ```bash
-PYTHONPATH=src python3 -m rsrf --help
-PYTHONPATH=src python3 -m rsrf show-layout
-PYTHONPATH=src python3 -m rsrf list-sensors
-PYTHONPATH=src python3 -m rsrf list-planned-sensors
-PYTHONPATH=src python3 -m rsrf list-bands sentinel-2c_msi --variant band_average
-PYTHONPATH=src python3 -m rsrf show-metadata hyperspec_example --variant metadata_band_spec
-PYTHONPATH=src python3 -m rsrf show-response sentinel-2c_msi B03 --variant band_average
-PYTHONPATH=src python3 -m rsrf validate-sensor sentinel-2c_msi --variant band_average
-PYTHONPATH=src python3 -m rsrf export-validation hyperspec_example --variant metadata_band_spec
-PYTHONPATH=src python3 -m rsrf validate-manifest rsrf_source_manifest_sentinel2c_v2.json
-PYTHONPATH=src python3 -m rsrf show-registry-rows rsrf_source_manifest_hyperspectral_band_spec_example.json
-PYTHONPATH=src python3 -m rsrf register-manifest rsrf_source_manifest_sentinel2c_v2.json
-PYTHONPATH=src python3 -m rsrf register-planned-sensors
-python3 scripts/ingest/ingest_sampled_curve.py rsrf_source_manifest_noaa20_viirs_v2.json --dry-run
-python3 scripts/ingest/ingest_sentinel2_srf.py --dry-run
-python3 scripts/ingest/ingest_band_spec_table.py --dry-run
-python3 scripts/validate/generate_validation_report.py sentinel-2c_msi --variant band_average
-python3 scripts/validate/refresh_validation_fixtures.py
-PYTHONPATH=src python3 - <<'PY'
-from rsrf import list_sensors, load_response_definition, validate_sensor
-print(list_sensors())
-print(type(load_response_definition('sentinel-2c_msi', 'B01', 'band_average')).__name__)
-print(validate_sensor('hyperspec_example', 'metadata_band_spec')['passed'])
-PY
+python3 -m unittest discover -s tests/unit
+python3 -m unittest discover -s tests/regression
+python3 -m build
+python3 -m twine check dist/*
+mkdocs build --strict
 ```
 
-After installation:
+GitHub Actions workflows are provided for:
 
-```bash
-rsrf --help
-```
+- CI on pushes and pull requests
+- GitHub Pages docs deployment
+- PyPI publishing via trusted publishing
 
-## Next implementation steps
+## Project status
 
-1. Add trusted overlay references for the new Planet and other sampled-curve families so QA can move beyond structural checks.
-2. Backfill `mission_family`, `platform`, and `instrument` metadata across the older manifests so legacy registry rows are no longer partially null.
-3. Resolve the remaining DESIS gap with an official public per-band wavelength/FWHM source, rather than backfilling approximate values from workshop material.
-4. Promote the remaining P2 planned sensors from the planning catalog into canonical ingests as exact public source artifacts are staged and reviewed.
+The active design baseline and implementation history are still tracked in:
+
+- [`rsrf_repo_plan_v3_hyperspectral_support.md`](rsrf_repo_plan_v3_hyperspectral_support.md)
+- [`rsrf_implementation_plan.md`](rsrf_implementation_plan.md)
