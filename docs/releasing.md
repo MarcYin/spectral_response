@@ -18,7 +18,7 @@ This repo includes three workflows:
 
 - `ci.yml`: test matrix plus packaging smoke check
 - `docs.yml`: build and deploy MkDocs to GitHub Pages
-- `publish.yml`: build and publish to PyPI using trusted publishing
+- `release-package.yml`: build and publish to PyPI using trusted publishing
 
 ## Trusted publishing setup
 
@@ -35,6 +35,6 @@ Recommended release sequence:
 1. Merge verified changes to `main`.
 2. Create and push a version tag such as `v0.1.0`.
 3. Create a GitHub Release from that tag.
-4. Let `publish.yml` build and publish the package.
+4. Let `release-package.yml` build and publish the package.
 
 If you prefer a dry run first, use the workflow's manual dispatch option.
