@@ -24,6 +24,9 @@ class RegistryRowTests(unittest.TestCase):
         self.assertEqual(len(rows["sources"]), 1)
         self.assertEqual(rows["realizations"], [])
         self.assertEqual(rows["sensors"][0]["content_kind"], "sampled_curve")
+        self.assertEqual(rows["sensors"][0]["mission_family"], "Sentinel-2")
+        self.assertEqual(rows["sensors"][0]["platform"], "Sentinel-2C")
+        self.assertEqual(rows["sensors"][0]["instrument"], "MSI")
 
     def test_band_spec_manifest_produces_realization_row(self) -> None:
         payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")

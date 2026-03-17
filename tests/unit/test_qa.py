@@ -51,6 +51,24 @@ class QaTests(unittest.TestCase):
         self.assertFalse(report["overlay_checks"]["available"])
         self.assertEqual(report["summary"]["band_count"], 8)
 
+    def test_validate_probav_camera_variant_passes_without_overlay_requirement(self) -> None:
+        report = validate_sensor("probav_vgt", "center_camera", root=ROOT)
+
+        self.assertTrue(report["passed"])
+        self.assertFalse(report["overlay_checks"]["available"])
+        self.assertEqual(report["summary"]["band_count"], 4)
+
+    def test_validate_planet_support_article_variants_pass_without_overlay_requirement(self) -> None:
+        rapid = validate_sensor("rapideye_msi", "official_rsr", root=ROOT)
+        superdove = validate_sensor("planetscope_psb_sd", "superdove", root=ROOT)
+
+        self.assertTrue(rapid["passed"])
+        self.assertTrue(superdove["passed"])
+        self.assertFalse(rapid["overlay_checks"]["available"])
+        self.assertFalse(superdove["overlay_checks"]["available"])
+        self.assertEqual(rapid["summary"]["band_count"], 5)
+        self.assertEqual(superdove["summary"]["band_count"], 8)
+
     def test_validate_sampled_curve_variant_fails_when_required_overlay_is_missing(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             tmp_root = Path(tmpdir)
@@ -73,6 +91,30 @@ class QaTests(unittest.TestCase):
         self.assertTrue(report["realization_checks"]["enabled"])
         self.assertLess(report["realization_checks"]["max_center_abs_error_nm"], 1.0)
         self.assertLess(report["realization_checks"]["max_fwhm_abs_error_nm"], 2.0)
+
+    def test_validate_new_band_spec_families_pass(self) -> None:
+        enmap = validate_sensor("enmap_hsi", "metadata_band_spec", root=ROOT)
+        emit = validate_sensor("emit_hsi", "metadata_band_spec", root=ROOT)
+        satellogic = validate_sensor("satellogic_newsat_hsi", "mark_iv_band_spec", root=ROOT)
+
+        self.assertTrue(enmap["passed"])
+        self.assertTrue(emit["passed"])
+        self.assertTrue(satellogic["passed"])
+        self.assertEqual(enmap["summary"]["band_count"], 224)
+        self.assertEqual(emit["summary"]["band_count"], 285)
+        self.assertEqual(satellogic["summary"]["band_count"], 32)
+
+    def test_validate_promoted_public_interval_band_specs_pass(self) -> None:
+        pleiades = validate_sensor("pleiades_msi", "metadata_band_spec", root=ROOT)
+        formosat = validate_sensor("formosat-5_rsi", "metadata_band_spec", root=ROOT)
+        cbers = validate_sensor("cbers-4a_optical_payload", "wpm_band_spec", root=ROOT)
+
+        self.assertTrue(pleiades["passed"])
+        self.assertTrue(formosat["passed"])
+        self.assertTrue(cbers["passed"])
+        self.assertEqual(pleiades["summary"]["band_count"], 5)
+        self.assertEqual(formosat["summary"]["band_count"], 5)
+        self.assertEqual(cbers["summary"]["band_count"], 8)
 
     def test_write_validation_artifacts_exports_report_and_plot(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

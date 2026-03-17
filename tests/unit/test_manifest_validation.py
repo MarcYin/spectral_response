@@ -37,6 +37,7 @@ class ManifestValidationTests(unittest.TestCase):
         self.assertEqual(manifest.content_kind, ContentKind.SAMPLED_CURVE)
         self.assertEqual(manifest.parser.script, "scripts/ingest/ingest_sentinel2_srf.py")
         self.assertEqual(manifest.to_dict()["sensor_unit_id"], "sentinel-2c_msi")
+        self.assertEqual(manifest.to_dict()["mission_family"], "Sentinel-2")
 
     def test_manifest_rejects_nonpositive_grid_policy_values(self) -> None:
         payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
@@ -55,6 +56,13 @@ class ManifestValidationTests(unittest.TestCase):
             "curve_realization.approximation_reason is required when approximation=true",
             errors,
         )
+
+    def test_manifest_requires_reason_for_top_level_approximation(self) -> None:
+        payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
+        payload["approximation"] = True
+        payload["approximation_reason"] = None
+        errors = validate_manifest_dict(payload)
+        self.assertIn("approximation_reason is required when approximation=true", errors)
 
     def test_parse_manifest_file_reports_invalid_json(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

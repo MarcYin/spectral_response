@@ -20,9 +20,16 @@ from rsrf.parsers.band_spec_table import parse_band_spec_table
 from rsrf.validate import parse_manifest_dict
 
 EXPECTED_CANONICAL_VARIANTS = {
+    ("amazonia-1_optical_imager", "metadata_band_spec"),
     ("adeos_octs", "band_average"),
     ("aqua_modis", "band_average"),
+    ("cbers-4a_optical_payload", "mux_band_spec"),
+    ("cbers-4a_optical_payload", "wfi_band_spec"),
+    ("cbers-4a_optical_payload", "wpm_band_spec"),
+    ("emit_hsi", "metadata_band_spec"),
+    ("enmap_hsi", "metadata_band_spec"),
     ("envisat_meris", "band_average"),
+    ("formosat-5_rsi", "metadata_band_spec"),
     ("hyperspec_example", "metadata_band_spec"),
     ("landsat-1_mss", "band_average"),
     ("landsat-2_mss", "band_average"),
@@ -41,11 +48,40 @@ EXPECTED_CANONICAL_VARIANTS = {
     ("noaa-21_viirs", "band_average"),
     ("orbview-2_seawifs", "band_average"),
     ("pace_oci", "l1b_band_spec"),
+    ("pleiades-neo_msi", "metadata_band_spec"),
+    ("pleiades_msi", "metadata_band_spec"),
+    ("planetscope_ps2", "satid_0c_0d"),
+    ("planetscope_ps2", "satid_0e"),
+    ("planetscope_ps2", "satid_0f_10"),
+    ("planetscope_ps2_sd", "dove_r"),
+    ("planetscope_psb_sd", "superdove"),
+    ("probav_vgt", "center_camera"),
+    ("probav_vgt", "left_camera"),
+    ("probav_vgt", "right_camera"),
+    ("rapideye_msi", "official_rsr"),
+    ("satellogic_newsat_hsi", "mark_iv_band_spec"),
+    ("satellogic_newsat_msi", "mark_iv_band_spec"),
+    ("satellogic_newsat_msi", "mark_v_band_spec"),
     ("sentinel-2a_msi", "band_average"),
     ("sentinel-2b_msi", "band_average"),
     ("sentinel-2c_msi", "band_average"),
     ("sentinel-3a_olci", "band_average"),
     ("sentinel-3b_olci", "band_average"),
+    ("spot-6_7_msi", "metadata_band_spec"),
+    ("skysat_msi", "skysat1"),
+    ("skysat_msi", "skysat2"),
+    ("skysat_msi", "skysat3"),
+    ("skysat_msi", "skysat4"),
+    ("skysat_msi", "skysat5"),
+    ("skysat_msi", "skysat6"),
+    ("skysat_msi", "skysat7"),
+    ("skysat_msi", "skysat8"),
+    ("skysat_msi", "skysat9"),
+    ("skysat_msi", "skysat10"),
+    ("skysat_msi", "skysat11"),
+    ("skysat_msi", "skysat12"),
+    ("skysat_msi", "skysat13"),
+    ("skysat_msi", "skysat14_19"),
     ("snpp_viirs", "band_average"),
     ("terra_aster", "band_average"),
     ("terra_modis", "band_average"),
@@ -79,6 +115,17 @@ class CliTests(unittest.TestCase):
             for row in rows
         }
         self.assertEqual(variants, EXPECTED_CANONICAL_VARIANTS)
+
+    def test_list_planned_sensors_returns_p2_catalog_entries(self) -> None:
+        exit_code, stdout = self._run_main(["list-planned-sensors", "--root", str(ROOT)])
+
+        self.assertEqual(exit_code, 0)
+        rows = json.loads(stdout)
+        sensor_ids = {row["sensor_unit_id"] for row in rows}
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(sensor_ids, {"prisma_hsi"})
+        self.assertNotIn("pleiades_msi", sensor_ids)
+        self.assertNotIn("formosat-5_rsi", sensor_ids)
 
     def test_list_bands_returns_canonical_band_rows(self) -> None:
         exit_code, stdout = self._run_main(
@@ -188,6 +235,153 @@ class CliTests(unittest.TestCase):
         self.assertEqual(payload["band_id"], "B001")
         self.assertAlmostEqual(payload["center_wavelength_nm"], 314.55, places=2)
 
+    def test_show_response_summarizes_satellogic_band_specs(self) -> None:
+        msi_exit_code, msi_stdout = self._run_main(
+            [
+                "show-response",
+                "satellogic_newsat_msi",
+                "Blue",
+                "--variant",
+                "mark_iv_band_spec",
+                "--root",
+                str(ROOT),
+            ]
+        )
+        hsi_exit_code, hsi_stdout = self._run_main(
+            [
+                "show-response",
+                "satellogic_newsat_hsi",
+                "B01",
+                "--variant",
+                "mark_iv_band_spec",
+                "--root",
+                str(ROOT),
+            ]
+        )
+
+        self.assertEqual(msi_exit_code, 0)
+        self.assertEqual(hsi_exit_code, 0)
+        msi_payload = json.loads(msi_stdout)
+        hsi_payload = json.loads(hsi_stdout)
+        self.assertEqual(msi_payload["content_kind"], "band_spec")
+        self.assertEqual(hsi_payload["content_kind"], "band_spec")
+
+    def test_show_response_summarizes_enmap_and_emit_band_specs(self) -> None:
+        enmap_exit_code, enmap_stdout = self._run_main(
+            [
+                "show-response",
+                "enmap_hsi",
+                "B001",
+                "--variant",
+                "metadata_band_spec",
+                "--root",
+                str(ROOT),
+            ]
+        )
+        emit_exit_code, emit_stdout = self._run_main(
+            [
+                "show-response",
+                "emit_hsi",
+                "B001",
+                "--variant",
+                "metadata_band_spec",
+                "--root",
+                str(ROOT),
+            ]
+        )
+
+        self.assertEqual(enmap_exit_code, 0)
+        self.assertEqual(emit_exit_code, 0)
+        enmap_payload = json.loads(enmap_stdout)
+        emit_payload = json.loads(emit_stdout)
+        self.assertEqual(enmap_payload["content_kind"], "band_spec")
+        self.assertEqual(emit_payload["content_kind"], "band_spec")
+        self.assertEqual(enmap_payload["band_id"], "B001")
+        self.assertEqual(emit_payload["band_id"], "B001")
+
+    def test_show_response_summarizes_promoted_public_interval_band_specs(self) -> None:
+        neo_exit_code, neo_stdout = self._run_main(
+            [
+                "show-response",
+                "pleiades-neo_msi",
+                "RedEdge",
+                "--variant",
+                "metadata_band_spec",
+                "--root",
+                str(ROOT),
+            ]
+        )
+        cbers_exit_code, cbers_stdout = self._run_main(
+            [
+                "show-response",
+                "cbers-4a_optical_payload",
+                "Yellow",
+                "--variant",
+                "wpm_band_spec",
+                "--root",
+                str(ROOT),
+            ]
+        )
+
+        self.assertEqual(neo_exit_code, 0)
+        self.assertEqual(cbers_exit_code, 0)
+        neo_payload = json.loads(neo_stdout)
+        cbers_payload = json.loads(cbers_stdout)
+        self.assertEqual(neo_payload["content_kind"], "band_spec")
+        self.assertEqual(cbers_payload["content_kind"], "band_spec")
+        self.assertAlmostEqual(neo_payload["center_wavelength_nm"], 725.0)
+        self.assertAlmostEqual(cbers_payload["fwhm_nm"], 40.0)
+
+    def test_show_response_summarizes_planet_support_article_curves(self) -> None:
+        rapid_exit_code, rapid_stdout = self._run_main(
+            [
+                "show-response",
+                "rapideye_msi",
+                "RedEdge",
+                "--variant",
+                "official_rsr",
+                "--root",
+                str(ROOT),
+            ]
+        )
+        superdove_exit_code, superdove_stdout = self._run_main(
+            [
+                "show-response",
+                "planetscope_psb_sd",
+                "CoastalBlue",
+                "--variant",
+                "superdove",
+                "--root",
+                str(ROOT),
+            ]
+        )
+
+        self.assertEqual(rapid_exit_code, 0)
+        self.assertEqual(superdove_exit_code, 0)
+        rapid_payload = json.loads(rapid_stdout)
+        superdove_payload = json.loads(superdove_stdout)
+        self.assertEqual(rapid_payload["content_kind"], "sampled_curve")
+        self.assertEqual(superdove_payload["content_kind"], "sampled_curve")
+
+    def test_show_response_summarizes_probav_camera_variant(self) -> None:
+        exit_code, stdout = self._run_main(
+            [
+                "show-response",
+                "probav_vgt",
+                "BLUE",
+                "--variant",
+                "center_camera",
+                "--root",
+                str(ROOT),
+            ]
+        )
+
+        self.assertEqual(exit_code, 0)
+        payload = json.loads(stdout)
+        self.assertEqual(payload["content_kind"], "sampled_curve")
+        self.assertEqual(payload["band_id"], "BLUE")
+        self.assertGreater(payload["sample_count"], 10)
+
     def test_validate_sensor_prints_qa_report_json(self) -> None:
         exit_code, stdout = self._run_main(
             [
@@ -259,6 +453,21 @@ class CliTests(unittest.TestCase):
             self.assertTrue((output_dir / "validation_report.json").exists())
             self.assertTrue((output_dir / "overview.png").exists())
             self.assertTrue((output_dir / "overlay.png").exists())
+
+    def test_register_planned_sensors_writes_registry_rows(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            exit_code, stdout = self._run_main(
+                [
+                    "register-planned-sensors",
+                    "--root",
+                    str(tmpdir),
+                    "--catalog-path",
+                    str(ROOT / "sources" / "manifests" / "p2_planned_optical_sensors.json"),
+                ]
+            )
+
+        self.assertEqual(exit_code, 0)
+        self.assertIn("sensors:", stdout)
 
 
 if __name__ == "__main__":
