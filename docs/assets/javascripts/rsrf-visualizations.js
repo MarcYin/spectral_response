@@ -20,6 +20,11 @@
     if (!page) {
       return;
     }
+    document.body.classList.add("rsrf-viz-layout");
+    const article = page.closest(".md-content__inner");
+    if (article) {
+      article.classList.add("rsrf-viz-article");
+    }
     initVisualizations(page).catch((error) => {
       console.error(error);
       page.insertAdjacentHTML(
@@ -74,6 +79,10 @@
       bars: document.getElementById("rsrf-overlap-bars"),
       tableBody: document.getElementById("rsrf-overlap-table-body"),
     };
+
+    if (overlap.slider) {
+      overlap.slider.value = String(state.selectedWavelength);
+    }
 
     populateSensorSelect(explorer.sensorSelect, indexData.sensors);
     explorer.sensorSelect.value = state.activeSensorKey || "";

@@ -1,3 +1,38 @@
+body.rsrf-viz-layout .md-sidebar--secondary {
+  display: none;
+}
+
+body.rsrf-viz-layout .md-content {
+  min-width: 0;
+}
+
+body.rsrf-viz-layout .md-content__inner,
+body.rsrf-viz-layout .md-typeset {
+  margin: 0;
+  max-width: none;
+}
+
+body.rsrf-viz-layout .rsrf-viz-article > h1:first-of-type {
+  margin-bottom: 0.8rem;
+}
+
+@media (min-width: 76.25em) {
+  body.rsrf-viz-layout .md-main__inner.md-grid {
+    gap: 1.2rem;
+    grid-template-columns: 15rem minmax(0, 1fr);
+    margin-left: auto;
+    margin-right: auto;
+    max-width: min(100vw - 1.5rem, 1760px);
+  }
+}
+
+@media (min-width: 90em) {
+  body.rsrf-viz-layout .md-main__inner.md-grid {
+    grid-template-columns: 15.5rem minmax(0, 1fr);
+    max-width: min(100vw - 2rem, 1880px);
+  }
+}
+
 .rsrf-viz-page {
   --rsrf-surface: #fffdf7;
   --rsrf-surface-strong: #fff8ea;
@@ -9,8 +44,9 @@
   --rsrf-accent-soft: #d8efe8;
   --rsrf-highlight: #c7771a;
   display: grid;
-  gap: 1.6rem;
+  gap: 1.9rem;
   margin-top: 1rem;
+  width: 100%;
 }
 
 .rsrf-viz-hero,
@@ -57,19 +93,19 @@
 
 .rsrf-viz-section-header {
   display: grid;
-  gap: 0.8rem;
-  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 1rem 1.2rem;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.85fr);
   align-items: end;
 }
 
 .rsrf-viz-grid {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
+  gap: 1.2rem;
+  grid-template-columns: minmax(320px, 380px) minmax(0, 1fr);
 }
 
 .rsrf-viz-panel {
-  padding: 1rem;
+  padding: 1.1rem;
 }
 
 .rsrf-viz-control-panel {
@@ -125,7 +161,7 @@
 .rsrf-viz-band-list {
   display: grid;
   gap: 0.55rem;
-  max-height: 420px;
+  max-height: 560px;
   overflow: auto;
   padding-right: 0.25rem;
 }
@@ -194,16 +230,16 @@
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid var(--rsrf-border);
   border-radius: 18px;
-  min-height: 440px;
+  min-height: 520px;
   padding: 0.35rem;
 }
 
 .rsrf-viz-heatmap-chart {
-  min-height: 860px;
+  min-height: 980px;
 }
 
 .rsrf-viz-bar-chart {
-  min-height: 460px;
+  min-height: 540px;
 }
 
 .rsrf-viz-slider-row {
@@ -292,5 +328,9 @@
 
   .rsrf-viz-wavelength-chip {
     justify-self: start;
+  }
+
+  .rsrf-viz-band-list {
+    max-height: 420px;
   }
 }

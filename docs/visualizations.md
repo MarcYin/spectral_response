@@ -1,23 +1,19 @@
+---
+hide:
+  - toc
+---
+
 # Interactive Visualizations
 
-This page turns the canonical repository into two interactive views:
-
-- a sensor explorer for selecting a sensor representation and the exact bands to display
-- a wavelength overlap atlas for clicking anywhere from `300` to `2500 nm` and seeing which responses occupy that region
-
-<div
-  id="rsrf-visualization-page"
-  class="rsrf-viz-page"
-  data-index-path="../assets/visualization/index.json"
-  data-overlap-path="../assets/visualization/overlap_index.json"
->
+<div id="rsrf-visualization-page" class="rsrf-viz-page" data-index-path="../assets/visualization/index.json" data-overlap-path="../assets/visualization/overlap_index.json">
   <section class="rsrf-viz-hero">
     <p class="rsrf-viz-kicker">Optical response atlas</p>
     <h2>Explore the repository the way instrument engineers think about it</h2>
     <p>
-      The explorer below works directly from the checked-in canonical response definitions.
-      Sampled curves are shown directly, while metadata-only band specs are realized as Gaussian
-      display curves for comparison.
+      This page exposes two interactive views: a sensor explorer for exact band-level response
+      inspection, and a wavelength overlap atlas for scanning the full <strong>300 to 2500 nm</strong>
+      optical domain. Sampled curves are shown directly, while metadata-only band specs are
+      realized as Gaussian display curves for comparison.
     </p>
   </section>
 
