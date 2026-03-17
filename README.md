@@ -10,6 +10,10 @@ It combines three things that usually drift apart:
 
 The PyPI distribution name is `RSRF`. The import package is `rsrf`.
 
+> **Explore the RSRFs in your browser:** [https://marcyin.github.io/spectral_response/visualizations/](https://marcyin.github.io/spectral_response/visualizations/)
+>
+> Use the interactive visualization page to inspect sensor bandpasses, compare overlapping responses, and quickly check the published RSRFs without setting up the repository locally.
+
 ## Installation
 
 During development:
