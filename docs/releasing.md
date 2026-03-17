@@ -33,7 +33,7 @@ Before the first PyPI release:
 Recommended release sequence:
 
 1. Merge verified changes to `main`.
-2. Create and push a version tag such as `v0.1.0`.
+2. Create and push a version tag such as `v0.0.1`.
 3. Create a GitHub Release from that tag.
 4. Let `release-package.yml` build and publish the package.
 
