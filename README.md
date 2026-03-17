@@ -124,7 +124,7 @@ Project documentation is built with MkDocs:
 Key entry points:
 
 - getting started: [`docs/getting-started.md`](docs/getting-started.md)
-- interactive visualizations: [`docs/visualizations.md`](docs/visualizations.md)
+- interactive visualizations: [https://marcyin.github.io/spectral_response/visualizations/](https://marcyin.github.io/spectral_response/visualizations/) ([`docs/visualizations.md`](docs/visualizations.md))
 - repository layout: [`docs/repository-layout.md`](docs/repository-layout.md)
 - CLI reference: [`docs/cli.md`](docs/cli.md)
 - data model: [`docs/data-model.md`](docs/data-model.md)
