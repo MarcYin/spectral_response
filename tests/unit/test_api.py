@@ -134,6 +134,15 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(len(olci.wavelength_nm), 200)
         self.assertGreater(len(seawifs.wavelength_nm), 10)
 
+    def test_load_curve_reads_landsat4_tm_with_correct_axis_orientation(self) -> None:
+        curve = load_curve("landsat-4_tm", "B2", "band_average", root=ROOT)
+        peak_index = max(range(len(curve.response)), key=lambda index: float(curve.response[index]))
+
+        self.assertIsInstance(curve, SampledCurve)
+        self.assertGreater(min(curve.wavelength_nm), 400.0)
+        self.assertLess(max(curve.response), 1.01)
+        self.assertAlmostEqual(curve.wavelength_nm[peak_index], 594.0, delta=5.0)
+
     def test_load_curve_reads_planet_support_article_variants(self) -> None:
         rapideye = load_curve("rapideye_msi", "RedEdge", "official_rsr", root=ROOT)
         superdove = load_curve("planetscope_psb_sd", "CoastalBlue", "superdove", root=ROOT)

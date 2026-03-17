@@ -11,38 +11,38 @@
     },
     "B2": {
       "band_index": 2,
-      "center_wavelength_nm": 5.7,
-      "fwhm_nm": 999.4,
+      "center_wavelength_nm": 594.0,
+      "fwhm_nm": 80.0,
       "native_sampling_nm": null,
-      "native_support_max_nm": 1000.0,
-      "native_support_min_nm": 0.6,
+      "native_support_max_nm": 645.0,
+      "native_support_min_nm": 501.0,
       "sample_count": 133
     },
     "B3": {
       "band_index": 3,
-      "center_wavelength_nm": 3.1,
-      "fwhm_nm": 997.9,
+      "center_wavelength_nm": 677.0,
+      "fwhm_nm": 68.0,
       "native_sampling_nm": null,
-      "native_support_max_nm": 1000.0,
-      "native_support_min_nm": 2.1,
+      "native_support_max_nm": 740.0,
+      "native_support_min_nm": 580.0,
       "sample_count": 106
     },
     "B4": {
       "band_index": 4,
-      "center_wavelength_nm": 1.5,
-      "fwhm_nm": 998.5,
+      "center_wavelength_nm": 800.0,
+      "fwhm_nm": 129.0,
       "native_sampling_nm": null,
-      "native_support_max_nm": 1000.0,
-      "native_support_min_nm": 1.5,
+      "native_support_max_nm": 945.0,
+      "native_support_min_nm": 730.0,
       "sample_count": 176
     },
     "B5": {
       "band_index": 5,
-      "center_wavelength_nm": 0.1,
-      "fwhm_nm": 999.4,
+      "center_wavelength_nm": 1716.0,
+      "fwhm_nm": 214.0,
       "native_sampling_nm": null,
-      "native_support_max_nm": 999.5,
-      "native_support_min_nm": 0.1,
+      "native_support_max_nm": 1890.0,
+      "native_support_min_nm": 1504.0,
       "sample_count": 166
     },
     "B6": {
@@ -69,10 +69,12 @@
     "band_count": 7,
     "row_count": 1080,
     "wavelength_max_nm": 12700.0,
-    "wavelength_min_nm": 0.1
+    "wavelength_min_nm": 412.0
   },
-  "generated_at": "2026-03-16T17:40:03.415121+00:00",
+  "generated_at": "2026-03-17T22:41:57.949322+00:00",
   "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
     "band_spec": {
       "band_id_field": null,
       "band_index_field": null,
@@ -102,7 +104,9 @@
     },
     "doc_version": "c3-master",
     "file_sha256": "b3630dd002a235878204731a0b562d19a5bf7f6ca484ba50aa0ace1be96bbd7f",
+    "instrument": null,
     "license_note": "USGS terms apply",
+    "mission_family": null,
     "notes": [
       "Canonical storage retains the official sampled curves from the USGS viewer export",
       "No curve realization step is needed because sampled curves are already official"
@@ -122,6 +126,7 @@
       },
       "script": "scripts/ingest/ingest_sampled_curve.py"
     },
+    "platform": null,
     "raw_local_path": "sources/raw/usgs/landsat/landsat-4/tm/c3-master",
     "representation_variant": "band_average",
     "retrieved_at": "2026-03-16",

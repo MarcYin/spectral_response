@@ -83,6 +83,27 @@ class UsgsJsonParserTests(unittest.TestCase):
         self.assertEqual([row["band_id"] for row in artifacts.band_rows], ["B3N", "B3B"])
         self.assertEqual([row["band_index"] for row in artifacts.band_rows], [3, 4])
 
+    def test_parser_handles_reversed_usgs_key_order(self) -> None:
+        manifest = parse_manifest_dict(_manifest_for("landsat-4_tm"))
+        payloads = {
+            "Landsat4TM2.json": [
+                {"L4TM-2": 0.0, "Landsat 4 TM": 0.501},
+                {"L4TM-2": 1.0, "Landsat 4 TM": 0.502},
+                {"L4TM-2": 0.0, "Landsat 4 TM": 0.503},
+            ],
+        }
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            source_dir = Path(tmpdir)
+            for filename, payload in payloads.items():
+                (source_dir / filename).write_text(json.dumps(payload), encoding="utf-8")
+            artifacts = parse_usgs_json_directory(source_dir, manifest)
+
+        self.assertEqual(len(artifacts.band_rows), 1)
+        self.assertEqual(artifacts.band_rows[0]["band_id"], "B2")
+        self.assertEqual([row["wavelength_nm"] for row in artifacts.curve_rows], [501.0, 502.0, 503.0])
+        self.assertEqual([row["response"] for row in artifacts.curve_rows], [0.0, 1.0, 0.0])
+
 
 if __name__ == "__main__":
     unittest.main()

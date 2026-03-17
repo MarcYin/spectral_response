@@ -58,17 +58,64 @@ def parse_usgs_json_directory(source_dir: Path, manifest: SourceManifest):
 
 
 def _extract_usgs_curve_arrays(payload: list[object], filename: str) -> tuple[list[float], list[float]]:
-    wavelength_nm: list[float] = []
-    response: list[float] = []
+    key_names: list[str] | None = None
+    series_by_key: dict[str, list[float]] = {}
     for index, row in enumerate(payload, start=1):
         if not isinstance(row, dict) or len(row) < 2:
             raise ValueError(f"unexpected row structure in {filename} at index {index}")
-        values = list(row.values())
-        wavelength_value = _coerce_float(values[0], filename)
-        response_value = _coerce_float(values[1], filename)
-        wavelength_nm.append(wavelength_value * 1000.0 if wavelength_value < 100.0 else wavelength_value)
-        response.append(response_value)
+        row_keys = list(row.keys())
+        if key_names is None:
+            key_names = row_keys
+            series_by_key = {key: [] for key in key_names}
+        elif set(row_keys) != set(key_names):
+            raise ValueError(f"inconsistent USGS column keys in {filename} at index {index}")
+        for key in key_names:
+            series_by_key[key].append(_coerce_float(row[key], filename))
+
+    if not key_names or len(key_names) != 2:
+        raise ValueError(f"unexpected USGS column layout in {filename}")
+
+    wavelength_key, response_key = _classify_usgs_curve_columns(series_by_key)
+    wavelength_nm = [_scale_wavelength_nm(value) for value in series_by_key[wavelength_key]]
+    response = series_by_key[response_key]
     return wavelength_nm, response
+
+
+def _classify_usgs_curve_columns(series_by_key: dict[str, list[float]]) -> tuple[str, str]:
+    keys = list(series_by_key)
+    if len(keys) != 2:
+        raise ValueError("USGS curve classification requires exactly two columns")
+
+    spaced_keys = [key for key in keys if " " in key]
+    if len(spaced_keys) == 1:
+        wavelength_key = spaced_keys[0]
+        response_key = keys[0] if keys[1] == wavelength_key else keys[1]
+        return wavelength_key, response_key
+
+    ranked = sorted(
+        keys,
+        key=lambda key: _series_wavelength_score(series_by_key[key]),
+        reverse=True,
+    )
+    return ranked[0], ranked[1]
+
+
+def _series_wavelength_score(values: list[float]) -> tuple[float, float, float]:
+    if len(values) < 2:
+        return (1.0, 0.0, 0.0)
+
+    deltas = [right - left for left, right in zip(values, values[1:])]
+    negative_steps = sum(1 for delta in deltas if delta < 0.0)
+    total_variation = sum(abs(delta) for delta in deltas)
+    monotonic_ratio = (
+        1.0 if total_variation == 0.0 else abs(values[-1] - values[0]) / total_variation
+    )
+    span = abs(values[-1] - values[0])
+    return (-negative_steps, monotonic_ratio, span)
+
+
+def _scale_wavelength_nm(value: float) -> float:
+    return value * 1000.0 if value < 100.0 else value
 
 
 def _parse_usgs_band_identity(filename_stem: str, *, sensor_unit_id: str) -> tuple[str, int, str]:
