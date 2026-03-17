@@ -1,0 +1,126 @@
+{
+  "band_spec_table": {
+    "monotonic_centers": true,
+    "non_science_band_count": 41,
+    "row_count": 285
+  },
+  "content_kind": "band_spec",
+  "field_mapping": {
+    "band_id_field": "band_id",
+    "band_index_field": "band_index",
+    "band_status_field": "band_status",
+    "center_wavelength_field": "center_wavelength_nm",
+    "enabled": true,
+    "fwhm_field": "fwhm_nm",
+    "shape_param_fields": {}
+  },
+  "generated_at": "2026-03-16T22:03:13.075612+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": "band_id",
+      "band_index_field": "band_index",
+      "band_status_field": "band_status",
+      "center_wavelength_field": "center_wavelength_nm",
+      "enabled": true,
+      "fwhm_field": "fwhm_nm",
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "band_center_grid",
+      "kind": "band_spec",
+      "normalization": "not_applicable",
+      "published_shape_type": "unknown",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "band_spec",
+    "curve_realization": {
+      "approximation": true,
+      "approximation_reason": "Official source exposes center wavelengths and FWHM arrays but not full sampled SRF curves in the staged metadata export",
+      "enabled": true,
+      "grid_policy": {
+        "kind": "adaptive_per_band",
+        "max_step_nm": 1.0,
+        "samples_per_fwhm": 10,
+        "truncate_sigma": 4.0
+      },
+      "normalization": "peak_1.0",
+      "output_representation_variant": "gaussian_from_fwhm",
+      "persist_realized_curves": false,
+      "profile_type": "gaussian"
+    },
+    "doc_version": "EMITL2ARFL_001",
+    "file_sha256": "da6953ca58b2e8daa6542a8771ab41c30eca8e2baa1d72a95ae981122f489944",
+    "license_note": "NASA LP DAAC / JPL EMIT terms apply",
+    "notes": [
+      "The staged ASCII export was queried from the official LP DAAC OPeNDAP endpoint for a public EMIT L2A granule",
+      "good_wavelength flags are preserved as band_status values"
+    ],
+    "parser": {
+      "entrypoint": "parse_emit_band_parameters_ascii",
+      "notes": [
+        "The source artifact is the official OPeNDAP ASCII export of wavelengths, FWHM, and good_wavelength flags from an EMIT L2A granule",
+        "Canonical storage preserves the published band-parameter arrays rather than deriving curves"
+      ],
+      "outputs": {
+        "canonical": [
+          "band_specs.parquet",
+          "metadata.json"
+        ],
+        "optional": [
+          "realized_curves.parquet"
+        ]
+      },
+      "script": "scripts/ingest/ingest_band_spec_table.py"
+    },
+    "raw_local_path": "sources/raw/nasa/emit/l2a/001/EMIT_L2A_RFL_001_20220810T034103_2222203_001_sensor_band_parameters.ascii",
+    "representation_variant": "metadata_band_spec",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "emit_hsi",
+    "source_id": "emit_hsi_l2a_band_parameters_20220810t034103_2222203_001",
+    "source_tier": "A",
+    "source_type": "official_metadata",
+    "title": "EMIT L2A band parameters extracted from the official OPeNDAP product metadata",
+    "url": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/EMITL2ARFL_001/items/EMIT_L2A_RFL_001_20220810T034103_2222203_001",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": true,
+      "expected_band_count": 285,
+      "expected_domain": "VSWIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": true,
+      "require_sampled_curve": false
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_emit_band_parameters_ascii",
+    "function": "parse_emit_band_parameters_ascii",
+    "module": "rsrf.parsers.emit",
+    "script": "scripts/ingest/ingest_band_spec_table.py"
+  },
+  "realization": {
+    "approximation": true,
+    "approximation_reason": "Official source exposes center wavelengths and FWHM arrays but not full sampled SRF curves in the staged metadata export",
+    "enabled": true,
+    "grid_policy": {
+      "kind": "adaptive_per_band",
+      "max_step_nm": 1.0,
+      "samples_per_fwhm": 10,
+      "truncate_sigma": 4.0
+    },
+    "normalization": "peak_1.0",
+    "output_representation_variant": "gaussian_from_fwhm",
+    "persist_realized_curves": false,
+    "profile_type": "gaussian"
+  },
+  "representation_variant": "metadata_band_spec",
+  "sensor_unit_id": "emit_hsi",
+  "source_artifact": {
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/nasa/emit/l2a/001/EMIT_L2A_RFL_001_20220810T034103_2222203_001_sensor_band_parameters.ascii",
+    "sha256": "da6953ca58b2e8daa6542a8771ab41c30eca8e2baa1d72a95ae981122f489944",
+    "size_bytes": 5524
+  },
+  "source_id": "emit_hsi_l2a_band_parameters_20220810t034103_2222203_001",
+  "source_tier": "A",
+  "source_type": "official_metadata"
+}

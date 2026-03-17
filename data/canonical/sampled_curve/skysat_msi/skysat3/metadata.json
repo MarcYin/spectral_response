@@ -1,0 +1,160 @@
+{
+  "band_metrics": {
+    "Blue": {
+      "band_index": 1,
+      "center_wavelength_nm": 500.0,
+      "fwhm_nm": 60.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 996.0,
+      "native_support_min_nm": 419.0,
+      "sample_count": 647
+    },
+    "Green": {
+      "band_index": 2,
+      "center_wavelength_nm": 548.0,
+      "fwhm_nm": 80.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 996.0,
+      "native_support_min_nm": 477.0,
+      "sample_count": 647
+    },
+    "NIR": {
+      "band_index": 4,
+      "center_wavelength_nm": 751.0,
+      "fwhm_nm": 105.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 934.0,
+      "native_support_min_nm": 435.0,
+      "sample_count": 647
+    },
+    "Pan": {
+      "band_index": 5,
+      "center_wavelength_nm": 600.0,
+      "fwhm_nm": 368.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 926.0,
+      "native_support_min_nm": 416.0,
+      "sample_count": 647
+    },
+    "Red": {
+      "band_index": 3,
+      "center_wavelength_nm": 610.0,
+      "fwhm_nm": 88.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 993.0,
+      "native_support_min_nm": 436.0,
+      "sample_count": 647
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_csv": {
+    "band_fields": [
+      "Blue",
+      "Green",
+      "Red",
+      "NIR",
+      "Pan"
+    ],
+    "wavelength_field": "\ufeffWavelength [um]"
+  },
+  "curve_table": {
+    "band_count": 5,
+    "row_count": 3235,
+    "wavelength_max_nm": 996.0,
+    "wavelength_min_nm": 350.0
+  },
+  "generated_at": "2026-03-16T22:42:14.007831+00:00",
+  "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "2024-01-30_support_article",
+    "file_sha256": "a7799a32927179e2679a4426b0283d2de2e98e408a24d83aaff430045ce733a5",
+    "instrument": "MSI+PAN",
+    "license_note": "Planet terms apply",
+    "mission_family": "SkySat",
+    "notes": [
+      "This official Planet attachment contains per-platform SkySat sampled RSR curves.",
+      "The published file includes both multispectral and panchromatic bands.",
+      "Published by Planet in the support article: https://support.planet.com/hc/en-us/articles/360014290293-Do-you-provide-Relative-Spectral-Response-Curves-RSRs-for-your-satellites"
+    ],
+    "parser": {
+      "entrypoint": "parse_multiband_curve_csv",
+      "notes": [
+        "The attachment is a multi-band CSV with blue, green, red, NIR, and panchromatic response columns.",
+        "Canonical storage preserves the sampled response curves from the official support attachment."
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_sampled_curve.py"
+    },
+    "platform": "SkySat-3",
+    "raw_local_path": "sources/raw/planet/skysat/skysat-3/rsr/2024-01-30/Skysat_RSR_Skysat3.csv",
+    "representation_variant": "skysat3",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "skysat_msi",
+    "source_id": "skysat_msi_skysat3_rsr_2024_01_30",
+    "source_tier": "A",
+    "source_type": "official",
+    "title": "SkySat-3 relative spectral response curves",
+    "url": "https://support.planet.com/hc/article_attachments/360020371134",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 5,
+      "expected_domain": "VNIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_multiband_curve_csv",
+    "function": "parse_multiband_curve_csv",
+    "module": "rsrf.parsers.multiband_curve_csv",
+    "script": "scripts/ingest/ingest_sampled_curve.py"
+  },
+  "representation_variant": "skysat3",
+  "sensor_unit_id": "skysat_msi",
+  "source_artifact": {
+    "file_count": 1,
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/planet/skysat/skysat-3/rsr/2024-01-30/Skysat_RSR_Skysat3.csv",
+    "sha256": "a7799a32927179e2679a4426b0283d2de2e98e408a24d83aaff430045ce733a5",
+    "size_bytes": 41147
+  },
+  "source_id": "skysat_msi_skysat3_rsr_2024_01_30",
+  "source_tier": "A",
+  "source_type": "official"
+}

@@ -24,9 +24,19 @@ The repository currently contains:
   - S-NPP VIIRS, NOAA-20 VIIRS, and NOAA-21 VIIRS
   - Sentinel-3A OLCI, Sentinel-3B OLCI, and Terra ASTER
   - NASA OBPG legacy ocean-colour sensors: Nimbus-7 CZCS, ADEOS OCTS, OrbView-2 SeaWiFS, and Envisat MERIS
+  - Planet support-article RSR families: RapidEye, PlanetScope PS2 grouped variants, PlanetScope Dove-R, PlanetScope SuperDove, and SkySat 1-13 plus the shared SkySat 14-19 response
+  - PROBA-V VGT center, left, and right camera SRFs
 - canonical band-spec coverage for:
   - the hyperspectral example source
   - PACE OCI Level-1B bandpass metadata
+  - EnMAP HSI published band centers and FWHM values
+  - EMIT HSI official wavelength, FWHM, and good-wavelength metadata
+  - Satellogic NewSat Mark IV HSI exact center/FWHM metadata
+  - Satellogic NewSat Mark IV and Mark V MSI official support-range proxies
+  - Pleiades HiRI, Pleiades-Neo, SPOT-6/7, and FORMOSAT-5 official support-range proxies from WMO OSCAR
+  - Amazonia-1 WFI and CBERS-4A MUX, WFI, and WPM official support-range proxies from INPE
+- a remaining planning-only optical backlog for:
+  - PRISMA
 - data, docs, scripts, sources, and tests directories aligned with the implementation plan
 
 Trusted sampled-curve overlays can be stored at:
@@ -91,6 +101,7 @@ Without installing the package:
 PYTHONPATH=src python3 -m rsrf --help
 PYTHONPATH=src python3 -m rsrf show-layout
 PYTHONPATH=src python3 -m rsrf list-sensors
+PYTHONPATH=src python3 -m rsrf list-planned-sensors
 PYTHONPATH=src python3 -m rsrf list-bands sentinel-2c_msi --variant band_average
 PYTHONPATH=src python3 -m rsrf show-metadata hyperspec_example --variant metadata_band_spec
 PYTHONPATH=src python3 -m rsrf show-response sentinel-2c_msi B03 --variant band_average
@@ -99,6 +110,7 @@ PYTHONPATH=src python3 -m rsrf export-validation hyperspec_example --variant met
 PYTHONPATH=src python3 -m rsrf validate-manifest rsrf_source_manifest_sentinel2c_v2.json
 PYTHONPATH=src python3 -m rsrf show-registry-rows rsrf_source_manifest_hyperspectral_band_spec_example.json
 PYTHONPATH=src python3 -m rsrf register-manifest rsrf_source_manifest_sentinel2c_v2.json
+PYTHONPATH=src python3 -m rsrf register-planned-sensors
 python3 scripts/ingest/ingest_sampled_curve.py rsrf_source_manifest_noaa20_viirs_v2.json --dry-run
 python3 scripts/ingest/ingest_sentinel2_srf.py --dry-run
 python3 scripts/ingest/ingest_band_spec_table.py --dry-run
@@ -120,6 +132,7 @@ rsrf --help
 
 ## Next implementation steps
 
-1. Add trusted overlay references for the new sensor families so sampled-curve QA can move beyond structural checks.
-2. Fill mission-family metadata in `data/registry/sensors.parquet` (`mission_family`, `platform`, `instrument`) instead of leaving those columns null.
-3. Expand the metadata-driven backlog from the original plan with the next P1 families, such as EnMAP, DESIS, EMIT, and PROBA-V.
+1. Add trusted overlay references for the new Planet and other sampled-curve families so QA can move beyond structural checks.
+2. Backfill `mission_family`, `platform`, and `instrument` metadata across the older manifests so legacy registry rows are no longer partially null.
+3. Resolve the remaining DESIS gap with an official public per-band wavelength/FWHM source, rather than backfilling approximate values from workshop material.
+4. Promote the remaining P2 planned sensors from the planning catalog into canonical ingests as exact public source artifacts are staged and reviewed.

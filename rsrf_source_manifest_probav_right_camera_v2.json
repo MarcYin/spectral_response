@@ -1,0 +1,70 @@
+{
+  "source_id": "probav_vgt_srf_right_camera",
+  "sensor_unit_id": "probav_vgt",
+  "representation_variant": "right_camera",
+  "source_tier": "A",
+  "source_type": "official",
+  "content_kind": "sampled_curve",
+  "title": "PROBA-V spectral response functions - right camera",
+  "url": "https://proba-v.vgt.vito.be/en/quality/spectral-response-functions",
+  "retrieved_at": "2026-03-16",
+  "doc_version": "unversioned_probav_srf_workbook",
+  "raw_local_path": "sources/raw/esa/proba-v/vgt/srf/unversioned/PROBA-V_SRF.xlsx",
+  "file_sha256": "f6ef6f4d96b5c4026fb6f3e60f94444a21b98a0cde38a453f79282ce0b8b5930",
+  "license_note": "PROBA-V / VITO terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_sampled_curve.py",
+    "entrypoint": "parse_probav_srf_workbook",
+    "outputs": {
+      "canonical": [
+        "curves.parquet",
+        "metadata.json"
+      ],
+      "optional": []
+    },
+    "notes": [
+      "The source workbook provides per-camera SRFs for BLUE, RED, NIR, and SWIR",
+      "This manifest preserves the right-camera curves without averaging across cameras"
+    ]
+  },
+  "canonical": {
+    "kind": "sampled_curve",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "source_published_axis",
+    "normalization": "relative_response_peak_preserved",
+    "published_shape_type": "sampled"
+  },
+  "band_spec": {
+    "enabled": false,
+    "band_index_field": null,
+    "band_id_field": null,
+    "center_wavelength_field": null,
+    "fwhm_field": null,
+    "band_status_field": null,
+    "shape_param_fields": {}
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": null,
+    "profile_type": null,
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0"
+  },
+  "validation": {
+    "expected_band_count": 4,
+    "expected_domain": "VSWIR",
+    "require_band_spec": false,
+    "require_sampled_curve": true,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": false,
+    "monotonic_centers_required": true
+  },
+  "notes": [
+    "No curve realization step is needed because sampled curves are already official",
+    "Additional manifests capture the center and left camera SRFs separately"
+  ]
+}

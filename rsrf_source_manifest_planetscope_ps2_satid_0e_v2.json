@@ -1,0 +1,76 @@
+{
+  "source_id": "planetscope_ps2_rsr_satid_0e_2024_01_30",
+  "sensor_unit_id": "planetscope_ps2",
+  "representation_variant": "satid_0e",
+  "source_tier": "A",
+  "source_type": "official",
+  "content_kind": "sampled_curve",
+  "mission_family": "PlanetScope",
+  "platform": "PlanetScope SatID 0e",
+  "instrument": "PS2",
+  "approximation": false,
+  "approximation_reason": null,
+  "title": "PlanetScope PS2 relative spectral response curves for SatID 0e",
+  "url": "https://support.planet.com/hc/article_attachments/360020355254",
+  "retrieved_at": "2026-03-16",
+  "doc_version": "2024-01-30_support_article",
+  "raw_local_path": "sources/raw/planet/planetscope/ps2/rsr/2024-01-30/PlanetScope_RSR_SatID_0e.csv",
+  "file_sha256": "59bd1b5fa83ed21470ef9c5977a6e57a5d08e80c6d5948beb2584c83fd928d22",
+  "license_note": "Planet terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_sampled_curve.py",
+    "entrypoint": "parse_multiband_curve_csv",
+    "outputs": {
+      "canonical": [
+        "curves.parquet",
+        "metadata.json"
+      ],
+      "optional": []
+    },
+    "notes": [
+      "The attachment is a multi-band CSV with blue, green, red, and NIR response columns.",
+      "Canonical storage preserves the sampled response curves from the official support attachment."
+    ]
+  },
+  "canonical": {
+    "kind": "sampled_curve",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "source_published_axis",
+    "normalization": "relative_response_peak_preserved",
+    "published_shape_type": "sampled"
+  },
+  "band_spec": {
+    "enabled": false,
+    "band_index_field": null,
+    "band_id_field": null,
+    "center_wavelength_field": null,
+    "fwhm_field": null,
+    "band_status_field": null,
+    "shape_param_fields": {}
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": null,
+    "profile_type": null,
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0"
+  },
+  "validation": {
+    "expected_band_count": 4,
+    "expected_domain": "VNIR",
+    "require_band_spec": false,
+    "require_sampled_curve": true,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": false,
+    "monotonic_centers_required": true
+  },
+  "notes": [
+    "This official Planet attachment isolates the PS2 RSR curves for satellites with SatID prefix 0e.",
+    "Keep this variant distinct from the 0c/0d and 0f/10 groupings because Planet publishes them separately.",
+    "Published by Planet in the support article: https://support.planet.com/hc/en-us/articles/360014290293-Do-you-provide-Relative-Spectral-Response-Curves-RSRs-for-your-satellites"
+  ]
+}

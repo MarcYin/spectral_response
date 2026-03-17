@@ -1,0 +1,75 @@
+{
+  "source_tier": "A",
+  "source_type": "official_metadata",
+  "content_kind": "band_spec",
+  "retrieved_at": "2026-03-16",
+  "license_note": "Satellogic terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_band_spec_table.py",
+    "entrypoint": "parse_band_spec_table",
+    "outputs": {
+      "canonical": [
+        "band_specs.parquet",
+        "metadata.json"
+      ],
+      "optional": []
+    },
+    "notes": [
+      "The staged CSV is a faithful extract of the official Mark IV hyperspectral technical-characteristics table.",
+      "The official docs publish exact center wavelength and FWHM values for all 32 hyperspectral bands."
+    ]
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": null,
+    "profile_type": null,
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0"
+  },
+  "source_id": "satellogic_newsat_hsi_mark_iv_band_spec_2026_03_13",
+  "sensor_unit_id": "satellogic_newsat_hsi",
+  "representation_variant": "mark_iv_band_spec",
+  "mission_family": "Satellogic NewSat",
+  "platform": "NewSat Mark IV",
+  "instrument": "HSI",
+  "approximation": false,
+  "approximation_reason": null,
+  "title": "Satellogic NewSat Mark IV hyperspectral band centers and FWHM values",
+  "url": "https://developers.satellogic.com/data/processing-levels/hyperspectral.html#technical-characteristics",
+  "doc_version": "2026-03-13_docs",
+  "raw_local_path": "sources/raw/satellogic/newsat/mark-iv/hsi/2026-03-13/mark_iv_hyperspectral_band_spec.csv",
+  "file_sha256": "06a301753f208019496ca802c26340fce7e44ee3834a37ad02f90f78f06c3224",
+  "canonical": {
+    "kind": "band_spec",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "band_center_grid",
+    "normalization": "not_applicable",
+    "published_shape_type": "unknown"
+  },
+  "band_spec": {
+    "enabled": true,
+    "band_index_field": "band_index",
+    "band_id_field": "band_id",
+    "center_wavelength_field": "center_wavelength_nm",
+    "fwhm_field": "fwhm_nm",
+    "band_status_field": null,
+    "shape_param_fields": {}
+  },
+  "validation": {
+    "expected_band_count": 32,
+    "expected_domain": "VNIR",
+    "require_band_spec": true,
+    "require_sampled_curve": false,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": false,
+    "monotonic_centers_required": true
+  },
+  "notes": [
+    "This variant captures the exact 32-band Mark IV hyperspectral table published in the official docs.",
+    "The published centers are monotonic and already normalized into a repo-staged CSV for reproducible ingest."
+  ]
+}

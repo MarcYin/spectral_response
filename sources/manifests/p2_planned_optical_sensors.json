@@ -1,0 +1,28 @@
+{
+  "bucket": "P2",
+  "catalog_id": "p2_planned_optical_sensors",
+  "catalog_version": "2026-03-17",
+  "entries": [
+    {
+      "band_count": null,
+      "blocking_reason": "Public ASI mission resources are available, but no reproducible public per-band wavelength/FWHM artifact or anonymous sample-product metadata has been staged in-repo yet.",
+      "content_kind": "band_spec",
+      "ingest_readiness": "candidate_public_exact",
+      "instrument": "HSI",
+      "license_note": "ASI / PRISMA terms apply",
+      "mission_family": "PRISMA",
+      "notes": [
+        "Prefer exact per-product wavelength and FWHM metadata over brochure summaries.",
+        "Do not synthesize the wavelength vector from only total band count, total span, or average spectral resolution."
+      ],
+      "official_source_available": true,
+      "platform": "PRISMA",
+      "representation_variant": "metadata_band_spec",
+      "sensor_unit_id": "prisma_hsi",
+      "source_tier": "A",
+      "source_url": "https://www.asi.it/en/earth-science/prisma/",
+      "spectral_domain": "VSWIR",
+      "status": "planned"
+    }
+  ]
+}

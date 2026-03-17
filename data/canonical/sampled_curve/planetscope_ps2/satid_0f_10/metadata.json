@@ -1,0 +1,150 @@
+{
+  "band_metrics": {
+    "Blue": {
+      "band_index": 1,
+      "center_wavelength_nm": 480.0,
+      "fwhm_nm": 60.0,
+      "native_sampling_nm": 10.0,
+      "native_support_max_nm": 680.0,
+      "native_support_min_nm": 400.0,
+      "sample_count": 60
+    },
+    "Green": {
+      "band_index": 2,
+      "center_wavelength_nm": 540.0,
+      "fwhm_nm": 100.0,
+      "native_sampling_nm": 10.0,
+      "native_support_max_nm": 680.0,
+      "native_support_min_nm": 400.0,
+      "sample_count": 60
+    },
+    "NIR": {
+      "band_index": 4,
+      "center_wavelength_nm": 780.0,
+      "fwhm_nm": 90.0,
+      "native_sampling_nm": 10.0,
+      "native_support_max_nm": 880.0,
+      "native_support_min_nm": 450.0,
+      "sample_count": 60
+    },
+    "Red": {
+      "band_index": 3,
+      "center_wavelength_nm": 610.0,
+      "fwhm_nm": 80.0,
+      "native_sampling_nm": 10.0,
+      "native_support_max_nm": 690.0,
+      "native_support_min_nm": 400.0,
+      "sample_count": 60
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_csv": {
+    "band_fields": [
+      "Blue",
+      "Green",
+      "Red ",
+      "NIR"
+    ],
+    "wavelength_field": "\ufeffWavelength [\u00b5m]"
+  },
+  "curve_table": {
+    "band_count": 4,
+    "row_count": 240,
+    "wavelength_max_nm": 990.0,
+    "wavelength_min_nm": 400.0
+  },
+  "generated_at": "2026-03-16T22:42:11.670548+00:00",
+  "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "2024-01-30_support_article",
+    "file_sha256": "d434e6b651c0359c5b4ce0a78e4c448e195dbb6631b8cd87d7e7b2c6c2796bd4",
+    "instrument": "PS2",
+    "license_note": "Planet terms apply",
+    "mission_family": "PlanetScope",
+    "notes": [
+      "This official Planet attachment groups the PS2 RSR curves for satellites with SatID prefixes 0f and 10.",
+      "Keep this variant distinct from earlier PS2 groupings because Planet publishes them separately.",
+      "Published by Planet in the support article: https://support.planet.com/hc/en-us/articles/360014290293-Do-you-provide-Relative-Spectral-Response-Curves-RSRs-for-your-satellites"
+    ],
+    "parser": {
+      "entrypoint": "parse_multiband_curve_csv",
+      "notes": [
+        "The attachment is a multi-band CSV with blue, green, red, and NIR response columns.",
+        "Canonical storage preserves the sampled response curves from the official support attachment."
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_sampled_curve.py"
+    },
+    "platform": "PlanetScope SatID 0f/10",
+    "raw_local_path": "sources/raw/planet/planetscope/ps2/rsr/2024-01-30/PlanetScope_RSR_SatID_0f_10.csv",
+    "representation_variant": "satid_0f_10",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "planetscope_ps2",
+    "source_id": "planetscope_ps2_rsr_satid_0f_10_2024_01_30",
+    "source_tier": "A",
+    "source_type": "official",
+    "title": "PlanetScope PS2 relative spectral response curves for SatID 0f/10",
+    "url": "https://support.planet.com/hc/article_attachments/360044152473",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 4,
+      "expected_domain": "VNIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_multiband_curve_csv",
+    "function": "parse_multiband_curve_csv",
+    "module": "rsrf.parsers.multiband_curve_csv",
+    "script": "scripts/ingest/ingest_sampled_curve.py"
+  },
+  "representation_variant": "satid_0f_10",
+  "sensor_unit_id": "planetscope_ps2",
+  "source_artifact": {
+    "file_count": 1,
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/planet/planetscope/ps2/rsr/2024-01-30/PlanetScope_RSR_SatID_0f_10.csv",
+    "sha256": "d434e6b651c0359c5b4ce0a78e4c448e195dbb6631b8cd87d7e7b2c6c2796bd4",
+    "size_bytes": 1833
+  },
+  "source_id": "planetscope_ps2_rsr_satid_0f_10_2024_01_30",
+  "source_tier": "A",
+  "source_type": "official"
+}

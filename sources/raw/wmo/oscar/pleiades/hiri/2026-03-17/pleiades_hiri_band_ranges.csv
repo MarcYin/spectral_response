@@ -1,0 +1,6 @@
+band_index,band_id,center_wavelength_nm,fwhm_nm,support_min_nm,support_max_nm,center_source,fwhm_source,band_status
+1,Blue,490.000,80.000,450.000,530.000,published_center,support_range_width_proxy,nominal
+2,Green,550.000,60.000,520.000,580.000,published_center,support_range_width_proxy,nominal
+3,Red,660.000,80.000,620.000,700.000,published_center,support_range_width_proxy,nominal
+4,NIR,830.000,110.000,780.000,890.000,published_center,support_range_width_proxy,nominal
+5,Pan,690.000,420.000,480.000,900.000,midpoint_of_support_range,support_range_width_proxy,nominal

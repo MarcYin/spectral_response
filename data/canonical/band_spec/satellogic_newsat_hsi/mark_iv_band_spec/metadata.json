@@ -1,0 +1,121 @@
+{
+  "band_spec_table": {
+    "monotonic_centers": true,
+    "row_count": 32,
+    "status_counts": {
+      "nominal": 32
+    }
+  },
+  "content_kind": "band_spec",
+  "field_mapping": {
+    "band_id_field": "band_id",
+    "band_index_field": "band_index",
+    "band_status_field": null,
+    "center_wavelength_field": "center_wavelength_nm",
+    "enabled": true,
+    "fwhm_field": "fwhm_nm",
+    "shape_param_fields": {}
+  },
+  "generated_at": "2026-03-16T22:47:05.590105+00:00",
+  "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
+    "band_spec": {
+      "band_id_field": "band_id",
+      "band_index_field": "band_index",
+      "band_status_field": null,
+      "center_wavelength_field": "center_wavelength_nm",
+      "enabled": true,
+      "fwhm_field": "fwhm_nm",
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "band_center_grid",
+      "kind": "band_spec",
+      "normalization": "not_applicable",
+      "published_shape_type": "unknown",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "band_spec",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "2026-03-13_docs",
+    "file_sha256": "06a301753f208019496ca802c26340fce7e44ee3834a37ad02f90f78f06c3224",
+    "instrument": "HSI",
+    "license_note": "Satellogic terms apply",
+    "mission_family": "Satellogic NewSat",
+    "notes": [
+      "This variant captures the exact 32-band Mark IV hyperspectral table published in the official docs.",
+      "The published centers are monotonic and already normalized into a repo-staged CSV for reproducible ingest."
+    ],
+    "parser": {
+      "entrypoint": "parse_band_spec_table",
+      "notes": [
+        "The staged CSV is a faithful extract of the official Mark IV hyperspectral technical-characteristics table.",
+        "The official docs publish exact center wavelength and FWHM values for all 32 hyperspectral bands."
+      ],
+      "outputs": {
+        "canonical": [
+          "band_specs.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_band_spec_table.py"
+    },
+    "platform": "NewSat Mark IV",
+    "raw_local_path": "sources/raw/satellogic/newsat/mark-iv/hsi/2026-03-13/mark_iv_hyperspectral_band_spec.csv",
+    "representation_variant": "mark_iv_band_spec",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "satellogic_newsat_hsi",
+    "source_id": "satellogic_newsat_hsi_mark_iv_band_spec_2026_03_13",
+    "source_tier": "A",
+    "source_type": "official_metadata",
+    "title": "Satellogic NewSat Mark IV hyperspectral band centers and FWHM values",
+    "url": "https://developers.satellogic.com/data/processing-levels/hyperspectral.html#technical-characteristics",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 32,
+      "expected_domain": "VNIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": true,
+      "require_sampled_curve": false
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_band_spec_table",
+    "function": "parse_band_spec_table",
+    "module": "rsrf.parsers.band_spec_table",
+    "script": "scripts/ingest/ingest_band_spec_table.py"
+  },
+  "realization": {
+    "approximation": false,
+    "approximation_reason": null,
+    "enabled": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0",
+    "output_representation_variant": null,
+    "persist_realized_curves": false,
+    "profile_type": null
+  },
+  "representation_variant": "mark_iv_band_spec",
+  "sensor_unit_id": "satellogic_newsat_hsi",
+  "source_artifact": {
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/satellogic/newsat/mark-iv/hsi/2026-03-13/mark_iv_hyperspectral_band_spec.csv",
+    "sha256": "06a301753f208019496ca802c26340fce7e44ee3834a37ad02f90f78f06c3224",
+    "size_bytes": 677
+  },
+  "source_id": "satellogic_newsat_hsi_mark_iv_band_spec_2026_03_13",
+  "source_tier": "A",
+  "source_type": "official_metadata"
+}

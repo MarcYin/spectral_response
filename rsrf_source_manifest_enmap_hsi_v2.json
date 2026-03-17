@@ -1,0 +1,78 @@
+{
+  "source_id": "enmap_hsi_band_update_mar2023",
+  "sensor_unit_id": "enmap_hsi",
+  "representation_variant": "metadata_band_spec",
+  "source_tier": "A",
+  "source_type": "official_metadata",
+  "content_kind": "band_spec",
+  "title": "EnMAP spectral bands update workbook",
+  "url": "https://www.enmap.org/data_access/",
+  "retrieved_at": "2026-03-16",
+  "doc_version": "Mar2023",
+  "raw_local_path": "sources/raw/esa/enmap/hsi/mar2023/EnMAP_Spectral_Bands_update.xlsx",
+  "file_sha256": "5279431b2f3181e413e2435e6889560e994ccdc451b92266e67ca9f9a4820c97",
+  "license_note": "EnMAP/DLR terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_band_spec_table.py",
+    "entrypoint": "parse_enmap_band_workbook",
+    "outputs": {
+      "canonical": [
+        "band_specs.parquet",
+        "metadata.json"
+      ],
+      "optional": [
+        "realized_curves.parquet"
+      ]
+    },
+    "notes": [
+      "The workbook publishes band-average center wavelength and FWHM values for the VNIR and SWIR subsystems",
+      "Canonical storage preserves the official per-band metadata rather than synthesizing sampled curves"
+    ]
+  },
+  "canonical": {
+    "kind": "band_spec",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "band_center_grid",
+    "normalization": "not_applicable",
+    "published_shape_type": "unknown"
+  },
+  "band_spec": {
+    "enabled": true,
+    "band_index_field": "BAND #",
+    "band_id_field": null,
+    "center_wavelength_field": "CW (nm)",
+    "fwhm_field": "FWHM (nm)",
+    "band_status_field": null,
+    "shape_param_fields": {}
+  },
+  "curve_realization": {
+    "enabled": true,
+    "output_representation_variant": "gaussian_from_fwhm",
+    "profile_type": "gaussian",
+    "approximation": true,
+    "approximation_reason": "Official source provides center wavelengths and FWHM only; no sampled SRF curves are published in this workbook",
+    "persist_realized_curves": false,
+    "grid_policy": {
+      "kind": "adaptive_per_band",
+      "samples_per_fwhm": 10,
+      "max_step_nm": 1.0,
+      "truncate_sigma": 4.0
+    },
+    "normalization": "peak_1.0"
+  },
+  "validation": {
+    "expected_band_count": 224,
+    "expected_domain": "VSWIR",
+    "require_band_spec": true,
+    "require_sampled_curve": false,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": true,
+    "monotonic_centers_required": false
+  },
+  "notes": [
+    "The workbook note states the values are representative of L1B datatakes from March 2023",
+    "Product-specific EnMAP metadata may vary slightly and should be preferred for product-level analysis",
+    "The published VNIR and SWIR band lists overlap spectrally, so center wavelengths are not strictly monotonic in official band-index order"
+  ]
+}

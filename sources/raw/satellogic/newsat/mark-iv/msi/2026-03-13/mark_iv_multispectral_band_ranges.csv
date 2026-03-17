@@ -1,0 +1,5 @@
+band_index,band_id,center_wavelength_nm,fwhm_nm,support_min_nm,support_max_nm
+1,Blue,480.0,60.0,450.0,510.0
+2,Green,545.0,70.0,510.0,580.0
+3,Red,640.0,100.0,590.0,690.0
+4,NIR,825.0,150.0,750.0,900.0

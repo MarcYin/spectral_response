@@ -1,0 +1,80 @@
+{
+  "source_tier": "B",
+  "source_type": "official_metadata",
+  "content_kind": "band_spec",
+  "retrieved_at": "2026-03-17",
+  "license_note": "WMO OSCAR and mission terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_band_spec_table.py",
+    "entrypoint": "parse_band_spec_table",
+    "outputs": {
+      "canonical": [
+        "band_specs.parquet",
+        "metadata.json"
+      ],
+      "optional": []
+    },
+    "notes": [
+      "The staged CSV is a faithful transcription of the published official or WMO OSCAR spectral-interval table.",
+      "Support bounds are preserved in shape_param_json; fwhm_nm remains an explicit support-range proxy rather than a sampled-SRF measurement."
+    ]
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": null,
+    "profile_type": null,
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0"
+  },
+  "source_id": "pleiades_neo_msi_band_spec_2026_03_17",
+  "sensor_unit_id": "pleiades-neo_msi",
+  "representation_variant": "metadata_band_spec",
+  "mission_family": "Pleiades Neo",
+  "platform": "Pleiades-Neo constellation",
+  "instrument": "Pleiades-Neo",
+  "approximation": true,
+  "approximation_reason": "WMO OSCAR publishes spectral support intervals and central wavelengths, not sampled SRFs or explicit FWHM values; interval widths are preserved as support-range proxies.",
+  "title": "Pleiades-Neo published spectral intervals",
+  "url": "https://space.oscar.wmo.int/instruments/view/pleiades_neo",
+  "doc_version": "2026-03-17_oscar",
+  "raw_local_path": "sources/raw/wmo/oscar/pleiades-neo/2026-03-17/pleiades_neo_band_ranges.csv",
+  "file_sha256": "4c157d831fbac66620dfc20d36e8f830e5a183b4db656c402b0c46725e329b95",
+  "canonical": {
+    "kind": "band_spec",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "band_center_grid",
+    "normalization": "not_applicable",
+    "published_shape_type": "support_range_proxy"
+  },
+  "band_spec": {
+    "enabled": true,
+    "band_index_field": "band_index",
+    "band_id_field": "band_id",
+    "center_wavelength_field": "center_wavelength_nm",
+    "fwhm_field": "fwhm_nm",
+    "band_status_field": "band_status",
+    "shape_param_fields": {
+      "support_min_nm": "support_min_nm",
+      "support_max_nm": "support_max_nm",
+      "center_source": "center_source",
+      "fwhm_source": "fwhm_source"
+    }
+  },
+  "validation": {
+    "expected_domain": "VNIR",
+    "require_band_spec": true,
+    "require_sampled_curve": false,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": false,
+    "monotonic_centers_required": false,
+    "expected_band_count": 7
+  },
+  "notes": [
+    "The Pleiades-Neo entry is sourced from the WMO OSCAR instrument page for the Pleiades-Neo payload.",
+    "The deep blue and red-edge channels are preserved as distinct bands because they are part of the published Neo design."
+  ]
+}

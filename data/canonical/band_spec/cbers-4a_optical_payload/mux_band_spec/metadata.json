@@ -1,0 +1,131 @@
+{
+  "band_spec_table": {
+    "monotonic_centers": true,
+    "row_count": 4,
+    "status_counts": {
+      "nominal": 4
+    }
+  },
+  "content_kind": "band_spec",
+  "field_mapping": {
+    "band_id_field": "band_id",
+    "band_index_field": "band_index",
+    "band_status_field": "band_status",
+    "center_wavelength_field": "center_wavelength_nm",
+    "enabled": true,
+    "fwhm_field": "fwhm_nm",
+    "shape_param_fields": {
+      "center_source": "center_source",
+      "fwhm_source": "fwhm_source",
+      "support_max_nm": "support_max_nm",
+      "support_min_nm": "support_min_nm"
+    }
+  },
+  "generated_at": "2026-03-17T09:08:05.184155+00:00",
+  "manifest": {
+    "approximation": true,
+    "approximation_reason": "Official INPE pages publish support intervals for CBERS-4A MUX rather than sampled SRFs or explicit FWHM values; midpoint/FWHM proxies are derived while preserving support bounds.",
+    "band_spec": {
+      "band_id_field": "band_id",
+      "band_index_field": "band_index",
+      "band_status_field": "band_status",
+      "center_wavelength_field": "center_wavelength_nm",
+      "enabled": true,
+      "fwhm_field": "fwhm_nm",
+      "shape_param_fields": {
+        "center_source": "center_source",
+        "fwhm_source": "fwhm_source",
+        "support_max_nm": "support_max_nm",
+        "support_min_nm": "support_min_nm"
+      }
+    },
+    "canonical": {
+      "axis_policy": "band_center_grid",
+      "kind": "band_spec",
+      "normalization": "not_applicable",
+      "published_shape_type": "support_range_proxy",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "band_spec",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "2026-03-17_inpe",
+    "file_sha256": "78aefb38f5f2a4cf674edc6689a4b1761c5b47a79c24b9020513cfbdb5ef828f",
+    "instrument": "MUX",
+    "license_note": "CBERS / INPE terms apply",
+    "mission_family": "CBERS-4A",
+    "notes": [
+      "The INPE CBERS-04A camera page states the MUX used on CBERS-04A is the same instrument family used on CBERS-3 and CBERS-4.",
+      "The staged table preserves the published support bounds and marks the midpoint/FWHM proxy explicitly."
+    ],
+    "parser": {
+      "entrypoint": "parse_band_spec_table",
+      "notes": [
+        "The staged CSV is a faithful transcription of the published official or WMO OSCAR spectral-interval table.",
+        "Support bounds are preserved in shape_param_json; fwhm_nm remains an explicit support-range proxy rather than a sampled-SRF measurement."
+      ],
+      "outputs": {
+        "canonical": [
+          "band_specs.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_band_spec_table.py"
+    },
+    "platform": "CBERS-4A",
+    "raw_local_path": "sources/raw/inpe/cbers-4a/mux/2026-03-17/cbers_4a_mux_band_ranges.csv",
+    "representation_variant": "mux_band_spec",
+    "retrieved_at": "2026-03-17",
+    "sensor_unit_id": "cbers-4a_optical_payload",
+    "source_id": "cbers_4a_optical_payload_mux_band_spec_2026_03_17",
+    "source_tier": "A",
+    "source_type": "official_metadata",
+    "title": "CBERS-4A MUX published spectral intervals",
+    "url": "https://www.gov.br/inpe/pt-br/programas/cbers/sobre-o-cbers-1/cbers-04a/cameras-imageadoras",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 4,
+      "expected_domain": "VNIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": true,
+      "require_sampled_curve": false
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_band_spec_table",
+    "function": "parse_band_spec_table",
+    "module": "rsrf.parsers.band_spec_table",
+    "script": "scripts/ingest/ingest_band_spec_table.py"
+  },
+  "realization": {
+    "approximation": false,
+    "approximation_reason": null,
+    "enabled": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0",
+    "output_representation_variant": null,
+    "persist_realized_curves": false,
+    "profile_type": null
+  },
+  "representation_variant": "mux_band_spec",
+  "sensor_unit_id": "cbers-4a_optical_payload",
+  "source_artifact": {
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/inpe/cbers-4a/mux/2026-03-17/cbers_4a_mux_band_ranges.csv",
+    "sha256": "78aefb38f5f2a4cf674edc6689a4b1761c5b47a79c24b9020513cfbdb5ef828f",
+    "size_bytes": 513
+  },
+  "source_id": "cbers_4a_optical_payload_mux_band_spec_2026_03_17",
+  "source_tier": "A",
+  "source_type": "official_metadata"
+}

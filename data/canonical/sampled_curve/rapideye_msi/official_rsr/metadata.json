@@ -1,0 +1,160 @@
+{
+  "band_metrics": {
+    "Blue": {
+      "band_index": 1,
+      "center_wavelength_nm": 505.00001000000003,
+      "fwhm_nm": 69.0,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 900.0000299999999,
+      "native_support_min_nm": 400.00001000000003,
+      "sample_count": 1001
+    },
+    "Green": {
+      "band_index": 2,
+      "center_wavelength_nm": 584.00001,
+      "fwhm_nm": 69.5,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 900.0000299999999,
+      "native_support_min_nm": 400.00001000000003,
+      "sample_count": 1001
+    },
+    "NIR": {
+      "band_index": 5,
+      "center_wavelength_nm": 765.00002,
+      "fwhm_nm": 90.00000999999986,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 900.0000299999999,
+      "native_support_min_nm": 400.00001000000003,
+      "sample_count": 1001
+    },
+    "Red": {
+      "band_index": 3,
+      "center_wavelength_nm": 678.0000200000001,
+      "fwhm_nm": 53.999999999999886,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 900.0000299999999,
+      "native_support_min_nm": 400.00001000000003,
+      "sample_count": 1001
+    },
+    "RedEdge": {
+      "band_index": 4,
+      "center_wavelength_nm": 698.50002,
+      "fwhm_nm": 39.000000000000114,
+      "native_sampling_nm": null,
+      "native_support_max_nm": 900.0000299999999,
+      "native_support_min_nm": 400.00001000000003,
+      "sample_count": 1001
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_csv": {
+    "band_fields": [
+      "Blue",
+      "Green",
+      "Red",
+      "Red Edge",
+      "NIR"
+    ],
+    "wavelength_field": "Wavelength [um]"
+  },
+  "curve_table": {
+    "band_count": 5,
+    "row_count": 5005,
+    "wavelength_max_nm": 900.0000299999999,
+    "wavelength_min_nm": 400.00001000000003
+  },
+  "generated_at": "2026-03-16T22:41:53.041153+00:00",
+  "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "2024-01-30_support_article",
+    "file_sha256": "2d33983a1a21b90d3d065ae3c4f79af2113b51bdbdfba17168ce85215fcbc96f",
+    "instrument": "MSI",
+    "license_note": "Planet terms apply",
+    "mission_family": "RapidEye",
+    "notes": [
+      "Official Planet support attachment containing the published RapidEye RSR curves.",
+      "Canonical storage preserves the sampled response curves from the attachment directly.",
+      "Published by Planet in the support article: https://support.planet.com/hc/en-us/articles/360014290293-Do-you-provide-Relative-Spectral-Response-Curves-RSRs-for-your-satellites"
+    ],
+    "parser": {
+      "entrypoint": "parse_multiband_curve_csv",
+      "notes": [
+        "Planet publishes this attachment as a multi-band CSV with wavelength samples and one response column per band.",
+        "This representation preserves the official sampled curves instead of reducing them to center/FWHM summaries."
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_sampled_curve.py"
+    },
+    "platform": "RapidEye Constellation",
+    "raw_local_path": "sources/raw/planet/rapideye/constellation/msi/2024-01-30/RapidEye_RSR.csv",
+    "representation_variant": "official_rsr",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "rapideye_msi",
+    "source_id": "rapideye_msi_official_rsr_2024_01_30",
+    "source_tier": "A",
+    "source_type": "official",
+    "title": "RapidEye official relative spectral response curves",
+    "url": "https://support.planet.com/hc/article_attachments/360021265873",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 5,
+      "expected_domain": "VNIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_multiband_curve_csv",
+    "function": "parse_multiband_curve_csv",
+    "module": "rsrf.parsers.multiband_curve_csv",
+    "script": "scripts/ingest/ingest_sampled_curve.py"
+  },
+  "representation_variant": "official_rsr",
+  "sensor_unit_id": "rapideye_msi",
+  "source_artifact": {
+    "file_count": 1,
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/planet/rapideye/constellation/msi/2024-01-30/RapidEye_RSR.csv",
+    "sha256": "2d33983a1a21b90d3d065ae3c4f79af2113b51bdbdfba17168ce85215fcbc96f",
+    "size_bytes": 62103
+  },
+  "source_id": "rapideye_msi_official_rsr_2024_01_30",
+  "source_tier": "A",
+  "source_type": "official"
+}

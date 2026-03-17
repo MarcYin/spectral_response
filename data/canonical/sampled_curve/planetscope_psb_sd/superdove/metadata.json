@@ -1,0 +1,190 @@
+{
+  "band_metrics": {
+    "Blue": {
+      "band_index": 2,
+      "center_wavelength_nm": 505.0,
+      "fwhm_nm": 52.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 999.0,
+      "native_support_min_nm": 441.0,
+      "sample_count": 601
+    },
+    "CoastalBlue": {
+      "band_index": 1,
+      "center_wavelength_nm": 447.0,
+      "fwhm_nm": 20.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 460.0,
+      "native_support_min_nm": 427.0,
+      "sample_count": 601
+    },
+    "GreenI": {
+      "band_index": 3,
+      "center_wavelength_nm": 528.0,
+      "fwhm_nm": 37.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 558.0,
+      "native_support_min_nm": 507.0,
+      "sample_count": 601
+    },
+    "GreenII": {
+      "band_index": 4,
+      "center_wavelength_nm": 557.0,
+      "fwhm_nm": 38.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 600.0,
+      "native_support_min_nm": 530.0,
+      "sample_count": 601
+    },
+    "NIR": {
+      "band_index": 8,
+      "center_wavelength_nm": 847.0,
+      "fwhm_nm": 41.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 894.0,
+      "native_support_min_nm": 840.0,
+      "sample_count": 601
+    },
+    "Red": {
+      "band_index": 6,
+      "center_wavelength_nm": 653.0,
+      "fwhm_nm": 32.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 945.0,
+      "native_support_min_nm": 634.0,
+      "sample_count": 601
+    },
+    "RedEdge": {
+      "band_index": 7,
+      "center_wavelength_nm": 701.0,
+      "fwhm_nm": 16.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 723.0,
+      "native_support_min_nm": 692.0,
+      "sample_count": 601
+    },
+    "Yellow": {
+      "band_index": 5,
+      "center_wavelength_nm": 602.0,
+      "fwhm_nm": 23.0,
+      "native_sampling_nm": 1.0,
+      "native_support_max_nm": 634.0,
+      "native_support_min_nm": 593.0,
+      "sample_count": 601
+    }
+  },
+  "content_kind": "sampled_curve",
+  "curve_csv": {
+    "band_fields": [
+      " Coastal-Blue response",
+      " Blue response",
+      " Green_i response",
+      " Green_ii response",
+      " Yellow response",
+      " Red response",
+      " Red-edge response",
+      " NIR response"
+    ],
+    "wavelength_field": "Wavelength (nm)"
+  },
+  "curve_table": {
+    "band_count": 8,
+    "row_count": 4808,
+    "wavelength_max_nm": 1000.0,
+    "wavelength_min_nm": 400.0
+  },
+  "generated_at": "2026-03-16T22:42:12.629818+00:00",
+  "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": null,
+      "band_status_field": null,
+      "center_wavelength_field": null,
+      "enabled": false,
+      "fwhm_field": null,
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "source_published_axis",
+      "kind": "sampled_curve",
+      "normalization": "relative_response_peak_preserved",
+      "published_shape_type": "sampled",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "sampled_curve",
+    "curve_realization": {
+      "approximation": false,
+      "approximation_reason": null,
+      "enabled": false,
+      "grid_policy": null,
+      "normalization": "peak_1.0",
+      "output_representation_variant": null,
+      "persist_realized_curves": false,
+      "profile_type": null
+    },
+    "doc_version": "2024-01-30_support_article",
+    "file_sha256": "af8e261889ec0a8352679b56d7b3b305f7d8b7e2fe870985cc84b529938687e8",
+    "instrument": "PSB.SD",
+    "license_note": "Planet terms apply",
+    "mission_family": "PlanetScope",
+    "notes": [
+      "This official Planet attachment contains the sampled SuperDove RSR curves.",
+      "The file retains the two published green channels as distinct bands.",
+      "Published by Planet in the support article: https://support.planet.com/hc/en-us/articles/360014290293-Do-you-provide-Relative-Spectral-Response-Curves-RSRs-for-your-satellites"
+    ],
+    "parser": {
+      "entrypoint": "parse_multiband_curve_csv",
+      "notes": [
+        "The attachment is a multi-band CSV with eight response columns.",
+        "Canonical storage preserves the sampled response curves from the official support attachment."
+      ],
+      "outputs": {
+        "canonical": [
+          "curves.parquet",
+          "metadata.json"
+        ],
+        "optional": []
+      },
+      "script": "scripts/ingest/ingest_sampled_curve.py"
+    },
+    "platform": "PlanetScope SuperDove",
+    "raw_local_path": "sources/raw/planet/planetscope/psb-sd/rsr/2024-01-30/Superdove.csv",
+    "representation_variant": "superdove",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "planetscope_psb_sd",
+    "source_id": "planetscope_psb_sd_superdove_rsr_2024_01_30",
+    "source_tier": "A",
+    "source_type": "official",
+    "title": "PlanetScope SuperDove relative spectral response curves",
+    "url": "https://support.planet.com/hc/article_attachments/360017988517",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": false,
+      "expected_band_count": 8,
+      "expected_domain": "VNIR",
+      "monotonic_centers_required": true,
+      "plot_overlay_required": false,
+      "require_band_spec": false,
+      "require_sampled_curve": true
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_multiband_curve_csv",
+    "function": "parse_multiband_curve_csv",
+    "module": "rsrf.parsers.multiband_curve_csv",
+    "script": "scripts/ingest/ingest_sampled_curve.py"
+  },
+  "representation_variant": "superdove",
+  "sensor_unit_id": "planetscope_psb_sd",
+  "source_artifact": {
+    "file_count": 1,
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/planet/planetscope/psb-sd/rsr/2024-01-30/Superdove.csv",
+    "sha256": "af8e261889ec0a8352679b56d7b3b305f7d8b7e2fe870985cc84b529938687e8",
+    "size_bytes": 23723
+  },
+  "source_id": "planetscope_psb_sd_superdove_rsr_2024_01_30",
+  "source_tier": "A",
+  "source_type": "official"
+}

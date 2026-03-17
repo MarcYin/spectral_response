@@ -1,0 +1,130 @@
+{
+  "band_spec_table": {
+    "monotonic_centers": false,
+    "row_count": 224,
+    "sheet_order": [
+      "VNIR",
+      "SWIR"
+    ]
+  },
+  "content_kind": "band_spec",
+  "field_mapping": {
+    "band_id_field": null,
+    "band_index_field": "BAND #",
+    "band_status_field": null,
+    "center_wavelength_field": "CW (nm)",
+    "enabled": true,
+    "fwhm_field": "FWHM (nm)",
+    "shape_param_fields": {}
+  },
+  "generated_at": "2026-03-16T22:04:32.695870+00:00",
+  "manifest": {
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": "BAND #",
+      "band_status_field": null,
+      "center_wavelength_field": "CW (nm)",
+      "enabled": true,
+      "fwhm_field": "FWHM (nm)",
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "band_center_grid",
+      "kind": "band_spec",
+      "normalization": "not_applicable",
+      "published_shape_type": "unknown",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "band_spec",
+    "curve_realization": {
+      "approximation": true,
+      "approximation_reason": "Official source provides center wavelengths and FWHM only; no sampled SRF curves are published in this workbook",
+      "enabled": true,
+      "grid_policy": {
+        "kind": "adaptive_per_band",
+        "max_step_nm": 1.0,
+        "samples_per_fwhm": 10,
+        "truncate_sigma": 4.0
+      },
+      "normalization": "peak_1.0",
+      "output_representation_variant": "gaussian_from_fwhm",
+      "persist_realized_curves": false,
+      "profile_type": "gaussian"
+    },
+    "doc_version": "Mar2023",
+    "file_sha256": "5279431b2f3181e413e2435e6889560e994ccdc451b92266e67ca9f9a4820c97",
+    "license_note": "EnMAP/DLR terms apply",
+    "notes": [
+      "The workbook note states the values are representative of L1B datatakes from March 2023",
+      "Product-specific EnMAP metadata may vary slightly and should be preferred for product-level analysis",
+      "The published VNIR and SWIR band lists overlap spectrally, so center wavelengths are not strictly monotonic in official band-index order"
+    ],
+    "parser": {
+      "entrypoint": "parse_enmap_band_workbook",
+      "notes": [
+        "The workbook publishes band-average center wavelength and FWHM values for the VNIR and SWIR subsystems",
+        "Canonical storage preserves the official per-band metadata rather than synthesizing sampled curves"
+      ],
+      "outputs": {
+        "canonical": [
+          "band_specs.parquet",
+          "metadata.json"
+        ],
+        "optional": [
+          "realized_curves.parquet"
+        ]
+      },
+      "script": "scripts/ingest/ingest_band_spec_table.py"
+    },
+    "raw_local_path": "sources/raw/esa/enmap/hsi/mar2023/EnMAP_Spectral_Bands_update.xlsx",
+    "representation_variant": "metadata_band_spec",
+    "retrieved_at": "2026-03-16",
+    "sensor_unit_id": "enmap_hsi",
+    "source_id": "enmap_hsi_band_update_mar2023",
+    "source_tier": "A",
+    "source_type": "official_metadata",
+    "title": "EnMAP spectral bands update workbook",
+    "url": "https://www.enmap.org/data_access/",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": true,
+      "expected_band_count": 224,
+      "expected_domain": "VSWIR",
+      "monotonic_centers_required": false,
+      "plot_overlay_required": false,
+      "require_band_spec": true,
+      "require_sampled_curve": false
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_enmap_band_workbook",
+    "function": "parse_enmap_band_workbook",
+    "module": "rsrf.parsers.enmap",
+    "script": "scripts/ingest/ingest_band_spec_table.py"
+  },
+  "realization": {
+    "approximation": true,
+    "approximation_reason": "Official source provides center wavelengths and FWHM only; no sampled SRF curves are published in this workbook",
+    "enabled": true,
+    "grid_policy": {
+      "kind": "adaptive_per_band",
+      "max_step_nm": 1.0,
+      "samples_per_fwhm": 10,
+      "truncate_sigma": 4.0
+    },
+    "normalization": "peak_1.0",
+    "output_representation_variant": "gaussian_from_fwhm",
+    "persist_realized_curves": false,
+    "profile_type": "gaussian"
+  },
+  "representation_variant": "metadata_band_spec",
+  "sensor_unit_id": "enmap_hsi",
+  "source_artifact": {
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/esa/enmap/hsi/mar2023/EnMAP_Spectral_Bands_update.xlsx",
+    "sha256": "5279431b2f3181e413e2435e6889560e994ccdc451b92266e67ca9f9a4820c97",
+    "size_bytes": 18062
+  },
+  "source_id": "enmap_hsi_band_update_mar2023",
+  "source_tier": "A",
+  "source_type": "official_metadata"
+}

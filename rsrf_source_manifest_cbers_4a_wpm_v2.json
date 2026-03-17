@@ -1,0 +1,80 @@
+{
+  "source_tier": "A",
+  "source_type": "official_metadata",
+  "content_kind": "band_spec",
+  "retrieved_at": "2026-03-17",
+  "license_note": "CBERS / INPE terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_band_spec_table.py",
+    "entrypoint": "parse_band_spec_table",
+    "outputs": {
+      "canonical": [
+        "band_specs.parquet",
+        "metadata.json"
+      ],
+      "optional": []
+    },
+    "notes": [
+      "The staged CSV is a faithful transcription of the published official or WMO OSCAR spectral-interval table.",
+      "Support bounds are preserved in shape_param_json; fwhm_nm remains an explicit support-range proxy rather than a sampled-SRF measurement."
+    ]
+  },
+  "curve_realization": {
+    "enabled": false,
+    "output_representation_variant": null,
+    "profile_type": null,
+    "approximation": false,
+    "approximation_reason": null,
+    "persist_realized_curves": false,
+    "grid_policy": null,
+    "normalization": "peak_1.0"
+  },
+  "source_id": "cbers_4a_optical_payload_wpm_band_spec_2026_03_17",
+  "sensor_unit_id": "cbers-4a_optical_payload",
+  "representation_variant": "wpm_band_spec",
+  "mission_family": "CBERS-4A",
+  "platform": "CBERS-4A",
+  "instrument": "WPM",
+  "approximation": true,
+  "approximation_reason": "Official INPE pages publish support intervals for CBERS-4A WPM rather than sampled SRFs or explicit FWHM values; midpoint/FWHM proxies are derived while preserving support bounds.",
+  "title": "CBERS-4A WPM published spectral intervals",
+  "url": "https://www.gov.br/inpe/pt-br/programas/cbers/sobre-o-cbers-1/cbers-04a/cameras-imageadoras",
+  "doc_version": "2026-03-17_inpe",
+  "raw_local_path": "sources/raw/inpe/cbers-4a/wpm/2026-03-17/cbers_4a_wpm_band_ranges.csv",
+  "file_sha256": "f3bff8734447759fee93a4e95a4c997b594d425647b9c2c5fe2d1ef306fd4fb2",
+  "canonical": {
+    "kind": "band_spec",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "band_center_grid",
+    "normalization": "not_applicable",
+    "published_shape_type": "support_range_proxy"
+  },
+  "band_spec": {
+    "enabled": true,
+    "band_index_field": "band_index",
+    "band_id_field": "band_id",
+    "center_wavelength_field": "center_wavelength_nm",
+    "fwhm_field": "fwhm_nm",
+    "band_status_field": "band_status",
+    "shape_param_fields": {
+      "support_min_nm": "support_min_nm",
+      "support_max_nm": "support_max_nm",
+      "center_source": "center_source",
+      "fwhm_source": "fwhm_source"
+    }
+  },
+  "validation": {
+    "expected_domain": "VNIR",
+    "require_band_spec": true,
+    "require_sampled_curve": false,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": false,
+    "monotonic_centers_required": false,
+    "expected_band_count": 8
+  },
+  "notes": [
+    "The staged table uses the official INPE CBERS-04A WPM spectral intervals.",
+    "The panchromatic center is derived from the published support-range midpoint and marked in shape_param_json."
+  ]
+}
