@@ -79,7 +79,11 @@ def _as_curve(response_definition: SampledCurve | BandSpec) -> SampledCurve:
 
 
 def _integrate(values: np.ndarray, wavelength_nm: np.ndarray) -> float:
-    trapezoid = getattr(np, "trapezoid", np.trapz)
+    trapezoid = getattr(np, "trapezoid", None)
+    if trapezoid is None:
+        trapezoid = getattr(np, "trapz", None)
+    if trapezoid is None:
+        raise RuntimeError("NumPy integration helper not available; expected trapezoid or trapz")
     return float(trapezoid(values, wavelength_nm))
 
 
