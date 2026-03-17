@@ -5,9 +5,9 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .venv/
-build/
-dist/
-site/
+/build/
+/dist/
+/site/
 *.egg-info/
 .DS_Store
 sources/raw/asi/prisma/hsi/l1/std/offl/20190710/PRS_L1_STD_OFFL_20190710091734_20190710091738_0001.he5
