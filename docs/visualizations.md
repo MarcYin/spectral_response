@@ -5,7 +5,7 @@ hide:
 
 # Interactive Visualizations
 
-<div id="rsrf-visualization-page" class="rsrf-viz-page" data-viz-version="20260317-v2" data-index-path="../assets/visualization/index.json" data-overlap-path="../assets/visualization/overlap_index.json">
+<div id="rsrf-visualization-page" class="rsrf-viz-page" data-viz-version="20260317-v3" data-index-path="../assets/visualization/index.json" data-overlap-path="../assets/visualization/overlap_index.json">
   <section class="rsrf-viz-hero">
     <p class="rsrf-viz-kicker">Optical response atlas</p>
     <h2>Explore the repository the way instrument engineers think about it</h2>
@@ -15,6 +15,18 @@ hide:
       optical domain. Sampled curves are shown directly, while metadata-only band specs are
       realized as Gaussian display curves for comparison.
     </p>
+    <div class="rsrf-viz-hero-controls">
+      <label class="rsrf-viz-toggle-card" for="rsrf-toggle-pan-bands">
+        <span class="rsrf-viz-toggle-label">
+          <input id="rsrf-toggle-pan-bands" type="checkbox" />
+          <span>Include Pan / panchromatic bands</span>
+        </span>
+        <small>
+          Off by default. Wide Pan bands can dominate the overlap review and make the band-level
+          comparison harder to read.
+        </small>
+      </label>
+    </div>
   </section>
 
   <section class="rsrf-viz-section">
