@@ -5,7 +5,7 @@ hide:
 
 # Interactive Visualizations
 
-<div id="rsrf-visualization-page" class="rsrf-viz-page" data-index-path="../assets/visualization/index.json" data-overlap-path="../assets/visualization/overlap_index.json">
+<div id="rsrf-visualization-page" class="rsrf-viz-page" data-viz-version="20260317-v2" data-index-path="../assets/visualization/index.json" data-overlap-path="../assets/visualization/overlap_index.json">
   <section class="rsrf-viz-hero">
     <p class="rsrf-viz-kicker">Optical response atlas</p>
     <h2>Explore the repository the way instrument engineers think about it</h2>
@@ -100,6 +100,7 @@ hide:
         </aside>
 
         <div class="rsrf-viz-overlap-stage">
+          <div id="rsrf-overlap-bars" class="rsrf-viz-legacy-anchor" aria-hidden="true"></div>
           <div class="rsrf-viz-chart rsrf-viz-overlap-curve-chart" id="rsrf-overlap-curves"></div>
         </div>
       </div>

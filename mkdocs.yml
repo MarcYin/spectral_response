@@ -25,11 +25,11 @@ markdown_extensions:
   - pymdownx.superfences
 
 extra_css:
-  - assets/stylesheets/rsrf-visualizations.css
+  - assets/stylesheets/rsrf-visualizations-v2.css
 
 extra_javascript:
   - https://cdn.plot.ly/plotly-2.35.2.min.js
-  - assets/javascripts/rsrf-visualizations.js
+  - assets/javascripts/rsrf-visualizations-v2.js
 
 nav:
   - Home: index.md
