@@ -1,0 +1,146 @@
+{
+  "band_spec_table": {
+    "dropped_invalid_slots": {
+      "SWIR": 1,
+      "VNIR": 0
+    },
+    "monotonic_centers": false,
+    "ordering_policy": "vnir_then_swir_native_slot_order",
+    "row_count": 238,
+    "subsystem_counts": {
+      "SWIR": 172,
+      "VNIR": 66
+    }
+  },
+  "content_kind": "band_spec",
+  "field_mapping": {
+    "band_id_field": null,
+    "band_index_field": "implicit_native_order",
+    "band_status_field": null,
+    "center_wavelength_field": "List_Cw_*",
+    "enabled": true,
+    "fwhm_field": "List_Fwhm_*",
+    "shape_param_fields": {}
+  },
+  "generated_at": "2026-03-17T18:48:22.915914+00:00",
+  "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
+    "band_spec": {
+      "band_id_field": null,
+      "band_index_field": "implicit_native_order",
+      "band_status_field": null,
+      "center_wavelength_field": "List_Cw_*",
+      "enabled": true,
+      "fwhm_field": "List_Fwhm_*",
+      "shape_param_fields": {}
+    },
+    "canonical": {
+      "axis_policy": "band_center_grid",
+      "kind": "band_spec",
+      "normalization": "not_applicable",
+      "published_shape_type": "unknown",
+      "spectral_calibration_scope": "sensor_unit"
+    },
+    "content_kind": "band_spec",
+    "curve_realization": {
+      "approximation": true,
+      "approximation_reason": "The official staged product exposes exact band centers and FWHM values but not full sampled spectral response curves",
+      "enabled": true,
+      "grid_policy": {
+        "kind": "adaptive_per_band",
+        "max_step_nm": 1.0,
+        "samples_per_fwhm": 10,
+        "truncate_sigma": 4.0
+      },
+      "normalization": "peak_1.0",
+      "output_representation_variant": "gaussian_from_fwhm",
+      "persist_realized_curves": false,
+      "profile_type": "gaussian"
+    },
+    "doc_version": "PRS_L1_STD_OFFL_20190710091734_20190710091738_0001",
+    "file_sha256": "873182fa49b0281303c788f672d9993bfc1d4c6697ca39d98471d468ee7704cd",
+    "instrument": "HSI",
+    "license_note": "ASI / PRISMA terms apply",
+    "mission_family": "PRISMA",
+    "notes": [
+      "The staged source is a compact HE5 metadata extract derived from an official PRISMA L1 granule and stored in sources/raw for reproducible ingest",
+      "This specific granule contains 66 valid VNIR rows and 172 valid SWIR rows; one trailing SWIR slot is zero-valued and excluded from canonical storage",
+      "Product-level wavelength and FWHM metadata should still be preferred for scene-specific analysis if multiple PRISMA granules are available"
+    ],
+    "parser": {
+      "entrypoint": "parse_prisma_he5_metadata",
+      "notes": [
+        "The staged PRISMA metadata HE5 stores the exact per-product wavelength and FWHM vectors copied from the official product root attributes List_Cw_Vnir, List_Cw_Swir, List_Fwhm_Vnir, and List_Fwhm_Swir",
+        "Canonical storage preserves those exact metadata vectors and drops invalid zero-valued placeholder slots"
+      ],
+      "outputs": {
+        "canonical": [
+          "band_specs.parquet",
+          "metadata.json"
+        ],
+        "optional": [
+          "realized_curves.parquet"
+        ]
+      },
+      "script": "scripts/ingest/ingest_band_spec_table.py"
+    },
+    "platform": "PRISMA",
+    "raw_local_path": "sources/raw/asi/prisma/hsi/l1/std/offl/20190710/PRS_L1_STD_OFFL_20190710091734_20190710091738_0001_metadata.he5",
+    "representation_variant": "metadata_band_spec",
+    "retrieved_at": "2026-03-17",
+    "sensor_unit_id": "prisma_hsi",
+    "source_id": "prisma_hsi_l1_std_offl_20190710_0001",
+    "source_tier": "A",
+    "source_type": "official_metadata",
+    "title": "PRISMA L1 standard metadata extract band lists",
+    "url": "https://www.asi.it/en/earth-science/prisma/",
+    "validation": {
+      "compare_center_and_fwhm": true,
+      "curve_checks_if_realized": true,
+      "expected_band_count": 238,
+      "expected_domain": "VSWIR",
+      "monotonic_centers_required": false,
+      "plot_overlay_required": false,
+      "require_band_spec": true,
+      "require_sampled_curve": false
+    }
+  },
+  "parser": {
+    "entrypoint": "parse_prisma_he5_metadata",
+    "function": "parse_prisma_he5_metadata",
+    "module": "rsrf.parsers.prisma",
+    "script": "scripts/ingest/ingest_band_spec_table.py"
+  },
+  "product_metadata": {
+    "image_id": 321,
+    "processing_level": "1",
+    "product_id": "PRS_L1_STD",
+    "product_name": "PRS_L1_STD_OFFL_20190710091734_20190710091738_0001.he5"
+  },
+  "realization": {
+    "approximation": true,
+    "approximation_reason": "The official staged product exposes exact band centers and FWHM values but not full sampled spectral response curves",
+    "enabled": true,
+    "grid_policy": {
+      "kind": "adaptive_per_band",
+      "max_step_nm": 1.0,
+      "samples_per_fwhm": 10,
+      "truncate_sigma": 4.0
+    },
+    "normalization": "peak_1.0",
+    "output_representation_variant": "gaussian_from_fwhm",
+    "persist_realized_curves": false,
+    "profile_type": "gaussian"
+  },
+  "representation_variant": "metadata_band_spec",
+  "sensor_unit_id": "prisma_hsi",
+  "source_artifact": {
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/asi/prisma/hsi/l1/std/offl/20190710/PRS_L1_STD_OFFL_20190710091734_20190710091738_0001_metadata.he5",
+    "sha256": "873182fa49b0281303c788f672d9993bfc1d4c6697ca39d98471d468ee7704cd",
+    "size_bytes": 3360
+  },
+  "source_id": "prisma_hsi_l1_std_offl_20190710_0001",
+  "source_tier": "A",
+  "source_type": "official_metadata"
+}

@@ -162,8 +162,6 @@ def register_planned_sensor_catalog(
 
     catalog = load_planned_sensor_catalog(root, catalog_path=catalog_path)
     rows = [entry.sensor_registry_row() for entry in catalog["entries"]]
-    if not rows:
-        return None
     if not parquet_support_available():
         raise RuntimeError(
             "Parquet support requires either pyarrow or fastparquet in the Python environment"
@@ -173,9 +171,14 @@ def register_planned_sensor_catalog(
         current = read_registry_table(root, "sensors")
     except FileNotFoundError:
         retained_rows: list[dict[str, Any]] = []
+        planned_rows_removed = False
     else:
         retained = current[current["status"] != "planned"]
         retained_rows = retained.to_dict(orient="records")
+        planned_rows_removed = len(retained_rows) != len(current)
+
+    if not rows and not planned_rows_removed:
+        return None
 
     output_rows = retained_rows + rows
     output_path = registry_table_path(root, "sensors")

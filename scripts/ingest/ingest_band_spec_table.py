@@ -18,6 +18,7 @@ from rsrf.parsers import (
     parse_emit_band_parameters_ascii,
     parse_enmap_band_workbook,
     parse_obpg_bandpass_csv,
+    parse_prisma_he5_metadata,
 )
 from rsrf.validate import parse_manifest_file
 
@@ -26,6 +27,7 @@ PARSER_FUNCTIONS = {
     "parse_emit_band_parameters_ascii": parse_emit_band_parameters_ascii,
     "parse_enmap_band_workbook": parse_enmap_band_workbook,
     "parse_obpg_bandpass_csv": parse_obpg_bandpass_csv,
+    "parse_prisma_he5_metadata": parse_prisma_he5_metadata,
 }
 
 

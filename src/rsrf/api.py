@@ -137,13 +137,23 @@ def load_band_spec(
     if frame.empty:
         raise KeyError(f"band spec not found for {sensor_unit_id}/{resolved_variant}/{band_id}")
     row = frame.iloc[0]
+    band_registry_row = _lookup_band_registry_row(
+        sensor_unit_id,
+        band_id,
+        resolved_variant,
+        root=root,
+    )
     shape_param_json = row["shape_param_json"]
     return BandSpec(
         band_id=str(row["band_id"]),
         center_wavelength_nm=float(row["center_wavelength_nm"]),
         fwhm_nm=float(row["fwhm_nm"]),
         band_index=None if _is_nullish(row["band_index"]) else int(row["band_index"]),
-        band_name=str(row["band_id"]),
+        band_name=(
+            str(band_registry_row["band_name"])
+            if band_registry_row is not None and not _is_nullish(band_registry_row["band_name"])
+            else str(row["band_id"])
+        ),
         band_status="nominal" if _is_nullish(row["band_status"]) else str(row["band_status"]),
         published_shape_type=str(row["published_shape_type"]),
         shape_param_json=(
@@ -193,6 +203,26 @@ def _resolve_sensor_variant(
         raise ValueError(
             f"multiple representations found for {sensor_unit_id}; representation_variant is required"
         )
+    return frame.iloc[0]
+
+
+def _lookup_band_registry_row(
+    sensor_unit_id: str,
+    band_id: str,
+    representation_variant: str,
+    *,
+    root: Path | None = None,
+):
+    frame = read_registry_table(root, "bands")
+    frame = frame[
+        (frame["sensor_unit_id"] == sensor_unit_id)
+        & (frame["representation_variant"] == representation_variant)
+        & (frame["band_id"] == band_id)
+    ]
+    if frame.empty:
+        return None
+    if "band_index" in frame.columns:
+        frame = frame.sort_values(["band_index", "band_id"], na_position="last")
     return frame.iloc[0]
 
 

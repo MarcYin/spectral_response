@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping
@@ -98,6 +99,8 @@ REGISTRY_PRIMARY_KEYS = {
     "realizations": ("realization_id",),
 }
 
+RSRF_ROOT_ENV_VAR = "RSRF_ROOT"
+
 
 @dataclass(frozen=True)
 class RepoLayout:
@@ -128,7 +131,18 @@ class RepoLayout:
 def discover_repo_root(start: Path | None = None) -> Path:
     """Walk upward until a repository root marker is found."""
 
-    current = (start or Path.cwd()).resolve()
+    if start is not None:
+        current = start.resolve()
+    else:
+        environment_root = os.getenv(RSRF_ROOT_ENV_VAR)
+        if environment_root:
+            candidate = Path(environment_root).expanduser().resolve()
+            if not candidate.exists():
+                raise FileNotFoundError(
+                    f"{RSRF_ROOT_ENV_VAR} points to a missing path: {candidate}"
+                )
+            return candidate
+        current = Path.cwd().resolve()
     for candidate in (current, *current.parents):
         if (candidate / "pyproject.toml").exists():
             return candidate

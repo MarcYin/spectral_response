@@ -8,6 +8,7 @@ from .multiband_curve_csv import parse_multiband_curve_csv
 from .modis import parse_modis_rsr_workbook
 from .obpg import parse_obpg_bandpass_csv, parse_obpg_rsr_netcdf
 from .olci import parse_olci_mean_rsr_nc4
+from .prisma import parse_prisma_he5_metadata
 from .probav import parse_probav_srf_workbook
 from .sentinel2 import parse_s2_srf_xlsx
 from .usgs_json import parse_usgs_json_directory
@@ -23,6 +24,7 @@ __all__ = [
     "parse_obpg_bandpass_csv",
     "parse_obpg_rsr_netcdf",
     "parse_olci_mean_rsr_nc4",
+    "parse_prisma_he5_metadata",
     "parse_probav_srf_workbook",
     "parse_s2_srf_xlsx",
     "parse_usgs_json_directory",

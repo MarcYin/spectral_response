@@ -1,0 +1,83 @@
+{
+  "source_id": "prisma_hsi_l1_std_offl_20190710_0001",
+  "sensor_unit_id": "prisma_hsi",
+  "representation_variant": "metadata_band_spec",
+  "source_tier": "A",
+  "source_type": "official_metadata",
+  "content_kind": "band_spec",
+  "mission_family": "PRISMA",
+  "platform": "PRISMA",
+  "instrument": "HSI",
+  "approximation": false,
+  "approximation_reason": null,
+  "title": "PRISMA L1 standard metadata extract band lists",
+  "url": "https://www.asi.it/en/earth-science/prisma/",
+  "retrieved_at": "2026-03-17",
+  "doc_version": "PRS_L1_STD_OFFL_20190710091734_20190710091738_0001",
+  "raw_local_path": "sources/raw/asi/prisma/hsi/l1/std/offl/20190710/PRS_L1_STD_OFFL_20190710091734_20190710091738_0001_metadata.he5",
+  "file_sha256": "873182fa49b0281303c788f672d9993bfc1d4c6697ca39d98471d468ee7704cd",
+  "license_note": "ASI / PRISMA terms apply",
+  "parser": {
+    "script": "scripts/ingest/ingest_band_spec_table.py",
+    "entrypoint": "parse_prisma_he5_metadata",
+    "outputs": {
+      "canonical": [
+        "band_specs.parquet",
+        "metadata.json"
+      ],
+      "optional": [
+        "realized_curves.parquet"
+      ]
+    },
+    "notes": [
+      "The staged PRISMA metadata HE5 stores the exact per-product wavelength and FWHM vectors copied from the official product root attributes List_Cw_Vnir, List_Cw_Swir, List_Fwhm_Vnir, and List_Fwhm_Swir",
+      "Canonical storage preserves those exact metadata vectors and drops invalid zero-valued placeholder slots"
+    ]
+  },
+  "canonical": {
+    "kind": "band_spec",
+    "spectral_calibration_scope": "sensor_unit",
+    "axis_policy": "band_center_grid",
+    "normalization": "not_applicable",
+    "published_shape_type": "unknown"
+  },
+  "band_spec": {
+    "enabled": true,
+    "band_index_field": "implicit_native_order",
+    "band_id_field": null,
+    "center_wavelength_field": "List_Cw_*",
+    "fwhm_field": "List_Fwhm_*",
+    "band_status_field": null,
+    "shape_param_fields": {}
+  },
+  "curve_realization": {
+    "enabled": true,
+    "output_representation_variant": "gaussian_from_fwhm",
+    "profile_type": "gaussian",
+    "approximation": true,
+    "approximation_reason": "The official staged product exposes exact band centers and FWHM values but not full sampled spectral response curves",
+    "persist_realized_curves": false,
+    "grid_policy": {
+      "kind": "adaptive_per_band",
+      "samples_per_fwhm": 10,
+      "max_step_nm": 1.0,
+      "truncate_sigma": 4.0
+    },
+    "normalization": "peak_1.0"
+  },
+  "validation": {
+    "expected_band_count": 238,
+    "expected_domain": "VSWIR",
+    "require_band_spec": true,
+    "require_sampled_curve": false,
+    "compare_center_and_fwhm": true,
+    "plot_overlay_required": false,
+    "curve_checks_if_realized": true,
+    "monotonic_centers_required": false
+  },
+  "notes": [
+    "The staged source is a compact HE5 metadata extract derived from an official PRISMA L1 granule and stored in sources/raw for reproducible ingest",
+    "This specific granule contains 66 valid VNIR rows and 172 valid SWIR rows; one trailing SWIR slot is zero-valued and excluded from canonical storage",
+    "Product-level wavelength and FWHM metadata should still be preferred for scene-specific analysis if multiple PRISMA granules are available"
+  ]
+}
