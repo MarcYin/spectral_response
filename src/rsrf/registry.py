@@ -281,7 +281,7 @@ def sensor_row_from_manifest(
     representation_variant: str | None = None,
     content_kind: ContentKind | None = None,
     realization_kind: str = "none",
-    approximation: bool = False,
+    approximation: bool | None = None,
     status: str = "registered",
 ) -> dict[str, Any]:
     """Build the canonical sensor registry row for a manifest."""
@@ -293,16 +293,16 @@ def sensor_row_from_manifest(
     )
     return {
         "sensor_unit_id": manifest.sensor_unit_id,
-        "mission_family": None,
-        "platform": None,
-        "instrument": None,
+        "mission_family": manifest.mission_family,
+        "platform": manifest.platform,
+        "instrument": manifest.instrument,
         "representation_variant": representation_variant or manifest.representation_variant,
         "content_kind": (content_kind or manifest.content_kind).value,
         "realization_kind": realization_kind,
         "spectral_calibration_scope": manifest.canonical.spectral_calibration_scope,
         "spectral_domain": manifest.validation.expected_domain,
         "source_tier": manifest.source_tier.value,
-        "approximation": approximation,
+        "approximation": manifest.approximation if approximation is None else approximation,
         "official_source_available": manifest.source_type
         in {SourceType.OFFICIAL, SourceType.OFFICIAL_METADATA},
         "band_count": band_count,

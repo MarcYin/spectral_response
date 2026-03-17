@@ -454,6 +454,11 @@ class SourceManifest:
     source_tier: SourceTier
     source_type: SourceType
     content_kind: ContentKind
+    mission_family: str | None
+    platform: str | None
+    instrument: str | None
+    approximation: bool
+    approximation_reason: str | None
     title: str
     url: str
     retrieved_at: str
@@ -492,6 +497,14 @@ class SourceManifest:
             errors,
             "content_kind",
         )
+        mission_family = _optional_string(payload, "mission_family", errors)
+        platform = _optional_string(payload, "platform", errors)
+        instrument = _optional_string(payload, "instrument", errors)
+        approximation = payload.get("approximation", False)
+        if not isinstance(approximation, bool):
+            errors.append("approximation must be a boolean when provided")
+            approximation = False
+        approximation_reason = _optional_string(payload, "approximation_reason", errors)
         title = _required_string(payload, "title", errors)
         url = _required_string(payload, "url", errors)
         retrieved_at = _required_string(payload, "retrieved_at", errors)
@@ -549,6 +562,8 @@ class SourceManifest:
             errors.append(
                 "validation.require_sampled_curve=true requires canonical.kind=sampled_curve"
             )
+        if approximation and not approximation_reason:
+            errors.append("approximation_reason is required when approximation=true")
         if curve_realization.approximation and not curve_realization.enabled:
             errors.append("curve_realization.approximation=true requires curve_realization.enabled=true")
         if errors:
@@ -561,6 +576,11 @@ class SourceManifest:
             source_tier=source_tier,
             source_type=source_type,
             content_kind=content_kind,
+            mission_family=mission_family,
+            platform=platform,
+            instrument=instrument,
+            approximation=approximation,
+            approximation_reason=approximation_reason,
             title=title,
             url=url,
             retrieved_at=retrieved_at,
@@ -584,6 +604,11 @@ class SourceManifest:
             "source_tier": self.source_tier.value,
             "source_type": self.source_type.value,
             "content_kind": self.content_kind.value,
+            "mission_family": self.mission_family,
+            "platform": self.platform,
+            "instrument": self.instrument,
+            "approximation": self.approximation,
+            "approximation_reason": self.approximation_reason,
             "title": self.title,
             "url": self.url,
             "retrieved_at": self.retrieved_at,

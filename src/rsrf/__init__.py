@@ -4,6 +4,7 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
 from .api import get_metadata, list_bands, list_sensors, load_band_spec, load_curve, load_response_definition
+from .planning import list_planned_sensors, register_planned_sensor_catalog
 from .qa import validate_sensor, write_validation_artifacts
 from .realize import realize_curve
 
@@ -19,11 +20,13 @@ __all__ = [
     "__version__",
     "get_metadata",
     "list_bands",
+    "list_planned_sensors",
     "list_sensors",
     "load_band_spec",
     "load_curve",
     "load_response_definition",
     "realize_curve",
+    "register_planned_sensor_catalog",
     "validate_sensor",
     "write_validation_artifacts",
 ]

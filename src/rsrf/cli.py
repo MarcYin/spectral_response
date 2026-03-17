@@ -10,6 +10,7 @@ from typing import Any, Sequence
 from .api import get_metadata, list_bands, list_sensors, load_response_definition
 from .convolve import response_area
 from .models import BandSpec, ManifestSummary, ManifestValidationError, SampledCurve
+from .planning import list_planned_sensors, register_planned_sensor_catalog
 from .qa import validate_sensor, write_validation_artifacts
 from .registry import build_repo_layout, manifest_registry_rows, register_manifest
 from .validate import parse_manifest_file
@@ -41,6 +42,23 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=None,
         help="repository root; defaults to the discovered current repository",
+    )
+
+    list_planned_cmd = subparsers.add_parser(
+        "list-planned-sensors",
+        help="list registry-first planned sensor representations from the planning catalog",
+    )
+    list_planned_cmd.add_argument(
+        "--root",
+        type=Path,
+        default=None,
+        help="repository root; defaults to the discovered current repository",
+    )
+    list_planned_cmd.add_argument(
+        "--catalog-path",
+        type=Path,
+        default=None,
+        help="override the planning catalog path",
     )
 
     list_bands_cmd = subparsers.add_parser(
@@ -164,6 +182,23 @@ def build_parser() -> argparse.ArgumentParser:
         help="repository root; defaults to the discovered current repository",
     )
 
+    register_planned_cmd = subparsers.add_parser(
+        "register-planned-sensors",
+        help="upsert planned sensor rows from the planning catalog into sensors.parquet",
+    )
+    register_planned_cmd.add_argument(
+        "--root",
+        type=Path,
+        default=None,
+        help="repository root; defaults to the discovered current repository",
+    )
+    register_planned_cmd.add_argument(
+        "--catalog-path",
+        type=Path,
+        default=None,
+        help="override the planning catalog path",
+    )
+
     return parser
 
 
@@ -223,6 +258,15 @@ def _exception_message(exc: Exception) -> str:
 def _handle_list_sensors(root: Path | None) -> int:
     try:
         sensors = list_sensors(root=root)
+    except (FileNotFoundError, KeyError, RuntimeError, ValueError) as exc:
+        print(_exception_message(exc))
+        return 1
+    return _print_json(sensors)
+
+
+def _handle_list_planned_sensors(root: Path | None, catalog_path: Path | None) -> int:
+    try:
+        sensors = list_planned_sensors(root=root, catalog_path=catalog_path)
     except (FileNotFoundError, KeyError, RuntimeError, ValueError) as exc:
         print(_exception_message(exc))
         return 1
@@ -417,6 +461,21 @@ def _handle_register_manifest(manifest_path: Path, root: Path | None) -> int:
     return 0
 
 
+def _handle_register_planned_sensors(root: Path | None, catalog_path: Path | None) -> int:
+    try:
+        written = register_planned_sensor_catalog(root=root, catalog_path=catalog_path)
+    except (FileNotFoundError, KeyError, RuntimeError, ValueError) as exc:
+        print(_exception_message(exc))
+        return 1
+
+    if written is None:
+        print("No planned sensor rows were written.")
+        return 0
+
+    print(f"sensors: {written}")
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the CLI."""
 
@@ -427,6 +486,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _handle_show_layout(args.root)
     if args.command == "list-sensors":
         return _handle_list_sensors(args.root)
+    if args.command == "list-planned-sensors":
+        return _handle_list_planned_sensors(args.root, args.catalog_path)
     if args.command == "list-bands":
         return _handle_list_bands(
             args.sensor_unit_id,
@@ -465,6 +526,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _handle_show_registry_rows(args.manifest_path)
     if args.command == "register-manifest":
         return _handle_register_manifest(args.manifest_path, args.root)
+    if args.command == "register-planned-sensors":
+        return _handle_register_planned_sensors(args.root, args.catalog_path)
 
     parser.print_help()
     return 0

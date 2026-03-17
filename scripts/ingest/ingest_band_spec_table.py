@@ -13,11 +13,18 @@ if str(SRC) not in sys.path:
 
 from rsrf.ingest import write_band_spec_artifacts
 from rsrf.models import ManifestSummary, ManifestValidationError
-from rsrf.parsers import parse_band_spec_table, parse_obpg_bandpass_csv
+from rsrf.parsers import (
+    parse_band_spec_table,
+    parse_emit_band_parameters_ascii,
+    parse_enmap_band_workbook,
+    parse_obpg_bandpass_csv,
+)
 from rsrf.validate import parse_manifest_file
 
 PARSER_FUNCTIONS = {
     "parse_band_spec_table": parse_band_spec_table,
+    "parse_emit_band_parameters_ascii": parse_emit_band_parameters_ascii,
+    "parse_enmap_band_workbook": parse_enmap_band_workbook,
     "parse_obpg_bandpass_csv": parse_obpg_bandpass_csv,
 }
 
