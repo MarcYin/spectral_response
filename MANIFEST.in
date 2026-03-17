@@ -3,6 +3,7 @@ include mkdocs.yml
 graft src
 graft docs
 graft scripts
+prune docs/assets/visualization
 prune data
 prune sources
 prune tests

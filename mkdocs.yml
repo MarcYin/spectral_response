@@ -24,9 +24,17 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.superfences
 
+extra_css:
+  - assets/stylesheets/rsrf-visualizations.css
+
+extra_javascript:
+  - https://cdn.plot.ly/plotly-2.35.2.min.js
+  - assets/javascripts/rsrf-visualizations.js
+
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
+  - Visualizations: visualizations.md
   - Repository Layout: repository-layout.md
   - CLI: cli.md
   - Data Model: data-model.md

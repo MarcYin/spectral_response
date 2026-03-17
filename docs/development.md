@@ -13,9 +13,18 @@ Run the same core commands used by CI:
 ```bash
 python3 -m unittest discover -s tests/unit
 python3 -m unittest discover -s tests/regression
+python3 scripts/build/export_docs_visualization_assets.py --root .
 python3 -m build
 python3 -m twine check dist/*
 mkdocs build --strict
+```
+
+## Refreshing visualization assets
+
+The interactive docs page reads prebuilt JSON assets from `docs/assets/visualization/`. Refresh them whenever canonical sensor coverage changes:
+
+```bash
+python3 scripts/build/export_docs_visualization_assets.py --root .
 ```
 
 ## Repository conventions

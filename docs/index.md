@@ -21,9 +21,10 @@ It is designed for workflows where the code and the curated spectral-response re
 - broad multispectral coverage across Sentinel, Landsat, MODIS, VIIRS, OLCI, ASTER, Planet, PROBA-V, and legacy ocean-colour families
 - hyperspectral or metadata-driven band specs for PACE OCI, EnMAP, EMIT, PRISMA, Satellogic NewSat, and several public interval-metadata families
 - registry-backed QA and validation exports
+- interactive docs visualizations for band curves and wavelength-overlap discovery
 
 ## What the package does not ship
 
 The published Python package is intended to ship code, not the full repository data. Use `--root` or `RSRF_ROOT` to point the installed package at a checkout or generated data root.
 
-Continue with [Getting Started](getting-started.md) or review the [Repository Layout](repository-layout.md).
+Continue with [Getting Started](getting-started.md), explore the [Interactive Visualizations](visualizations.md), or review the [Repository Layout](repository-layout.md).
