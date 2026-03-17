@@ -1,5 +1,7 @@
 # RSRF
 
+![rsrfs](figs/rsrfs.png)
+
 `RSRF` is a repository-backed Python toolkit for canonical optical sensor spectral response definitions.
 
 It combines three things that usually drift apart:
