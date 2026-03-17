@@ -7,9 +7,9 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from .io import parquet_support_available, read_json, write_parquet_table
+from .manifests import manifest_path, PLANNING_MANIFEST_DIRNAME
 from .models import ContentKind, SourceTier
 from .registry import (
-    build_repo_layout,
     read_registry_table,
     registry_table_columns,
     registry_table_path,
@@ -114,8 +114,11 @@ class PlannedSensorEntry:
 def planned_sensor_catalog_path(root: Path | None = None) -> Path:
     """Return the canonical path for the P2 planned optical catalog."""
 
-    layout = build_repo_layout(root)
-    return layout.source_manifests_root / "p2_planned_optical_sensors.json"
+    return manifest_path(
+        root,
+        "p2_planned_optical_sensors.json",
+        manifest_group=PLANNING_MANIFEST_DIRNAME,
+    )
 
 
 def load_planned_sensor_catalog(

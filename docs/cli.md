@@ -27,6 +27,8 @@ rsrf validate-sensor sentinel-2c_msi --variant band_average
 rsrf export-validation hyperspec_example --variant metadata_band_spec --output-dir /tmp/rsrf_validation
 ```
 
+Manifest filenames are resolved from the manifest library, so you usually do not need the full `sources/manifests/official/...` path.
+
 ## Registry operations
 
 ```bash

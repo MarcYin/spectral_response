@@ -28,6 +28,17 @@ rsrf list-sensors --root /path/to/spectral_response_function
 
 If neither is supplied, RSRF searches upward from the current working directory for a repository root.
 
+## Working with manifests
+
+Manifest-aware commands accept either explicit paths or manifest filenames from the checked-in manifest library:
+
+```bash
+rsrf validate-manifest rsrf_source_manifest_sentinel2c_v2.json
+rsrf show-registry-rows rsrf_source_manifest_prisma_hsi_v2.json
+```
+
+Checked-in manifests live under `sources/manifests/official/`, planning catalogs under `sources/manifests/planning/`, and templates under `sources/manifests/templates/`.
+
 ## First commands
 
 ```bash

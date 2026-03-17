@@ -12,6 +12,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from rsrf.ingest import write_band_spec_artifacts
+from rsrf.manifests import manifest_path
 from rsrf.models import ManifestSummary, ManifestValidationError
 from rsrf.parsers import (
     parse_band_spec_table,
@@ -37,7 +38,10 @@ def build_parser() -> argparse.ArgumentParser:
         "manifest_path",
         nargs="?",
         type=Path,
-        default=ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json",
+        default=manifest_path(
+            ROOT,
+            "rsrf_source_manifest_hyperspectral_band_spec_example.json",
+        ),
     )
     parser.add_argument(
         "--dry-run",
@@ -56,7 +60,7 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = build_parser().parse_args()
     try:
-        manifest = parse_manifest_file(args.manifest_path)
+        manifest = parse_manifest_file(args.manifest_path, root=ROOT)
     except ManifestValidationError as exc:
         for error in exc.errors:
             print(error)

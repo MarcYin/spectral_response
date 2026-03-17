@@ -1,6 +1,6 @@
 """Module entrypoint for ``python -m rsrf``."""
 
-from .cli import main
+from .commands.app import main
 
 
 if __name__ == "__main__":

@@ -21,8 +21,14 @@ mkdocs build --strict
 ## Repository conventions
 
 - package code lives under `src/rsrf/`
+- CLI wiring lives under `src/rsrf/commands/`
+- parser implementations live under `src/rsrf/parsers/`
 - canonical data and registries live under `data/`
 - raw and extracted source artifacts live under `sources/`
+- checked-in source manifests live under `sources/manifests/official/`
+- planning catalogs live under `sources/manifests/planning/`
+- manifest templates live under `sources/manifests/templates/`
+- implementation history lives under `plans/`
 - parser entrypoints live under `scripts/ingest/`
 - QA entrypoints live under `scripts/validate/`
 

@@ -8,6 +8,7 @@ It is designed for workflows where the code and the curated spectral-response re
 - normalize them into stable parquet-backed canonical forms
 - inspect and validate sensor definitions from Python or the CLI
 - publish documentation and package releases from CI
+- keep manifests, source artifacts, and planning documents organized in a predictable layout
 
 ## Core concepts
 
@@ -25,4 +26,4 @@ It is designed for workflows where the code and the curated spectral-response re
 
 The published Python package is intended to ship code, not the full repository data. Use `--root` or `RSRF_ROOT` to point the installed package at a checkout or generated data root.
 
-Continue with [Getting Started](getting-started.md).
+Continue with [Getting Started](getting-started.md) or review the [Repository Layout](repository-layout.md).

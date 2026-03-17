@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from .io import read_json
+from .manifests import resolve_manifest_path
 from .models import ManifestValidationError, SourceManifest
 
 
@@ -18,11 +19,12 @@ def parse_manifest_dict(payload: Mapping[str, Any]) -> SourceManifest:
     return SourceManifest.from_dict(payload)
 
 
-def parse_manifest_file(path: Path) -> SourceManifest:
+def parse_manifest_file(path: Path, root: Path | None = None) -> SourceManifest:
     """Load and parse a source manifest file."""
 
+    resolved_path = resolve_manifest_path(path, root=root)
     try:
-        payload = read_json(path)
+        payload = read_json(resolved_path)
     except JSONDecodeError as exc:
         raise ManifestValidationError(
             [f"manifest file is not valid JSON: {exc.msg}"]

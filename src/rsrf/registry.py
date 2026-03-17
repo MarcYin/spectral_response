@@ -125,6 +125,9 @@ class RepoLayout:
     raw_sources_root: Path
     extracted_sources_root: Path
     source_manifests_root: Path
+    official_source_manifests_root: Path
+    planning_source_manifests_root: Path
+    template_source_manifests_root: Path
     tests_root: Path
 
 
@@ -175,6 +178,9 @@ def build_repo_layout(root: Path | None = None) -> RepoLayout:
         raw_sources_root=repo_root / "sources" / "raw",
         extracted_sources_root=repo_root / "sources" / "extracted",
         source_manifests_root=repo_root / "sources" / "manifests",
+        official_source_manifests_root=repo_root / "sources" / "manifests" / "official",
+        planning_source_manifests_root=repo_root / "sources" / "manifests" / "planning",
+        template_source_manifests_root=repo_root / "sources" / "manifests" / "templates",
         tests_root=repo_root / "tests",
     )
 
@@ -202,6 +208,9 @@ def ensure_repo_layout(root: Path | None = None) -> RepoLayout:
         layout.raw_sources_root,
         layout.extracted_sources_root,
         layout.source_manifests_root,
+        layout.official_source_manifests_root,
+        layout.planning_source_manifests_root,
+        layout.template_source_manifests_root,
         layout.tests_root,
     )
     for path in paths:

@@ -57,7 +57,7 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = build_parser().parse_args()
     try:
-        manifest = parse_manifest_file(args.manifest_path)
+        manifest = parse_manifest_file(args.manifest_path, root=ROOT)
     except ManifestValidationError as exc:
         for error in exc.errors:
             print(error)

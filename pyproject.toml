@@ -71,7 +71,7 @@ dev = [
 ]
 
 [project.scripts]
-rsrf = "rsrf.cli:main"
+rsrf = "rsrf.commands.app:main"
 
 [tool.setuptools]
 include-package-data = false
