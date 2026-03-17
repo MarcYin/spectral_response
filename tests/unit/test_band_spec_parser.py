@@ -11,13 +11,14 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from rsrf.io import read_json
+from rsrf.manifests import manifest_path
 from rsrf.parsers.band_spec_table import parse_band_spec_table
 from rsrf.validate import parse_manifest_dict
 
 
 class BandSpecParserTests(unittest.TestCase):
     def test_parser_extracts_band_specs_and_metadata(self) -> None:
-        payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
         manifest = parse_manifest_dict(payload)
         table_path = ROOT / manifest.raw_local_path
         artifacts = parse_band_spec_table(table_path, manifest)

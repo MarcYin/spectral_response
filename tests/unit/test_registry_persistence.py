@@ -11,13 +11,14 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from rsrf.io import parquet_support_available, read_json
+from rsrf.manifests import manifest_path
 from rsrf.registry import read_registry_table, register_manifest
 from rsrf.validate import parse_manifest_dict
 
 
 class RegistryPersistenceTests(unittest.TestCase):
     def test_register_manifest_respects_parquet_support(self) -> None:
-        payload = read_json(ROOT / "rsrf_source_manifest_sentinel2c_v2.json")
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_sentinel2c_v2.json"))
         manifest = parse_manifest_dict(payload)
 
         with tempfile.TemporaryDirectory() as tmpdir:

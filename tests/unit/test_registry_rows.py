@@ -11,13 +11,14 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from rsrf.io import read_json
+from rsrf.manifests import manifest_path
 from rsrf.registry import manifest_registry_rows
 from rsrf.validate import parse_manifest_dict
 
 
 class RegistryRowTests(unittest.TestCase):
     def test_sampled_curve_manifest_produces_sensor_and_source_rows(self) -> None:
-        payload = read_json(ROOT / "rsrf_source_manifest_sentinel2c_v2.json")
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_sentinel2c_v2.json"))
         manifest = parse_manifest_dict(payload)
         rows = manifest_registry_rows(manifest)
         self.assertEqual(len(rows["sensors"]), 1)
@@ -29,7 +30,7 @@ class RegistryRowTests(unittest.TestCase):
         self.assertEqual(rows["sensors"][0]["instrument"], "MSI")
 
     def test_band_spec_manifest_produces_realization_row(self) -> None:
-        payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
         manifest = parse_manifest_dict(payload)
         rows = manifest_registry_rows(manifest)
         self.assertEqual(len(rows["sensors"]), 2)

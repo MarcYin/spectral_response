@@ -15,12 +15,13 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from rsrf.io import read_json
+from rsrf.manifests import manifest_path
 from rsrf.parsers.obpg import parse_obpg_bandpass_csv, parse_obpg_rsr_netcdf
 from rsrf.validate import parse_manifest_dict
 
 
 def _sampled_manifest_payload() -> dict:
-    payload = read_json(ROOT / "rsrf_source_manifest_sentinel2c_v2.json")
+    payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_sentinel2c_v2.json"))
     payload["source_id"] = "obpg_sampled_test"
     payload["sensor_unit_id"] = "orbview-2_seawifs"
     payload["title"] = "OBPG sampled parser test"
@@ -36,7 +37,7 @@ def _sampled_manifest_payload() -> dict:
 
 
 def _band_spec_manifest_payload() -> dict:
-    payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
+    payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
     payload["source_id"] = "obpg_bandpass_test"
     payload["sensor_unit_id"] = "pace_oci"
     payload["representation_variant"] = "l1b_band_spec"

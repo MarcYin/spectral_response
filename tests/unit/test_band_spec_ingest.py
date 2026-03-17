@@ -12,6 +12,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from rsrf.io import read_json
+from rsrf.manifests import manifest_path
 from rsrf.ingest import write_band_spec_artifacts
 from rsrf.parsers.band_spec_table import parse_band_spec_table
 from rsrf.registry import read_registry_table
@@ -20,7 +21,7 @@ from rsrf.validate import parse_manifest_dict
 
 class BandSpecIngestTests(unittest.TestCase):
     def test_write_band_spec_artifacts_updates_registry(self) -> None:
-        payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
         manifest = parse_manifest_dict(payload)
         artifacts = parse_band_spec_table(ROOT / manifest.raw_local_path, manifest)
 
@@ -36,7 +37,7 @@ class BandSpecIngestTests(unittest.TestCase):
             self.assertEqual(metadata["band_spec_table"]["row_count"], 6)
 
     def test_write_band_spec_artifacts_can_persist_realized_curves(self) -> None:
-        payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
         payload["curve_realization"]["persist_realized_curves"] = True
         manifest = parse_manifest_dict(payload)
         artifacts = parse_band_spec_table(ROOT / manifest.raw_local_path, manifest)
@@ -72,7 +73,7 @@ class BandSpecIngestTests(unittest.TestCase):
             self.assertLess(realized_metadata["validation"]["max_fwhm_abs_error_nm"], 2.0)
 
     def test_write_band_spec_artifacts_preflights_realized_curve_recipe(self) -> None:
-        payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
         payload["curve_realization"]["persist_realized_curves"] = True
         payload["curve_realization"]["profile_type"] = "triangle"
         manifest = parse_manifest_dict(payload)

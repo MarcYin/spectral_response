@@ -12,13 +12,14 @@ if str(SRC) not in sys.path:
 
 from rsrf.io import parquet_support_available, read_parquet_table, write_parquet_table
 from rsrf.io import read_json
+from rsrf.manifests import manifest_path
 from rsrf.registry import manifest_registry_rows, registry_table_columns
 from rsrf.validate import parse_manifest_dict
 
 
 class TableIoTests(unittest.TestCase):
     def test_parquet_write_path_matches_environment_capabilities(self) -> None:
-        payload = read_json(ROOT / "rsrf_source_manifest_sentinel2c_v2.json")
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_sentinel2c_v2.json"))
         manifest = parse_manifest_dict(payload)
         rows = manifest_registry_rows(manifest)["sensors"]
 

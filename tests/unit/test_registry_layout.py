@@ -20,6 +20,18 @@ class RegistryLayoutTests(unittest.TestCase):
         layout = build_repo_layout(ROOT)
         self.assertEqual(layout.package_root, ROOT / "src" / "rsrf")
         self.assertEqual(layout.source_manifests_root, ROOT / "sources" / "manifests")
+        self.assertEqual(
+            layout.official_source_manifests_root,
+            ROOT / "sources" / "manifests" / "official",
+        )
+        self.assertEqual(
+            layout.planning_source_manifests_root,
+            ROOT / "sources" / "manifests" / "planning",
+        )
+        self.assertEqual(
+            layout.template_source_manifests_root,
+            ROOT / "sources" / "manifests" / "templates",
+        )
         self.assertEqual(layout.registry_root, ROOT / "data" / "registry")
 
     def test_registry_paths_follow_table_names(self) -> None:

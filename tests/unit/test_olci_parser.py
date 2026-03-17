@@ -14,12 +14,13 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from rsrf.io import read_json
+from rsrf.manifests import manifest_path
 from rsrf.parsers.olci import parse_olci_mean_rsr_nc4
 from rsrf.validate import parse_manifest_dict
 
 
 def _manifest_for(sensor_unit_id: str) -> dict:
-    payload = read_json(ROOT / "rsrf_source_manifest_sentinel2c_v2.json")
+    payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_sentinel2c_v2.json"))
     payload["source_id"] = f"{sensor_unit_id}_olci_test"
     payload["sensor_unit_id"] = sensor_unit_id
     payload["title"] = f"{sensor_unit_id} OLCI test source"

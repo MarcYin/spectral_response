@@ -13,12 +13,13 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from rsrf.io import read_json
+from rsrf.manifests import manifest_path
 from rsrf.parsers.probav import parse_probav_srf_workbook
 from rsrf.validate import parse_manifest_dict
 
 
 def _manifest_payload() -> dict:
-    payload = read_json(ROOT / "rsrf_source_manifest_sentinel2c_v2.json")
+    payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_sentinel2c_v2.json"))
     payload["source_id"] = "probav_srf_test"
     payload["sensor_unit_id"] = "probav_vgt"
     payload["representation_variant"] = "left_camera"

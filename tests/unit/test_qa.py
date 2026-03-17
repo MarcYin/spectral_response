@@ -13,6 +13,7 @@ if str(SRC) not in sys.path:
 
 from rsrf.ingest import write_band_spec_artifacts
 from rsrf.io import read_json
+from rsrf.manifests import manifest_path
 from rsrf.parsers.band_spec_table import parse_band_spec_table
 from rsrf.qa import validate_sensor, write_validation_artifacts
 from rsrf.validate import parse_manifest_dict
@@ -182,7 +183,7 @@ class QaTests(unittest.TestCase):
             )
 
     def test_validate_band_spec_variant_reports_invalid_fwhm_without_crashing(self) -> None:
-        payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
         manifest = parse_manifest_dict(payload)
         artifacts = parse_band_spec_table(ROOT / manifest.raw_local_path, manifest)
         artifacts.band_spec_rows[0] = dict(artifacts.band_spec_rows[0])
@@ -201,7 +202,7 @@ class QaTests(unittest.TestCase):
         self.assertIn("positive_fwhm", checks)
 
     def test_validate_band_spec_variant_reports_unsupported_realization_recipe(self) -> None:
-        payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
         payload["curve_realization"]["profile_type"] = "triangle"
         manifest = parse_manifest_dict(payload)
         artifacts = parse_band_spec_table(ROOT / manifest.raw_local_path, manifest)

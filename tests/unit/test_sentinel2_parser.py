@@ -13,6 +13,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from rsrf.io import read_json
+from rsrf.manifests import manifest_path
 from rsrf.parsers.sentinel2 import parse_s2_srf_xlsx
 from rsrf.validate import parse_manifest_dict
 
@@ -70,7 +71,7 @@ def _build_fixture_workbook(path: Path) -> None:
 
 class Sentinel2ParserTests(unittest.TestCase):
     def test_parser_extracts_curves_bands_and_metadata(self) -> None:
-        payload = read_json(ROOT / "rsrf_source_manifest_sentinel2c_v2.json")
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_sentinel2c_v2.json"))
         manifest = parse_manifest_dict(payload)
 
         with tempfile.TemporaryDirectory() as tmpdir:

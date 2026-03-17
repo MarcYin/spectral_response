@@ -11,12 +11,13 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from rsrf.io import read_json
+from rsrf.manifests import manifest_path
 from rsrf.parsers.emit import parse_emit_band_parameters_ascii
 from rsrf.validate import parse_manifest_dict
 
 
 def _manifest_payload() -> dict:
-    payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
+    payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
     payload["source_id"] = "emit_ascii_test"
     payload["sensor_unit_id"] = "emit_hsi"
     payload["title"] = "EMIT ASCII parser test"

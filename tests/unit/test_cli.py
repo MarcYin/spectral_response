@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import sys
 import tempfile
 import unittest
@@ -16,6 +17,7 @@ if str(SRC) not in sys.path:
 from rsrf.cli import main
 from rsrf.ingest import write_band_spec_artifacts
 from rsrf.io import read_json
+from rsrf.manifests import PLANNING_MANIFEST_DIRNAME, manifest_path
 from rsrf.parsers.band_spec_table import parse_band_spec_table
 from rsrf.validate import parse_manifest_dict
 
@@ -105,6 +107,25 @@ class CliTests(unittest.TestCase):
         self.assertEqual(exit_code, 1)
         self.assertIn("Manifest validation failed", stdout)
         self.assertIn("manifest file is not valid JSON", stdout)
+
+    def test_validate_manifest_resolves_library_filename_with_root_outside_repo(self) -> None:
+        previous_cwd = Path.cwd()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            try:
+                os.chdir(tmpdir)
+                exit_code, stdout = self._run_main(
+                    [
+                        "validate-manifest",
+                        "rsrf_source_manifest_sentinel2c_v2.json",
+                        "--root",
+                        str(ROOT),
+                    ]
+                )
+            finally:
+                os.chdir(previous_cwd)
+
+        self.assertEqual(exit_code, 0)
+        self.assertIn("Manifest OK: sentinel-2c_msi [band_average] sampled_curve", stdout)
 
     def test_version_flag_reports_package_version(self) -> None:
         output = io.StringIO()
@@ -427,7 +448,7 @@ class CliTests(unittest.TestCase):
         self.assertTrue(payload["overlay_checks"]["available"])
 
     def test_validate_sensor_returns_nonzero_when_report_has_failures(self) -> None:
-        payload = read_json(ROOT / "rsrf_source_manifest_hyperspectral_band_spec_example.json")
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
         manifest = parse_manifest_dict(payload)
         artifacts = parse_band_spec_table(ROOT / manifest.raw_local_path, manifest)
         artifacts.band_spec_rows[0] = dict(artifacts.band_spec_rows[0])
@@ -487,7 +508,13 @@ class CliTests(unittest.TestCase):
                     "--root",
                     str(tmpdir),
                     "--catalog-path",
-                    str(ROOT / "sources" / "manifests" / "p2_planned_optical_sensors.json"),
+                    str(
+                        manifest_path(
+                            ROOT,
+                            "p2_planned_optical_sensors.json",
+                            manifest_group=PLANNING_MANIFEST_DIRNAME,
+                        )
+                    ),
                 ]
             )
 

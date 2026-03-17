@@ -10,6 +10,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from rsrf.manifests import PLANNING_MANIFEST_DIRNAME, manifest_path
 from rsrf.io import write_parquet_table
 from rsrf.planning import list_planned_sensors, load_planned_sensor_catalog, register_planned_sensor_catalog
 from rsrf.registry import read_registry_table, registry_table_columns, registry_table_path
@@ -33,7 +34,11 @@ class PlanningTests(unittest.TestCase):
             tmp_root = Path(tmpdir)
             written = register_planned_sensor_catalog(
                 tmp_root,
-                catalog_path=ROOT / "sources" / "manifests" / "p2_planned_optical_sensors.json",
+                catalog_path=manifest_path(
+                    ROOT,
+                    "p2_planned_optical_sensors.json",
+                    manifest_group=PLANNING_MANIFEST_DIRNAME,
+                ),
             )
         self.assertIsNone(written)
         with self.assertRaises(FileNotFoundError):
@@ -64,7 +69,11 @@ class PlanningTests(unittest.TestCase):
 
             written = register_planned_sensor_catalog(
                 tmp_root,
-                catalog_path=ROOT / "sources" / "manifests" / "p2_planned_optical_sensors.json",
+                catalog_path=manifest_path(
+                    ROOT,
+                    "p2_planned_optical_sensors.json",
+                    manifest_group=PLANNING_MANIFEST_DIRNAME,
+                ),
             )
             sensors = read_registry_table(tmp_root, "sensors")
 
