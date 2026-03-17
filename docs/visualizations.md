@@ -66,8 +66,9 @@ hide:
       </div>
       <p class="rsrf-viz-copy">
         The heatmap uses the maximum peak-normalized response per sensor on a `1 nm` grid from
-        `300` to `2500 nm`. Click the heatmap or drag the wavelength slider to reveal the strongest
-        overlaps and the sensor families that contribute to that region.
+        `300` to `2500 nm`. Click the heatmap or drag the wavelength slider to reveal overlapping
+        bands with response above `0.01`, then add the ones you care about into a full-curve
+        comparison.
       </p>
     </div>
 
@@ -82,12 +83,32 @@ hide:
 
       <div class="rsrf-viz-chart rsrf-viz-heatmap-chart" id="rsrf-overlap-heatmap"></div>
       <div class="rsrf-viz-stat-grid" id="rsrf-overlap-stats"></div>
-      <div class="rsrf-viz-chart rsrf-viz-bar-chart" id="rsrf-overlap-bars"></div>
+
+      <div class="rsrf-viz-overlap-grid">
+        <aside class="rsrf-viz-overlap-selector-shell">
+          <div class="rsrf-viz-overlap-toolbar">
+            <div class="rsrf-viz-band-meta" id="rsrf-overlap-meta">
+              Loading overlapping responses...
+            </div>
+            <div class="rsrf-viz-actions">
+              <button type="button" id="rsrf-overlap-top">Top</button>
+              <button type="button" id="rsrf-overlap-all">All</button>
+              <button type="button" id="rsrf-overlap-clear">Clear</button>
+            </div>
+          </div>
+          <div class="rsrf-viz-band-list rsrf-viz-overlap-list" id="rsrf-overlap-selector-list"></div>
+        </aside>
+
+        <div class="rsrf-viz-overlap-stage">
+          <div class="rsrf-viz-chart rsrf-viz-overlap-curve-chart" id="rsrf-overlap-curves"></div>
+        </div>
+      </div>
 
       <div class="rsrf-viz-table-shell">
         <table class="rsrf-viz-table">
           <thead>
             <tr>
+              <th>Compare</th>
               <th>Sensor</th>
               <th>Band</th>
               <th>Response</th>
