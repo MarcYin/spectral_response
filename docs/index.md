@@ -18,7 +18,7 @@ It is designed for workflows where the code and the curated spectral-response re
 
 ## What this repo covers today
 
-- broad multispectral coverage across Sentinel, Landsat, MODIS, VIIRS, OLCI, ASTER, Planet, PROBA-V, and legacy ocean-colour families
+- broad multispectral coverage across Sentinel, Landsat, MODIS, VIIRS, OLCI, SLSTR, ASTER, Planet, PROBA-V, and legacy ocean-colour families
 - hyperspectral or metadata-driven band specs for PACE OCI, EnMAP, EMIT, PRISMA, Satellogic NewSat, and several public interval-metadata families
 - registry-backed QA and validation exports
 - interactive docs visualizations for band curves and wavelength-overlap discovery

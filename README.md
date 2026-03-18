@@ -26,7 +26,7 @@ Interactive visualization: [https://marcyin.github.io/spectral_response/visualiz
 - Python package code under `src/rsrf/`
 - MkDocs content and browser visualization assets under `docs/`
 
-The current repository includes both multispectral and hyperspectral coverage, including Sentinel-2, Landsat, MODIS, VIIRS, OLCI, ASTER, PlanetScope, SkySat, PROBA-V, PRISMA, EMIT, EnMAP, PACE OCI, Pleiades, FORMOSAT-5, Amazonia-1, and CBERS-4A families.
+The current repository includes both multispectral and hyperspectral coverage, including Sentinel-2, Sentinel-3 OLCI and SLSTR, Landsat, MODIS, VIIRS, ASTER, PlanetScope, SkySat, PROBA-V, PRISMA, EMIT, EnMAP, PACE OCI, Pleiades, FORMOSAT-5, Amazonia-1, and CBERS-4A families.
 
 ## Installation
 
