@@ -22,6 +22,7 @@ from rsrf.parsers import (
     parse_probav_srf_workbook,
     parse_usgs_json_directory,
     parse_viirs_band_average_zip,
+    parse_slstr_nwp_saf_tar,
 )
 from rsrf.validate import parse_manifest_file
 
@@ -32,6 +33,7 @@ PARSER_FUNCTIONS = {
     "parse_obpg_rsr_netcdf": parse_obpg_rsr_netcdf,
     "parse_olci_mean_rsr_nc4": parse_olci_mean_rsr_nc4,
     "parse_probav_srf_workbook": parse_probav_srf_workbook,
+    "parse_slstr_nwp_saf_tar": parse_slstr_nwp_saf_tar,
     "parse_usgs_json_directory": parse_usgs_json_directory,
     "parse_viirs_band_average_zip": parse_viirs_band_average_zip,
 }

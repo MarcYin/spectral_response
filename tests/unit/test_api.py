@@ -73,7 +73,9 @@ EXPECTED_CANONICAL_VARIANTS = {
     ("sentinel-2b_msi", "band_average"),
     ("sentinel-2c_msi", "band_average"),
     ("sentinel-3a_olci", "band_average"),
+    ("sentinel-3a_slstr", "band_average"),
     ("sentinel-3b_olci", "band_average"),
+    ("sentinel-3b_slstr", "band_average"),
     ("spot-6_7_msi", "metadata_band_spec"),
     ("skysat_msi", "skysat1"),
     ("skysat_msi", "skysat2"),
@@ -123,15 +125,18 @@ class ApiTests(unittest.TestCase):
         landsat_tirs = load_curve("landsat-8_tirs", "B10", "band_average", root=ROOT)
         viirs = load_curve("noaa-20_viirs", "M1", "band_average", root=ROOT)
         olci = load_curve("sentinel-3a_olci", "B01", "band_average", root=ROOT)
+        slstr = load_curve("sentinel-3a_slstr", "S1", "band_average", root=ROOT)
         seawifs = load_curve("orbview-2_seawifs", "B01", "band_average", root=ROOT)
 
         self.assertIsInstance(landsat_tirs, SampledCurve)
         self.assertIsInstance(viirs, SampledCurve)
         self.assertIsInstance(olci, SampledCurve)
+        self.assertIsInstance(slstr, SampledCurve)
         self.assertIsInstance(seawifs, SampledCurve)
         self.assertGreater(len(landsat_tirs.wavelength_nm), 10)
         self.assertGreater(len(viirs.wavelength_nm), 10)
         self.assertEqual(len(olci.wavelength_nm), 200)
+        self.assertGreater(len(slstr.wavelength_nm), 100)
         self.assertGreater(len(seawifs.wavelength_nm), 10)
 
     def test_load_curve_reads_landsat4_tm_with_correct_axis_orientation(self) -> None:

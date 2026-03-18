@@ -11,6 +11,7 @@ from .olci import parse_olci_mean_rsr_nc4
 from .prisma import parse_prisma_he5_metadata
 from .probav import parse_probav_srf_workbook
 from .sentinel2 import parse_s2_srf_xlsx
+from .slstr import parse_slstr_nwp_saf_tar
 from .usgs_json import parse_usgs_json_directory
 from .viirs import parse_viirs_band_average_zip
 
@@ -27,6 +28,7 @@ __all__ = [
     "parse_prisma_he5_metadata",
     "parse_probav_srf_workbook",
     "parse_s2_srf_xlsx",
+    "parse_slstr_nwp_saf_tar",
     "parse_usgs_json_directory",
     "parse_viirs_band_average_zip",
 ]
