@@ -7,6 +7,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 411.2959899902344,
       "native_support_min_nm": 387.7464599609375,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B02": {
@@ -16,6 +22,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 421.2000427246094,
       "native_support_min_nm": 402.5324401855469,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B03": {
@@ -25,6 +37,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 452.3067932128906,
       "native_support_min_nm": 433.5885925292969,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B04": {
@@ -34,6 +52,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 499.82830810546875,
       "native_support_min_nm": 481.06805419921875,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B05": {
@@ -43,6 +67,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 519.7887573242188,
       "native_support_min_nm": 501.05316162109375,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B06": {
@@ -52,6 +82,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 569.8123779296875,
       "native_support_min_nm": 551.0492553710938,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B07": {
@@ -61,6 +97,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 629.73486328125,
       "native_support_min_nm": 611.0201416015625,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B08": {
@@ -70,6 +112,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 674.6220703125,
       "native_support_min_nm": 655.8665161132812,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B09": {
@@ -79,6 +127,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 682.154296875,
       "native_support_min_nm": 665.87353515625,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B10": {
@@ -88,6 +142,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 689.6990966796875,
       "native_support_min_nm": 673.4130249023438,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B11": {
@@ -97,6 +157,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 718.492431640625,
       "native_support_min_nm": 699.726806640625,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B12": {
@@ -106,6 +172,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 762.3192749023438,
       "native_support_min_nm": 746.0486450195312,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B13": {
@@ -115,6 +187,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 767.3556518554688,
       "native_support_min_nm": 756.0952758789062,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B14": {
@@ -124,6 +202,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 771.06494140625,
       "native_support_min_nm": 758.5901489257812,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B15": {
@@ -133,6 +217,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 773.5379028320312,
       "native_support_min_nm": 762.3013305664062,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B16": {
@@ -142,6 +232,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 791.1201171875,
       "native_support_min_nm": 767.3171997070312,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B17": {
@@ -151,6 +247,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 879.9743041992188,
       "native_support_min_nm": 851.1998901367188,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B18": {
@@ -160,6 +262,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 893.74169921875,
       "native_support_min_nm": 874.980712890625,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B19": {
@@ -169,6 +277,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 908.7571411132812,
       "native_support_min_nm": 889.99951171875,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B20": {
@@ -178,6 +292,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 953.8208618164062,
       "native_support_min_nm": 925.0224609375,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     },
     "B21": {
@@ -187,18 +307,32 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 1043.7667236328125,
       "native_support_min_nm": 995.070068359375,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 200
     }
   },
   "content_kind": "sampled_curve",
+  "curve_normalization": {
+    "dropped_nonfinite_samples": 0,
+    "duplicate_wavelength_samples": 0,
+    "negative_values_clipped": 0,
+    "values_capped_to_one": 0
+  },
   "curve_table": {
     "band_count": 21,
     "row_count": 4200,
     "wavelength_max_nm": 1043.7667236328125,
     "wavelength_min_nm": 387.7464599609375
   },
-  "generated_at": "2026-03-16T17:40:11.440614+00:00",
+  "generated_at": "2026-03-18T22:36:04.852216+00:00",
   "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
     "band_spec": {
       "band_id_field": null,
       "band_index_field": null,
@@ -228,7 +362,9 @@
     },
     "doc_version": "20160713",
     "file_sha256": "e2806df83b6a874e1b5ecd98bd56c70368e4bca6c75e6c7bad6b472cdc5fef7d",
+    "instrument": null,
     "license_note": "Copernicus/ESA terms apply",
+    "mission_family": null,
     "notes": [
       "Canonical storage retains the official mean sampled curves from the OLCI mean_rsr file",
       "No curve realization step is needed because sampled curves are already official"
@@ -248,6 +384,7 @@
       },
       "script": "scripts/ingest/ingest_sampled_curve.py"
     },
+    "platform": null,
     "raw_local_path": "sources/raw/esa/sentinel-3/s3a/olci/20160713/S3A_OL_SRF_20160713_mean_rsr.nc4",
     "representation_variant": "band_average",
     "retrieved_at": "2026-03-16",

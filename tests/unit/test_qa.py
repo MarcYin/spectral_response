@@ -15,11 +15,19 @@ from rsrf.ingest import write_band_spec_artifacts
 from rsrf.io import read_json
 from rsrf.manifests import manifest_path
 from rsrf.parsers.band_spec_table import parse_band_spec_table
-from rsrf.qa import validate_sensor, write_validation_artifacts
+from rsrf.qa import validate_sampled_curve_inventory, validate_sensor, write_validation_artifacts
 from rsrf.validate import parse_manifest_dict
 
 
 class QaTests(unittest.TestCase):
+    def test_validate_sampled_curve_inventory_passes_for_current_repository(self) -> None:
+        report = validate_sampled_curve_inventory(root=ROOT)
+
+        self.assertTrue(report["passed"])
+        self.assertEqual(report["failure_count"], 0)
+        self.assertGreater(report["summary"]["sensor_count"], 10)
+        self.assertGreater(report["summary"]["band_count"], 100)
+
     def test_validate_sampled_curve_variant_passes_for_sentinel2(self) -> None:
         report = validate_sensor("sentinel-2c_msi", "band_average", root=ROOT)
 

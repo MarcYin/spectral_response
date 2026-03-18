@@ -7,6 +7,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 1100.0,
       "native_support_min_nm": 380.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 721
     },
     "B02": {
@@ -16,6 +22,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 1100.0,
       "native_support_min_nm": 380.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 721
     },
     "B03": {
@@ -25,6 +37,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 1100.0,
       "native_support_min_nm": 380.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 721
     },
     "B04": {
@@ -34,6 +52,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 1100.0,
       "native_support_min_nm": 380.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 721
     },
     "B05": {
@@ -43,6 +67,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 1100.0,
       "native_support_min_nm": 380.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 721
     },
     "B06": {
@@ -52,6 +82,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 1100.0,
       "native_support_min_nm": 380.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 721
     },
     "B07": {
@@ -61,6 +97,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 1100.0,
       "native_support_min_nm": 380.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 721
     },
     "B08": {
@@ -70,18 +112,32 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 1100.0,
       "native_support_min_nm": 380.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 721
     }
   },
   "content_kind": "sampled_curve",
+  "curve_normalization": {
+    "dropped_nonfinite_samples": 0,
+    "duplicate_wavelength_samples": 0,
+    "negative_values_clipped": 0,
+    "values_capped_to_one": 0
+  },
   "curve_table": {
     "band_count": 8,
     "row_count": 5768,
     "wavelength_max_nm": 1100.0,
     "wavelength_min_nm": 380.0
   },
-  "generated_at": "2026-03-16T18:23:06.032013+00:00",
+  "generated_at": "2026-03-18T22:35:53.411774+00:00",
   "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
     "band_spec": {
       "band_id_field": null,
       "band_index_field": null,
@@ -111,7 +167,9 @@
     },
     "doc_version": "unversioned_obpg_rsr_tables",
     "file_sha256": "b6a8a6bb62116e7021c527ad4eda2e88a80b5c3a6ab1449cd3af81724c1974bd",
+    "instrument": null,
     "license_note": "NASA OBPG curated table terms apply; original mission terms may also apply",
+    "mission_family": null,
     "notes": [
       "Canonical storage retains the sampled RSR curves distributed by NASA OBPG",
       "No curve realization step is needed because sampled curves are already available"
@@ -131,6 +189,7 @@
       },
       "script": "scripts/ingest/ingest_sampled_curve.py"
     },
+    "platform": null,
     "raw_local_path": "sources/raw/nasa/obpg/orbview-2/seawifs/rsr_tables/orbview-2_seawifs_RSR.nc",
     "representation_variant": "band_average",
     "retrieved_at": "2026-03-16",

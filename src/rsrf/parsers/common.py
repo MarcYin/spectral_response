@@ -27,6 +27,18 @@ class ParsedBandCurve:
     band_status: str = "nominal"
 
 
+@dataclass(frozen=True)
+class NormalizedCurveSamples:
+    """Normalized sampled-curve arrays plus normalization counters."""
+
+    wavelength_nm: np.ndarray
+    response: np.ndarray
+    dropped_nonfinite_samples: int
+    duplicate_wavelength_samples: int
+    negative_values_clipped: int
+    values_capped_to_one: int
+
+
 def build_sampled_curve_artifacts(
     manifest: SourceManifest,
     source_artifact_path: Path,
@@ -46,6 +58,10 @@ def build_sampled_curve_artifacts(
     band_metrics: dict[str, dict[str, Any]] = {}
     global_wavelength_min_nm: float | None = None
     global_wavelength_max_nm: float | None = None
+    total_dropped_nonfinite_samples = 0
+    total_duplicate_wavelength_samples = 0
+    total_negative_values_clipped = 0
+    total_values_capped_to_one = 0
 
     for order_index, band in enumerate(bands, start=1):
         wavelength_nm = np.asarray(band.wavelength_nm, dtype=float)
@@ -55,9 +71,13 @@ def build_sampled_curve_artifacts(
         if wavelength_nm.shape != response.shape:
             raise ValueError(f"{band.band_id} wavelength/response arrays must have the same shape")
 
-        sort_index = np.argsort(wavelength_nm)
-        wavelength_nm = wavelength_nm[sort_index]
-        response = response[sort_index]
+        normalized = _normalize_curve_samples(wavelength_nm, response)
+        wavelength_nm = normalized.wavelength_nm
+        response = normalized.response
+        total_dropped_nonfinite_samples += normalized.dropped_nonfinite_samples
+        total_duplicate_wavelength_samples += normalized.duplicate_wavelength_samples
+        total_negative_values_clipped += normalized.negative_values_clipped
+        total_values_capped_to_one += normalized.values_capped_to_one
 
         global_wavelength_min_nm = float(wavelength_nm.min()) if global_wavelength_min_nm is None else min(
             global_wavelength_min_nm, float(wavelength_nm.min())
@@ -117,6 +137,12 @@ def build_sampled_curve_artifacts(
             "native_support_max_nm": support_max_nm,
             "native_sampling_nm": native_sampling_nm,
             "sample_count": int(wavelength_nm.size),
+            "normalization": {
+                "dropped_nonfinite_samples": normalized.dropped_nonfinite_samples,
+                "duplicate_wavelength_samples": normalized.duplicate_wavelength_samples,
+                "negative_values_clipped": normalized.negative_values_clipped,
+                "values_capped_to_one": normalized.values_capped_to_one,
+            },
         }
 
     metadata: dict[str, Any] = {
@@ -145,6 +171,12 @@ def build_sampled_curve_artifacts(
             "wavelength_min_nm": global_wavelength_min_nm,
             "wavelength_max_nm": global_wavelength_max_nm,
         },
+        "curve_normalization": {
+            "dropped_nonfinite_samples": total_dropped_nonfinite_samples,
+            "duplicate_wavelength_samples": total_duplicate_wavelength_samples,
+            "negative_values_clipped": total_negative_values_clipped,
+            "values_capped_to_one": total_values_capped_to_one,
+        },
         "band_metrics": band_metrics,
         "manifest": manifest.to_dict(),
     }
@@ -166,6 +198,53 @@ def _curve_object(band_id: str, wavelength_nm: np.ndarray, response: np.ndarray,
         wavelength_nm=wavelength_nm,
         response=response,
         source_variant=variant,
+    )
+
+
+def _normalize_curve_samples(
+    wavelength_nm: np.ndarray,
+    response: np.ndarray,
+) -> NormalizedCurveSamples:
+    finite_mask = np.isfinite(wavelength_nm) & np.isfinite(response)
+    dropped_nonfinite_samples = int(wavelength_nm.size - int(np.count_nonzero(finite_mask)))
+    if not np.any(finite_mask):
+        raise ValueError("curve samples do not contain any finite wavelength/response pairs")
+
+    wavelength_nm = wavelength_nm[finite_mask]
+    response = response[finite_mask]
+
+    sort_index = np.argsort(wavelength_nm, kind="mergesort")
+    wavelength_nm = wavelength_nm[sort_index]
+    response = response[sort_index]
+
+    negative_mask = response < 0.0
+    negative_values_clipped = int(np.count_nonzero(negative_mask))
+    if negative_values_clipped:
+        response = response.copy()
+        response[negative_mask] = 0.0
+
+    overbound_mask = response > 1.0
+    values_capped_to_one = int(np.count_nonzero(overbound_mask))
+    if values_capped_to_one:
+        if response.base is None:
+            response = response.copy()
+        response[overbound_mask] = 1.0
+
+    duplicate_wavelength_samples = int(wavelength_nm.size - np.unique(wavelength_nm).size)
+    if duplicate_wavelength_samples:
+        unique_wavelength_nm, inverse = np.unique(wavelength_nm, return_inverse=True)
+        deduplicated_response = np.full(unique_wavelength_nm.shape, -np.inf, dtype=float)
+        np.maximum.at(deduplicated_response, inverse, response)
+        wavelength_nm = unique_wavelength_nm
+        response = deduplicated_response
+
+    return NormalizedCurveSamples(
+        wavelength_nm=wavelength_nm,
+        response=response,
+        dropped_nonfinite_samples=dropped_nonfinite_samples,
+        duplicate_wavelength_samples=duplicate_wavelength_samples,
+        negative_values_clipped=negative_values_clipped,
+        values_capped_to_one=values_capped_to_one,
     )
 
 

@@ -7,6 +7,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 999.0,
       "native_support_min_nm": 441.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 601
     },
     "CoastalBlue": {
@@ -16,6 +22,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 460.0,
       "native_support_min_nm": 427.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 601
     },
     "GreenI": {
@@ -25,6 +37,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 558.0,
       "native_support_min_nm": 507.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 601
     },
     "GreenII": {
@@ -34,6 +52,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 600.0,
       "native_support_min_nm": 530.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 601
     },
     "NIR": {
@@ -43,6 +67,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 894.0,
       "native_support_min_nm": 840.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 601
     },
     "Red": {
@@ -52,6 +82,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 945.0,
       "native_support_min_nm": 634.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 601
     },
     "RedEdge": {
@@ -61,6 +97,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 723.0,
       "native_support_min_nm": 692.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 601
     },
     "Yellow": {
@@ -70,6 +112,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 634.0,
       "native_support_min_nm": 593.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 601
     }
   },
@@ -87,13 +135,19 @@
     ],
     "wavelength_field": "Wavelength (nm)"
   },
+  "curve_normalization": {
+    "dropped_nonfinite_samples": 0,
+    "duplicate_wavelength_samples": 0,
+    "negative_values_clipped": 0,
+    "values_capped_to_one": 0
+  },
   "curve_table": {
     "band_count": 8,
     "row_count": 4808,
     "wavelength_max_nm": 1000.0,
     "wavelength_min_nm": 400.0
   },
-  "generated_at": "2026-03-16T22:42:12.629818+00:00",
+  "generated_at": "2026-03-18T22:35:56.010022+00:00",
   "manifest": {
     "approximation": false,
     "approximation_reason": null,

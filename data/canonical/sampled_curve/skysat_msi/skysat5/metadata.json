@@ -7,6 +7,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 931.0,
       "native_support_min_nm": 397.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 155,
+        "values_capped_to_one": 0
+      },
       "sample_count": 647
     },
     "Green": {
@@ -16,6 +22,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 932.0,
       "native_support_min_nm": 399.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 177,
+        "values_capped_to_one": 0
+      },
       "sample_count": 647
     },
     "NIR": {
@@ -25,6 +37,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 914.0,
       "native_support_min_nm": 397.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 139,
+        "values_capped_to_one": 0
+      },
       "sample_count": 647
     },
     "Pan": {
@@ -34,6 +52,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 917.0,
       "native_support_min_nm": 397.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 79,
+        "values_capped_to_one": 0
+      },
       "sample_count": 647
     },
     "Red": {
@@ -43,6 +67,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 935.0,
       "native_support_min_nm": 399.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 143,
+        "values_capped_to_one": 0
+      },
       "sample_count": 647
     }
   },
@@ -57,13 +87,19 @@
     ],
     "wavelength_field": "\ufeffWavelength [um]"
   },
+  "curve_normalization": {
+    "dropped_nonfinite_samples": 0,
+    "duplicate_wavelength_samples": 0,
+    "negative_values_clipped": 693,
+    "values_capped_to_one": 0
+  },
   "curve_table": {
     "band_count": 5,
     "row_count": 3235,
     "wavelength_max_nm": 996.0,
     "wavelength_min_nm": 350.0
   },
-  "generated_at": "2026-03-16T22:42:14.944110+00:00",
+  "generated_at": "2026-03-18T22:36:10.851859+00:00",
   "manifest": {
     "approximation": false,
     "approximation_reason": null,

@@ -7,6 +7,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 495.0,
       "native_support_min_nm": 430.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 56
     },
     "NIR": {
@@ -16,6 +22,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 935.0,
       "native_support_min_nm": 750.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 62
     },
     "RED": {
@@ -25,6 +37,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 760.0,
       "native_support_min_nm": 606.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 86
     },
     "SWIR": {
@@ -34,18 +52,32 @@
       "native_sampling_nm": 5.0,
       "native_support_max_nm": 1695.0,
       "native_support_min_nm": 1490.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 81
     }
   },
   "content_kind": "sampled_curve",
+  "curve_normalization": {
+    "dropped_nonfinite_samples": 0,
+    "duplicate_wavelength_samples": 0,
+    "negative_values_clipped": 0,
+    "values_capped_to_one": 0
+  },
   "curve_table": {
     "band_count": 4,
     "row_count": 285,
     "wavelength_max_nm": 1800.0,
     "wavelength_min_nm": 400.0
   },
-  "generated_at": "2026-03-16T22:03:26.307472+00:00",
+  "generated_at": "2026-03-18T22:36:01.812027+00:00",
   "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
     "band_spec": {
       "band_id_field": null,
       "band_index_field": null,
@@ -75,7 +107,9 @@
     },
     "doc_version": "unversioned_probav_srf_workbook",
     "file_sha256": "f6ef6f4d96b5c4026fb6f3e60f94444a21b98a0cde38a453f79282ce0b8b5930",
+    "instrument": null,
     "license_note": "PROBA-V / VITO terms apply",
+    "mission_family": null,
     "notes": [
       "No curve realization step is needed because sampled curves are already official",
       "Additional manifests capture the center and left camera SRFs separately"
@@ -95,6 +129,7 @@
       },
       "script": "scripts/ingest/ingest_sampled_curve.py"
     },
+    "platform": null,
     "raw_local_path": "sources/raw/esa/proba-v/vgt/srf/unversioned/PROBA-V_SRF.xlsx",
     "representation_variant": "right_camera",
     "retrieved_at": "2026-03-16",

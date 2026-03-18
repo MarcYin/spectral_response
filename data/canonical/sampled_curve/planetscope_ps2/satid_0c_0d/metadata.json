@@ -7,6 +7,12 @@
       "native_sampling_nm": 10.0,
       "native_support_max_nm": 690.0,
       "native_support_min_nm": 410.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 69
     },
     "Green": {
@@ -16,6 +22,12 @@
       "native_sampling_nm": 10.0,
       "native_support_max_nm": 690.0,
       "native_support_min_nm": 450.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 69
     },
     "NIR": {
@@ -25,6 +37,12 @@
       "native_sampling_nm": 10.0,
       "native_support_max_nm": 880.0,
       "native_support_min_nm": 630.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 69
     },
     "Red": {
@@ -34,6 +52,12 @@
       "native_sampling_nm": 10.0,
       "native_support_max_nm": 700.0,
       "native_support_min_nm": 460.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 69
     }
   },
@@ -47,13 +71,19 @@
     ],
     "wavelength_field": "\ufeffWavelength [\u00b5m]"
   },
+  "curve_normalization": {
+    "dropped_nonfinite_samples": 0,
+    "duplicate_wavelength_samples": 0,
+    "negative_values_clipped": 0,
+    "values_capped_to_one": 0
+  },
   "curve_table": {
     "band_count": 4,
     "row_count": 276,
     "wavelength_max_nm": 1000.0,
     "wavelength_min_nm": 320.0
   },
-  "generated_at": "2026-03-16T22:42:01.479600+00:00",
+  "generated_at": "2026-03-18T22:35:53.923325+00:00",
   "manifest": {
     "approximation": false,
     "approximation_reason": null,

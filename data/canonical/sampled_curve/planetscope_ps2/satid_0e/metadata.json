@@ -4,37 +4,61 @@
       "band_index": 1,
       "center_wavelength_nm": 470.0,
       "fwhm_nm": 60.0,
-      "native_sampling_nm": null,
+      "native_sampling_nm": 10.0,
       "native_support_max_nm": 990.0,
       "native_support_min_nm": 400.0,
-      "sample_count": 68
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 7,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
+      "sample_count": 61
     },
     "Green": {
       "band_index": 2,
       "center_wavelength_nm": 540.0,
       "fwhm_nm": 100.0,
-      "native_sampling_nm": null,
+      "native_sampling_nm": 10.0,
       "native_support_max_nm": 990.0,
       "native_support_min_nm": 400.0,
-      "sample_count": 68
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 7,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
+      "sample_count": 61
     },
     "NIR": {
       "band_index": 4,
       "center_wavelength_nm": 780.0,
       "fwhm_nm": 100.0,
-      "native_sampling_nm": null,
+      "native_sampling_nm": 10.0,
       "native_support_max_nm": 890.0,
       "native_support_min_nm": 430.0,
-      "sample_count": 68
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 7,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
+      "sample_count": 61
     },
     "Red": {
       "band_index": 3,
       "center_wavelength_nm": 610.0,
       "fwhm_nm": 100.0,
-      "native_sampling_nm": null,
+      "native_sampling_nm": 10.0,
       "native_support_max_nm": 990.0,
       "native_support_min_nm": 400.0,
-      "sample_count": 68
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 7,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
+      "sample_count": 61
     }
   },
   "content_kind": "sampled_curve",
@@ -47,13 +71,19 @@
     ],
     "wavelength_field": "\ufeffWL [\u00b5m]"
   },
+  "curve_normalization": {
+    "dropped_nonfinite_samples": 0,
+    "duplicate_wavelength_samples": 28,
+    "negative_values_clipped": 0,
+    "values_capped_to_one": 0
+  },
   "curve_table": {
     "band_count": 4,
-    "row_count": 272,
+    "row_count": 244,
     "wavelength_max_nm": 1000.0,
     "wavelength_min_nm": 400.0
   },
-  "generated_at": "2026-03-16T22:42:11.208668+00:00",
+  "generated_at": "2026-03-18T22:35:54.457581+00:00",
   "manifest": {
     "approximation": false,
     "approximation_reason": null,

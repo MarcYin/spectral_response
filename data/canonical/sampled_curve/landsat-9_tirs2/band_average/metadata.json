@@ -7,6 +7,12 @@
       "native_sampling_nm": 50.0,
       "native_support_max_nm": 11800.0,
       "native_support_min_nm": 9800.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 41
     },
     "B11": {
@@ -16,18 +22,32 @@
       "native_sampling_nm": 50.0,
       "native_support_max_nm": 13000.0,
       "native_support_min_nm": 11000.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 41
     }
   },
   "content_kind": "sampled_curve",
+  "curve_normalization": {
+    "dropped_nonfinite_samples": 0,
+    "duplicate_wavelength_samples": 0,
+    "negative_values_clipped": 0,
+    "values_capped_to_one": 0
+  },
   "curve_table": {
     "band_count": 2,
     "row_count": 82,
     "wavelength_max_nm": 13000.0,
     "wavelength_min_nm": 9800.0
   },
-  "generated_at": "2026-03-16T17:40:07.185148+00:00",
+  "generated_at": "2026-03-18T22:35:51.289652+00:00",
   "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
     "band_spec": {
       "band_id_field": null,
       "band_index_field": null,
@@ -57,7 +77,9 @@
     },
     "doc_version": "2026-03-16",
     "file_sha256": "72af7625caf52688db077a5014ea93d98fa9eaeb68b65059bf1d7316d20c1bb1",
+    "instrument": null,
     "license_note": "USGS terms apply",
+    "mission_family": null,
     "notes": [
       "Canonical storage retains the official sampled curves from the TIRS band-average workbook",
       "No curve realization step is needed because sampled curves are already official"
@@ -77,6 +99,7 @@
       },
       "script": "scripts/ingest/ingest_sampled_curve.py"
     },
+    "platform": null,
     "raw_local_path": "sources/raw/usgs/landsat/landsat-9/tirs2/2026-03-16/L9_TIRS2_RSR.xlsx",
     "representation_variant": "band_average",
     "retrieved_at": "2026-03-16",

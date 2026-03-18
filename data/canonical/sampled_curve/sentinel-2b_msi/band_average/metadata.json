@@ -100,8 +100,10 @@
     "wavelength_min_nm": 300.0,
     "wavelength_sampling_nm": 1.0
   },
-  "generated_at": "2026-03-16T17:04:27.249021+00:00",
+  "generated_at": "2026-03-18T22:36:03.628520+00:00",
   "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
     "band_spec": {
       "band_id_field": null,
       "band_index_field": null,
@@ -131,7 +133,9 @@
     },
     "doc_version": "4.0",
     "file_sha256": "1a9edc27d692a570911a460d589f188da0fc3e27f0b0bd1ad322059c380519b0",
+    "instrument": "MSI",
     "license_note": "Copernicus/ESA terms apply",
+    "mission_family": "Sentinel-2",
     "notes": [
       "Use source-published wavelength axis for canonical storage",
       "Derived reflective_300_2500_1nm product built after native ingest",
@@ -155,6 +159,7 @@
       },
       "script": "scripts/ingest/ingest_sentinel2_srf.py"
     },
+    "platform": "Sentinel-2B",
     "raw_local_path": "sources/raw/esa/sentinel-2/s2c/msi/4.0/S2-SRF-4.0.xlsx",
     "representation_variant": "band_average",
     "retrieved_at": "2026-03-15",
@@ -184,7 +189,7 @@
   "representation_variant": "band_average",
   "sensor_unit_id": "sentinel-2b_msi",
   "source_artifact": {
-    "path": "sources/raw/esa/sentinel-2/s2c/msi/4.0/S2-SRF-4.0.xlsx",
+    "path": "/Users/fengyin/Documents/spectral_response_function/sources/raw/esa/sentinel-2/s2c/msi/4.0/S2-SRF-4.0.xlsx",
     "sha256": "1a9edc27d692a570911a460d589f188da0fc3e27f0b0bd1ad322059c380519b0",
     "size_bytes": 1339179
   },

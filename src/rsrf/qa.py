@@ -8,7 +8,7 @@ from typing import Any
 
 import numpy as np
 
-from .api import get_metadata, list_bands, load_band_spec, load_curve
+from .api import get_metadata, list_bands, list_sensors, load_band_spec, load_curve
 from .convolve import response_area
 from .io import write_json
 from .models import BandSpec, ContentKind, GridPolicy, SampledCurve
@@ -18,6 +18,8 @@ from .registry import build_repo_layout
 
 OVERLAY_REFERENCE_FILENAME = "overlay_reference.csv"
 OVERLAY_MAX_ABS_TOLERANCE = 0.02
+SAMPLED_CURVE_MIN_WAVELENGTH_NM = 50.0
+SAMPLED_CURVE_MAX_RESPONSE = 1.000001
 
 
 def validate_sensor(
@@ -45,6 +47,51 @@ def validate_sensor(
             root=root,
         )
     raise NotImplementedError(f"validation not implemented for content_kind={content_kind.value}")
+
+
+def validate_sampled_curve_inventory(
+    *,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    """Validate every sampled-curve representation in the current repository."""
+
+    sampled_rows = [
+        row
+        for row in list_sensors(root=root)
+        if str(row["content_kind"]) == ContentKind.SAMPLED_CURVE.value
+    ]
+    sampled_rows.sort(key=lambda row: (str(row["sensor_unit_id"]), str(row["representation_variant"])))
+
+    reports: list[dict[str, Any]] = []
+    failures: list[dict[str, Any]] = []
+    total_bands = 0
+    for row in sampled_rows:
+        report = validate_sampled_curve_variant(
+            str(row["sensor_unit_id"]),
+            str(row["representation_variant"]),
+            root=root,
+        )
+        reports.append(
+            {
+                "sensor_unit_id": report["sensor_unit_id"],
+                "representation_variant": report["representation_variant"],
+                "passed": report["passed"],
+                "failure_count": report["failure_count"],
+            }
+        )
+        failures.extend(report["failures"])
+        total_bands += int(report["summary"]["band_count"])
+
+    return {
+        "passed": not failures,
+        "failure_count": len(failures),
+        "failures": failures,
+        "summary": {
+            "sensor_count": len(sampled_rows),
+            "band_count": total_bands,
+        },
+        "reports": reports,
+    }
 
 
 def validate_sampled_curve_variant(
@@ -81,7 +128,9 @@ def validate_sampled_curve_variant(
         strictly_increasing = bool(wavelength_nm.size > 1 and np.all(np.diff(wavelength_nm) > 0))
         finite_values = bool(np.all(np.isfinite(wavelength_nm)) and np.all(np.isfinite(response)))
         nonnegative_response = bool(np.all(response >= 0.0))
+        bounded_response = bool(np.all(response <= SAMPLED_CURVE_MAX_RESPONSE))
         positive_peak = bool(float(response.max()) > 0.0)
+        plausible_wavelength_scale = bool(float(wavelength_nm.min()) >= SAMPLED_CURVE_MIN_WAVELENGTH_NM)
 
         if not strictly_increasing:
             failures.append(
@@ -123,6 +172,16 @@ def validate_sampled_curve_variant(
                     "response values must be non-negative",
                 )
             )
+        if not bounded_response:
+            failures.append(
+                _failure(
+                    sensor_unit_id,
+                    representation_variant,
+                    band_id,
+                    "bounded_response",
+                    f"response values must be <= {SAMPLED_CURVE_MAX_RESPONSE:.6f}",
+                )
+            )
         if not positive_peak:
             failures.append(
                 _failure(
@@ -131,6 +190,16 @@ def validate_sampled_curve_variant(
                     band_id,
                     "positive_peak",
                     "response curve must have a positive peak",
+                )
+            )
+        if not plausible_wavelength_scale:
+            failures.append(
+                _failure(
+                    sensor_unit_id,
+                    representation_variant,
+                    band_id,
+                    "minimum_wavelength_scale",
+                    f"wavelength grid must stay above {SAMPLED_CURVE_MIN_WAVELENGTH_NM:.1f} nm",
                 )
             )
 

@@ -7,6 +7,12 @@
       "native_sampling_nm": 1.0,
       "native_support_max_nm": 550.0,
       "native_support_min_nm": 420.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 131
     },
     "B2": {
@@ -16,6 +22,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 645.0,
       "native_support_min_nm": 501.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 133
     },
     "B3": {
@@ -25,6 +37,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 740.0,
       "native_support_min_nm": 580.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 106
     },
     "B4": {
@@ -34,6 +52,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 945.0,
       "native_support_min_nm": 730.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 176
     },
     "B5": {
@@ -43,6 +67,12 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 1880.0,
       "native_support_min_nm": 1514.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 160
     },
     "B6": {
@@ -52,7 +82,13 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 12900.0,
       "native_support_min_nm": 10000.0,
-      "sample_count": 172
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 1,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
+      "sample_count": 171
     },
     "B7": {
       "band_index": 7,
@@ -61,18 +97,32 @@
       "native_sampling_nm": null,
       "native_support_max_nm": 2395.0,
       "native_support_min_nm": 2000.0,
+      "normalization": {
+        "dropped_nonfinite_samples": 0,
+        "duplicate_wavelength_samples": 0,
+        "negative_values_clipped": 0,
+        "values_capped_to_one": 0
+      },
       "sample_count": 207
     }
   },
   "content_kind": "sampled_curve",
+  "curve_normalization": {
+    "dropped_nonfinite_samples": 0,
+    "duplicate_wavelength_samples": 1,
+    "negative_values_clipped": 0,
+    "values_capped_to_one": 0
+  },
   "curve_table": {
     "band_count": 7,
-    "row_count": 1085,
+    "row_count": 1084,
     "wavelength_max_nm": 12900.0,
     "wavelength_min_nm": 420.0
   },
-  "generated_at": "2026-03-16T17:40:04.507571+00:00",
+  "generated_at": "2026-03-18T22:35:48.668481+00:00",
   "manifest": {
+    "approximation": false,
+    "approximation_reason": null,
     "band_spec": {
       "band_id_field": null,
       "band_index_field": null,
@@ -102,7 +152,9 @@
     },
     "doc_version": "c3-master",
     "file_sha256": "cc860a3f3c0e86e6402e6ef813a93ffa5057bd2dbee9d07ff44cd7c4a7ce389d",
+    "instrument": null,
     "license_note": "USGS terms apply",
+    "mission_family": null,
     "notes": [
       "Canonical storage retains the official sampled curves from the USGS viewer export",
       "No curve realization step is needed because sampled curves are already official"
@@ -122,6 +174,7 @@
       },
       "script": "scripts/ingest/ingest_sampled_curve.py"
     },
+    "platform": null,
     "raw_local_path": "sources/raw/usgs/landsat/landsat-5/tm/c3-master",
     "representation_variant": "band_average",
     "retrieved_at": "2026-03-16",
