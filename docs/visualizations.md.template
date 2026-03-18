@@ -5,7 +5,7 @@ hide:
 
 # Interactive Visualizations
 
-<div id="rsrf-visualization-page" class="rsrf-viz-page" data-viz-version="20260318-v1" data-index-path="../assets/visualization/index.json" data-overlap-path="../assets/visualization/overlap_index.json">
+<div id="rsrf-visualization-page" class="rsrf-viz-page" data-viz-version="__RSRF_VISUALIZATION_BUILD_ID__" data-index-path="../assets/visualization/index.json" data-overlap-path="../assets/visualization/overlap_index.json">
   <section class="rsrf-viz-hero">
     <p class="rsrf-viz-kicker">Optical response atlas</p>
     <h2>Explore the repository the way instrument engineers think about it</h2>

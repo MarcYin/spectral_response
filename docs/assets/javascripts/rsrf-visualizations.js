@@ -1,4 +1,5 @@
 (function () {
+  const BUILD_ID = "__RSRF_VISUALIZATION_BUILD_ID__";
   const PAGE_ID = "rsrf-visualization-page";
   const OVERLAP_MIN_RESPONSE = 0.01;
   const OVERLAP_DEFAULT_SELECTION_LIMIT = 10;
@@ -57,6 +58,7 @@
       activeSensorKey: indexData.sensors[0] ? indexData.sensors[0].sensor_key : null,
       selectedBandIds: new Set(),
       bandFilter: "",
+      includePanBands: false,
       selectedWavelength: 865,
       overlapSelectedKeys: new Set(),
       overlapRequest: 0,
@@ -88,6 +90,13 @@
       tableBody: document.getElementById("rsrf-overlap-table-body"),
     };
 
+    const controls = {
+      panToggle: document.getElementById("rsrf-toggle-pan-bands"),
+    };
+
+    assertVisualizationDom(page, explorer, overlap, controls);
+    controls.panToggle.checked = state.includePanBands;
+
     if (overlap.slider) {
       overlap.slider.value = String(state.selectedWavelength);
     }
@@ -108,13 +117,24 @@
       await renderExplorer(indexUrl, sensorSummaries, sensorCache, state, explorer);
     });
 
+    controls.panToggle.addEventListener("change", async () => {
+      state.includePanBands = controls.panToggle.checked;
+      await renderExplorer(indexUrl, sensorSummaries, sensorCache, state, explorer);
+      await renderHeatmap(indexUrl, indexData, overlapSummaries, sensorCache, overlap, state);
+      await renderOverlap(indexUrl, indexData, overlapSummaries, sensorCache, state, overlap);
+    });
+
     explorer.featuredButton.addEventListener("click", async () => {
       const detail = await loadSensorDetail(
         sensorSummaries.get(state.activeSensorKey),
         sensorCache,
         indexUrl,
       );
-      state.selectedBandIds = new Set(defaultFeaturedBandIds(detail));
+      state.selectedBandIds = new Set(
+        defaultFeaturedBandIds(
+          filterBandsForDisplay(detail.bands, detail.sensor_key || state.activeSensorKey, state.includePanBands),
+        ),
+      );
       await renderExplorer(indexUrl, sensorSummaries, sensorCache, state, explorer, detail);
     });
 
@@ -124,7 +144,13 @@
         sensorCache,
         indexUrl,
       );
-      state.selectedBandIds = new Set(detail.bands.map((band) => band.band_id));
+      state.selectedBandIds = new Set(
+        filterBandsForDisplay(
+          detail.bands,
+          detail.sensor_key || state.activeSensorKey,
+          state.includePanBands,
+        ).map((band) => band.band_id),
+      );
       await renderExplorer(indexUrl, sensorSummaries, sensorCache, state, explorer, detail);
     });
 
@@ -147,12 +173,20 @@
         overlapSummaries,
         sensorCache,
         wavelength,
+        state.includePanBands,
       );
       if (requestId !== state.overlapRequest || wavelength !== Number(state.selectedWavelength)) {
         return;
       }
       state.overlapSelectedKeys = new Set(defaultOverlapSelectionKeys(overlaps));
-      renderOverlapSelector(overlap.selectorList, overlap.meta, overlaps, state);
+      renderOverlapSelector(
+        overlap.selectorList,
+        overlap.meta,
+        overlaps,
+        state,
+        overlap.curves,
+        overlap.tableBody,
+      );
       renderOverlapCurvePlot(overlap.curves, overlaps, state.overlapSelectedKeys, wavelength);
       renderOverlapTable(overlap.tableBody, overlaps, state.overlapSelectedKeys);
     });
@@ -166,12 +200,20 @@
         overlapSummaries,
         sensorCache,
         wavelength,
+        state.includePanBands,
       );
       if (requestId !== state.overlapRequest || wavelength !== Number(state.selectedWavelength)) {
         return;
       }
       state.overlapSelectedKeys = new Set(overlaps.map((item) => item.key));
-      renderOverlapSelector(overlap.selectorList, overlap.meta, overlaps, state);
+      renderOverlapSelector(
+        overlap.selectorList,
+        overlap.meta,
+        overlaps,
+        state,
+        overlap.curves,
+        overlap.tableBody,
+      );
       renderOverlapCurvePlot(overlap.curves, overlaps, state.overlapSelectedKeys, wavelength);
       renderOverlapTable(overlap.tableBody, overlaps, state.overlapSelectedKeys);
     });
@@ -185,12 +227,20 @@
         overlapSummaries,
         sensorCache,
         wavelength,
+        state.includePanBands,
       );
       if (requestId !== state.overlapRequest || wavelength !== Number(state.selectedWavelength)) {
         return;
       }
       state.overlapSelectedKeys = new Set();
-      renderOverlapSelector(overlap.selectorList, overlap.meta, overlaps, state);
+      renderOverlapSelector(
+        overlap.selectorList,
+        overlap.meta,
+        overlaps,
+        state,
+        overlap.curves,
+        overlap.tableBody,
+      );
       renderOverlapCurvePlot(overlap.curves, overlaps, state.overlapSelectedKeys, wavelength);
       renderOverlapTable(overlap.tableBody, overlaps, state.overlapSelectedKeys);
     });
@@ -221,23 +271,42 @@
     }
 
     const detail = detailOverride || (await loadSensorDetail(sensorSummary, sensorCache, indexUrl));
+    const visibleBands = filterBandsForDisplay(
+      detail.bands,
+      detail.sensor_key || sensorSummary.sensor_key || state.activeSensorKey,
+      state.includePanBands,
+    );
+    if (!state.includePanBands) {
+      const visibleIds = new Set(visibleBands.map((band) => band.band_id));
+      state.selectedBandIds = new Set(
+        [...state.selectedBandIds].filter((bandId) => visibleIds.has(bandId)),
+      );
+    }
     if (state.selectedBandIds.size === 0) {
-      state.selectedBandIds = new Set(defaultFeaturedBandIds(detail));
+      state.selectedBandIds = new Set(defaultFeaturedBandIds(visibleBands));
     }
 
-    renderExplorerStats(detail, explorer.stats, state.selectedBandIds.size);
-    renderBandList(detail, state, explorer);
-    renderExplorerPlot(detail, explorer.plot, state.selectedBandIds);
+    renderExplorerStats(
+      detail,
+      explorer.stats,
+      visibleBands,
+      state.selectedBandIds.size,
+      detail.bands.length - visibleBands.length,
+    );
+    renderBandList(detail, visibleBands, state, explorer);
+    renderExplorerPlot(visibleBands, explorer.plot, state.selectedBandIds, state.includePanBands);
   }
 
-  function renderExplorerStats(detail, statsElement, selectedCount) {
+  function renderExplorerStats(detail, statsElement, visibleBands, selectedCount, hiddenPanCount) {
     const stats = [
       ["Sensor", detail.label],
       ["Curve source", detail.curve_origin.replaceAll("_", " ")],
-      ["Band count", `${selectedCount} selected / ${detail.band_count}`],
+      ["Band count", formatBandCounter(selectedCount, visibleBands.length, hiddenPanCount)],
       [
         "Span",
-        `${formatNumber(detail.wavelength_min_nm, 0)} to ${formatNumber(detail.wavelength_max_nm, 0)} nm`,
+        visibleBands.length
+          ? `${formatNumber(Math.min(...visibleBands.map((band) => band.support_min_nm)), 0)} to ${formatNumber(Math.max(...visibleBands.map((band) => band.support_max_nm)), 0)} nm`
+          : "No visible bands",
       ],
     ];
     statsElement.innerHTML = stats
@@ -252,16 +321,18 @@
       .join("");
   }
 
-  function renderBandList(detail, state, explorer) {
-    const visibleBands = detail.bands.filter((band) => {
+  function renderBandList(detail, displayBands, state, explorer) {
+    const visibleBands = displayBands.filter((band) => {
       if (!state.bandFilter) {
         return true;
       }
       const haystack = `${band.band_id} ${band.band_name}`.toLowerCase();
       return haystack.includes(state.bandFilter);
     });
+    const hiddenPanCount = detail.bands.length - displayBands.length;
+    const selectedCount = displayBands.filter((band) => state.selectedBandIds.has(band.band_id)).length;
 
-    explorer.bandMeta.textContent = `${state.selectedBandIds.size} selected of ${detail.band_count} bands`;
+    explorer.bandMeta.textContent = formatBandCounter(selectedCount, displayBands.length, hiddenPanCount);
     explorer.bandList.innerHTML = "";
 
     visibleBands.forEach((band, index) => {
@@ -278,9 +349,14 @@
         } else {
           state.selectedBandIds.delete(band.band_id);
         }
-        renderExplorerStats(detail, explorer.stats, state.selectedBandIds.size);
-        renderExplorerPlot(detail, explorer.plot, state.selectedBandIds);
-        explorer.bandMeta.textContent = `${state.selectedBandIds.size} selected of ${detail.band_count} bands`;
+        const nextSelectedCount = displayBands.filter((item) => state.selectedBandIds.has(item.band_id)).length;
+        renderExplorerStats(detail, explorer.stats, displayBands, nextSelectedCount, hiddenPanCount);
+        renderExplorerPlot(displayBands, explorer.plot, state.selectedBandIds, state.includePanBands);
+        explorer.bandMeta.textContent = formatBandCounter(
+          nextSelectedCount,
+          displayBands.length,
+          hiddenPanCount,
+        );
       });
 
       const content = document.createElement("div");
@@ -297,12 +373,16 @@
     });
 
     if (visibleBands.length === 0) {
-      explorer.bandList.innerHTML = '<div class="rsrf-viz-empty">No bands match the current filter.</div>';
+      explorer.bandList.innerHTML = `<div class="rsrf-viz-empty">${
+        displayBands.length
+          ? "No bands match the current filter."
+          : "No visible bands with Pan hidden. Enable the toggle above to add them back."
+      }</div>`;
     }
   }
 
-  function renderExplorerPlot(detail, plotElement, selectedBandIds) {
-    const selectedBands = detail.bands.filter((band) => selectedBandIds.has(band.band_id));
+  function renderExplorerPlot(visibleBands, plotElement, selectedBandIds, includePanBands) {
+    const selectedBands = visibleBands.filter((band) => selectedBandIds.has(band.band_id));
     if (selectedBands.length === 0) {
       Plotly.react(
         plotElement,
@@ -313,7 +393,11 @@
           margin: { l: 54, r: 20, t: 30, b: 52 },
           annotations: [
             {
-              text: "Choose at least one band to display.",
+              text: visibleBands.length
+                ? "Choose at least one band to display."
+                : includePanBands
+                  ? "No bands available for this sensor."
+                  : "No visible bands with Pan hidden. Enable the toggle above to inspect them.",
               showarrow: false,
               font: { size: 16, color: "#5f6c76" },
             },
@@ -385,13 +469,17 @@
     const sensors = indexData.sensors;
     const wavelengths = indexData.grid.wavelength_nm;
     const height = Math.max(720, sensors.length * 15 + 140);
+    const heatmapMode = state.includePanBands ? "all_bands" : "no_pan";
+    const heatmapPayload = indexData.heatmap.modes
+      ? indexData.heatmap.modes[heatmapMode]
+      : { z: indexData.heatmap.z };
 
-    await Plotly.newPlot(
+    await Plotly.react(
       overlap.heatmap,
       [
         {
           type: "heatmap",
-          z: indexData.heatmap.z,
+          z: heatmapPayload.z,
           x: wavelengths,
           y: sensors.map((sensor) => sensor.label),
           colorscale: [
@@ -429,21 +517,24 @@
       },
     );
 
-    overlap.heatmap.on("plotly_click", async (event) => {
-      if (!event.points || !event.points.length) {
-        return;
-      }
-      state.selectedWavelength = Math.round(Number(event.points[0].x));
-      overlap.slider.value = String(state.selectedWavelength);
-      await renderOverlap(
-        indexUrl,
-        indexData,
-        overlapSummaries,
-        sensorCache,
-        state,
-        overlap,
-      );
-    });
+    if (!overlap.heatmap.dataset.clickBound) {
+      overlap.heatmap.on("plotly_click", async (event) => {
+        if (!event.points || !event.points.length) {
+          return;
+        }
+        state.selectedWavelength = Math.round(Number(event.points[0].x));
+        overlap.slider.value = String(state.selectedWavelength);
+        await renderOverlap(
+          indexUrl,
+          indexData,
+          overlapSummaries,
+          sensorCache,
+          state,
+          overlap,
+        );
+      });
+      overlap.heatmap.dataset.clickBound = "true";
+    }
   }
 
   async function renderOverlap(indexUrl, indexData, overlapSummaries, sensorCache, state, overlap) {
@@ -458,15 +549,23 @@
       overlapSummaries,
       sensorCache,
       wavelength,
+      state.includePanBands,
     );
     if (requestId !== state.overlapRequest) {
       return;
     }
 
-    renderOverlapStats(overlap.stats, wavelength, overlaps);
+    renderOverlapStats(overlap.stats, wavelength, overlaps, state.includePanBands);
     if (!overlaps.length) {
       state.overlapSelectedKeys = new Set();
-      renderOverlapSelector(overlap.selectorList, overlap.meta, overlaps, state);
+      renderOverlapSelector(
+        overlap.selectorList,
+        overlap.meta,
+        overlaps,
+        state,
+        overlap.curves,
+        overlap.tableBody,
+      );
       renderOverlapCurvePlot(overlap.curves, overlaps, state.overlapSelectedKeys, wavelength);
       renderOverlapTable(overlap.tableBody, overlaps, state.overlapSelectedKeys);
       return;
@@ -481,18 +580,26 @@
       ? validSelectedKeys
       : new Set(defaultOverlapSelectionKeys(overlaps));
 
-    renderOverlapSelector(overlap.selectorList, overlap.meta, overlaps, state);
+    renderOverlapSelector(
+      overlap.selectorList,
+      overlap.meta,
+      overlaps,
+      state,
+      overlap.curves,
+      overlap.tableBody,
+    );
     renderOverlapCurvePlot(overlap.curves, overlaps, state.overlapSelectedKeys, wavelength);
     renderOverlapTable(overlap.tableBody, overlaps, state.overlapSelectedKeys);
   }
 
-  function renderOverlapStats(statsElement, wavelength, overlaps) {
+  function renderOverlapStats(statsElement, wavelength, overlaps, includePanBands) {
     const uniqueSensors = new Set(overlaps.map((item) => item.sensorLabel));
     const strongest = overlaps[0];
     const stats = [
       ["Wavelength", `${formatNumber(wavelength, 0)} nm`],
       ["Sensors", `${uniqueSensors.size}`],
       ["Bands > 0.01", `${overlaps.length}`],
+      ["Pan bands", includePanBands ? "Included" : "Hidden"],
       ["Strongest overlap", strongest ? `${strongest.bandLabel}` : "None"],
     ];
     statsElement.innerHTML = stats
@@ -507,9 +614,11 @@
       .join("");
   }
 
-  function renderOverlapSelector(listElement, metaElement, overlaps, state) {
+  function renderOverlapSelector(listElement, metaElement, overlaps, state, plotElement, tableBody) {
     if (!overlaps.length) {
-      metaElement.textContent = `No bands exceed ${OVERLAP_MIN_RESPONSE.toFixed(2)} response at the selected wavelength.`;
+      metaElement.textContent = state.includePanBands
+        ? `No bands exceed ${OVERLAP_MIN_RESPONSE.toFixed(2)} response at the selected wavelength.`
+        : `No non-pan bands exceed ${OVERLAP_MIN_RESPONSE.toFixed(2)} response at the selected wavelength.`;
       listElement.innerHTML = '<div class="rsrf-viz-empty">No overlapping curves to compare.</div>';
       return;
     }
@@ -517,7 +626,8 @@
     const comparedCount = overlaps.filter((item) => state.overlapSelectedKeys.has(item.key)).length;
     metaElement.textContent =
       `${overlaps.length} bands exceed ${OVERLAP_MIN_RESPONSE.toFixed(2)} response. ` +
-      `${comparedCount} selected for full-curve comparison.`;
+      `${comparedCount} selected for full-curve comparison.` +
+      (state.includePanBands ? "" : " Pan bands hidden.");
 
     listElement.innerHTML = "";
     overlaps.forEach((item, index) => {
@@ -535,18 +645,14 @@
         } else {
           state.overlapSelectedKeys.delete(item.key);
         }
-        renderOverlapSelector(listElement, metaElement, overlaps, state);
+        renderOverlapSelector(listElement, metaElement, overlaps, state, plotElement, tableBody);
         renderOverlapCurvePlot(
-          document.getElementById("rsrf-overlap-curves"),
+          plotElement,
           overlaps,
           state.overlapSelectedKeys,
           state.selectedWavelength,
         );
-        renderOverlapTable(
-          document.getElementById("rsrf-overlap-table-body"),
-          overlaps,
-          state.overlapSelectedKeys,
-        );
+        renderOverlapTable(tableBody, overlaps, state.overlapSelectedKeys);
       });
 
       const content = document.createElement("div");
@@ -683,11 +789,14 @@
       .join("");
   }
 
-  async function collectOverlapCandidates(indexUrl, overlapSummaries, sensorCache, wavelength) {
+  async function collectOverlapCandidates(indexUrl, overlapSummaries, sensorCache, wavelength, includePanBands) {
     const candidateSummaries = [];
     overlapSummaries.forEach((sensor) => {
       const matchingBands = sensor.bands.filter(
-        (band) => wavelength >= band.support_min_nm && wavelength <= band.support_max_nm,
+        (band) =>
+          wavelength >= band.support_min_nm &&
+          wavelength <= band.support_max_nm &&
+          (includePanBands || !isPanBand(sensor.sensor_key, band)),
       );
       if (matchingBands.length) {
         candidateSummaries.push({ sensor, bands: matchingBands });
@@ -756,6 +865,44 @@
       .map((item) => item.key);
   }
 
+  function assertVisualizationDom(page, explorer, overlap, controls) {
+    if (page.dataset.vizVersion !== BUILD_ID) {
+      throw new Error(
+        "Visualization assets are out of sync with this page. Refresh the page to load the latest docs bundle.",
+      );
+    }
+
+    const required = [
+      [explorer.sensorSelect, "rsrf-explorer-sensor"],
+      [explorer.bandFilter, "rsrf-explorer-band-filter"],
+      [explorer.bandMeta, "rsrf-explorer-band-meta"],
+      [explorer.bandList, "rsrf-explorer-band-list"],
+      [explorer.featuredButton, "rsrf-explorer-featured"],
+      [explorer.allButton, "rsrf-explorer-all"],
+      [explorer.clearButton, "rsrf-explorer-clear"],
+      [explorer.stats, "rsrf-explorer-stats"],
+      [explorer.plot, "rsrf-explorer-plot"],
+      [controls.panToggle, "rsrf-toggle-pan-bands"],
+      [overlap.slider, "rsrf-overlap-slider"],
+      [overlap.wavelengthChip, "rsrf-overlap-wavelength"],
+      [overlap.heatmap, "rsrf-overlap-heatmap"],
+      [overlap.stats, "rsrf-overlap-stats"],
+      [overlap.meta, "rsrf-overlap-meta"],
+      [overlap.topButton, "rsrf-overlap-top"],
+      [overlap.allButton, "rsrf-overlap-all"],
+      [overlap.clearButton, "rsrf-overlap-clear"],
+      [overlap.selectorList, "rsrf-overlap-selector-list"],
+      [overlap.curves, "rsrf-overlap-curves"],
+      [overlap.tableBody, "rsrf-overlap-table-body"],
+    ];
+    const missing = required.filter(([element]) => !element).map(([, id]) => id);
+    if (missing.length) {
+      throw new Error(
+        `Visualization markup is incomplete for build ${BUILD_ID}. Missing: ${missing.join(", ")}.`,
+      );
+    }
+  }
+
   async function loadSensorDetail(sensorSummary, sensorCache, indexUrl) {
     if (!sensorSummary) {
       throw new Error("Missing sensor summary");
@@ -769,16 +916,16 @@
     return payload;
   }
 
-  function defaultFeaturedBandIds(detail) {
-    if (detail.band_count <= 12) {
-      return detail.bands.map((band) => band.band_id);
+  function defaultFeaturedBandIds(bands) {
+    if (bands.length <= 12) {
+      return bands.map((band) => band.band_id);
     }
-    const count = Math.min(12, detail.bands.length);
+    const count = Math.min(12, bands.length);
     const indices = new Set();
     for (let index = 0; index < count; index += 1) {
-      indices.add(Math.round((index * (detail.bands.length - 1)) / (count - 1)));
+      indices.add(Math.round((index * (bands.length - 1)) / (count - 1)));
     }
-    return detail.bands
+    return bands
       .filter((_, index) => indices.has(index))
       .map((band) => band.band_id);
   }
@@ -815,6 +962,42 @@
     }
     parts.push(`support ${formatNumber(band.support_min_nm, 0)} to ${formatNumber(band.support_max_nm, 0)} nm`);
     return escapeHtml(parts.join(" · "));
+  }
+
+  function filterBandsForDisplay(bands, sensorKey, includePanBands) {
+    if (includePanBands) {
+      return bands;
+    }
+    return bands.filter((band) => !isPanBand(sensorKey, band));
+  }
+
+  function isPanBand(sensorKey, band) {
+    if (band && typeof band.is_pan_band === "boolean") {
+      return band.is_pan_band;
+    }
+    const bandId = String(band.band_id || "").trim();
+    const bandName = String(band.band_name || "").trim();
+    const text = `${bandId} ${bandName}`.toLowerCase();
+    if (/\bpan(chromatic)?\b/.test(text)) {
+      return true;
+    }
+    const normalizedSensor = String(sensorKey || "")
+      .toLowerCase()
+      .split("__", 1)[0];
+    return (
+      (normalizedSensor === "landsat-7_etm_plus" ||
+        normalizedSensor === "landsat-8_oli" ||
+        normalizedSensor === "landsat-9_oli2") &&
+      bandId.toUpperCase() === "B8"
+    );
+  }
+
+  function formatBandCounter(selectedCount, visibleCount, hiddenPanCount) {
+    let message = `${selectedCount} selected / ${visibleCount} visible`;
+    if (hiddenPanCount > 0) {
+      message += ` (${hiddenPanCount} Pan hidden)`;
+    }
+    return message;
   }
 
   function verticalGuideShape(wavelength) {

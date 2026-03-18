@@ -1,5 +1,5 @@
 (function () {
-  const BUILD_ID = "20260317-v3";
+  const BUILD_ID = "20260318-v1";
   const PAGE_ID = "rsrf-visualization-page";
   const OVERLAP_MIN_RESPONSE = 0.01;
   const OVERLAP_DEFAULT_SELECTION_LIMIT = 10;
@@ -120,6 +120,7 @@
     controls.panToggle.addEventListener("change", async () => {
       state.includePanBands = controls.panToggle.checked;
       await renderExplorer(indexUrl, sensorSummaries, sensorCache, state, explorer);
+      await renderHeatmap(indexUrl, indexData, overlapSummaries, sensorCache, overlap, state);
       await renderOverlap(indexUrl, indexData, overlapSummaries, sensorCache, state, overlap);
     });
 
@@ -468,13 +469,17 @@
     const sensors = indexData.sensors;
     const wavelengths = indexData.grid.wavelength_nm;
     const height = Math.max(720, sensors.length * 15 + 140);
+    const heatmapMode = state.includePanBands ? "all_bands" : "no_pan";
+    const heatmapPayload = indexData.heatmap.modes
+      ? indexData.heatmap.modes[heatmapMode]
+      : { z: indexData.heatmap.z };
 
-    await Plotly.newPlot(
+    await Plotly.react(
       overlap.heatmap,
       [
         {
           type: "heatmap",
-          z: indexData.heatmap.z,
+          z: heatmapPayload.z,
           x: wavelengths,
           y: sensors.map((sensor) => sensor.label),
           colorscale: [
@@ -512,21 +517,24 @@
       },
     );
 
-    overlap.heatmap.on("plotly_click", async (event) => {
-      if (!event.points || !event.points.length) {
-        return;
-      }
-      state.selectedWavelength = Math.round(Number(event.points[0].x));
-      overlap.slider.value = String(state.selectedWavelength);
-      await renderOverlap(
-        indexUrl,
-        indexData,
-        overlapSummaries,
-        sensorCache,
-        state,
-        overlap,
-      );
-    });
+    if (!overlap.heatmap.dataset.clickBound) {
+      overlap.heatmap.on("plotly_click", async (event) => {
+        if (!event.points || !event.points.length) {
+          return;
+        }
+        state.selectedWavelength = Math.round(Number(event.points[0].x));
+        overlap.slider.value = String(state.selectedWavelength);
+        await renderOverlap(
+          indexUrl,
+          indexData,
+          overlapSummaries,
+          sensorCache,
+          state,
+          overlap,
+        );
+      });
+      overlap.heatmap.dataset.clickBound = "true";
+    }
   }
 
   async function renderOverlap(indexUrl, indexData, overlapSummaries, sensorCache, state, overlap) {
@@ -964,6 +972,9 @@
   }
 
   function isPanBand(sensorKey, band) {
+    if (band && typeof band.is_pan_band === "boolean") {
+      return band.is_pan_band;
+    }
     const bandId = String(band.band_id || "").trim();
     const bandName = String(band.band_name || "").trim();
     const text = `${bandId} ${bandName}`.toLowerCase();

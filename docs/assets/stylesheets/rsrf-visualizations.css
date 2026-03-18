@@ -64,6 +64,43 @@ body.rsrf-viz-layout .rsrf-viz-article > h1:first-of-type {
   padding: 1.7rem 1.8rem;
 }
 
+.rsrf-viz-hero-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 1.2rem;
+}
+
+.rsrf-viz-toggle-card {
+  display: grid;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--rsrf-border);
+  border-radius: 18px;
+  max-width: 32rem;
+  padding: 0.9rem 1rem;
+}
+
+.rsrf-viz-toggle-label {
+  align-items: center;
+  color: var(--rsrf-ink);
+  display: flex;
+  gap: 0.7rem;
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.rsrf-viz-toggle-label input[type="checkbox"] {
+  accent-color: var(--rsrf-accent);
+  margin: 0;
+  width: auto;
+}
+
+.rsrf-viz-toggle-card small {
+  color: var(--rsrf-muted);
+  line-height: 1.45;
+}
+
 .rsrf-viz-kicker,
 .rsrf-viz-eyebrow {
   margin: 0 0 0.35rem;
@@ -212,6 +249,10 @@ body.rsrf-viz-layout .rsrf-viz-article > h1:first-of-type {
   border-radius: 18px;
   min-width: 0;
   padding: 0.9rem;
+}
+
+.rsrf-viz-legacy-anchor {
+  display: none;
 }
 
 .rsrf-viz-overlap-toolbar {

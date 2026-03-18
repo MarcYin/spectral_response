@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -19,6 +20,12 @@ DOCS_WAVELENGTH_MAX_NM = 2500
 DOCS_WAVELENGTH_STEP_NM = 1
 DISPLAY_MAX_POINTS = 800
 SUPPORT_THRESHOLD = 0.001
+NUMERIC_PAN_SENSOR_KEYS = {
+    "landsat-7_etm_plus",
+    "landsat-8_oli",
+    "landsat-9_oli2",
+}
+PAN_BAND_RE = re.compile(r"\bpan(chromatic)?\b", re.IGNORECASE)
 
 
 def export_docs_visualization_assets(
@@ -58,10 +65,11 @@ def export_docs_visualization_assets(
 
     sensor_index_rows: list[dict[str, Any]] = []
     overlap_index_rows: list[dict[str, Any]] = []
-    heatmap_rows: list[list[float]] = []
+    heatmap_rows_all: list[list[float]] = []
+    heatmap_rows_no_pan: list[list[float]] = []
 
     for sensor_row in sensor_rows:
-        sensor_payload, heatmap_row = _build_sensor_visualization_payload(
+        sensor_payload, heatmap_rows = _build_sensor_visualization_payload(
             resolved_root,
             sensor_row,
             wavelength_grid_nm,
@@ -84,6 +92,7 @@ def export_docs_visualization_assets(
             "content_kind": sensor_payload["content_kind"],
             "spectral_domain": sensor_payload["spectral_domain"],
             "band_count": sensor_payload["band_count"],
+            "pan_band_count": sensor_payload["pan_band_count"],
             "curve_origin": sensor_payload["curve_origin"],
             "wavelength_min_nm": sensor_payload["wavelength_min_nm"],
             "wavelength_max_nm": sensor_payload["wavelength_max_nm"],
@@ -96,7 +105,8 @@ def export_docs_visualization_assets(
                 "bands": sensor_payload["bands"],
             }
         )
-        heatmap_rows.append(_round_array(heatmap_row, digits=4))
+        heatmap_rows_all.append(_round_array(heatmap_rows["all_bands"], digits=4))
+        heatmap_rows_no_pan.append(_round_array(heatmap_rows["no_pan"], digits=4))
 
     index_payload = {
         "grid": {
@@ -106,10 +116,22 @@ def export_docs_visualization_assets(
             "wavelength_nm": _round_array(wavelength_grid_nm, digits=1),
         },
         "heatmap": {
-            "description": (
-                "Peak-normalized per-sensor maximum response across all bands on a 1 nm grid."
-            ),
-            "z": heatmap_rows,
+            "default_mode": "no_pan",
+            "z": heatmap_rows_no_pan,
+            "modes": {
+                "all_bands": {
+                    "description": (
+                        "Peak-normalized per-sensor maximum response across all bands on a 1 nm grid."
+                    ),
+                    "z": heatmap_rows_all,
+                },
+                "no_pan": {
+                    "description": (
+                        "Peak-normalized per-sensor maximum response with Pan/panchromatic bands excluded."
+                    ),
+                    "z": heatmap_rows_no_pan,
+                },
+            },
         },
         "sensors": sensor_index_rows,
     }
@@ -132,19 +154,25 @@ def _build_sensor_visualization_payload(
     root: Path,
     sensor_row: dict[str, Any],
     wavelength_grid_nm: np.ndarray,
-) -> tuple[dict[str, Any], np.ndarray]:
+) -> tuple[dict[str, Any], dict[str, np.ndarray]]:
     sensor_unit_id = str(sensor_row["sensor_unit_id"])
     representation_variant = str(sensor_row["representation_variant"])
     bands = list_bands(sensor_unit_id, representation_variant, root=root)
 
     band_payloads: list[dict[str, Any]] = []
-    heatmap_row = np.zeros_like(wavelength_grid_nm, dtype=float)
+    heatmap_rows = {
+        "all_bands": np.zeros_like(wavelength_grid_nm, dtype=float),
+        "no_pan": np.zeros_like(wavelength_grid_nm, dtype=float),
+    }
     sensor_support_min = float("inf")
     sensor_support_max = float("-inf")
     curve_origins: set[str] = set()
+    pan_band_count = 0
 
     for band_row in bands:
         band_id = str(band_row["band_id"])
+        band_name = _clean_optional_text(band_row.get("band_name")) or band_id
+        is_pan_band = _is_pan_band(sensor_unit_id, band_id, band_name)
         response_definition = load_response_definition(
             sensor_unit_id,
             band_id,
@@ -158,25 +186,34 @@ def _build_sensor_visualization_payload(
         sensor_support_min = min(sensor_support_min, support_min_nm)
         sensor_support_max = max(sensor_support_max, support_max_nm)
         curve_origins.add(curve_origin)
+        if is_pan_band:
+            pan_band_count += 1
 
-        heatmap_row = np.maximum(
-            heatmap_row,
-            np.interp(
-                wavelength_grid_nm,
-                np.asarray(normalized_curve.wavelength_nm, dtype=float),
-                np.asarray(normalized_curve.response, dtype=float),
-                left=0.0,
-                right=0.0,
-            ),
+        interpolated_curve = np.interp(
+            wavelength_grid_nm,
+            np.asarray(normalized_curve.wavelength_nm, dtype=float),
+            np.asarray(normalized_curve.response, dtype=float),
+            left=0.0,
+            right=0.0,
         )
+        heatmap_rows["all_bands"] = np.maximum(
+            heatmap_rows["all_bands"],
+            interpolated_curve,
+        )
+        if not is_pan_band:
+            heatmap_rows["no_pan"] = np.maximum(
+                heatmap_rows["no_pan"],
+                interpolated_curve,
+            )
 
         display_curve = _downsample_curve(curve, max_points=DISPLAY_MAX_POINTS)
         band_payloads.append(
             {
                 "band_id": band_id,
-                "band_name": _clean_optional_text(band_row.get("band_name")) or band_id,
+                "band_name": band_name,
                 "band_index": _clean_optional_int(band_row.get("band_index")),
                 "curve_origin": curve_origin,
+                "is_pan_band": is_pan_band,
                 "center_wavelength_nm": _clean_optional_float(
                     band_row.get("center_wavelength_nm")
                 ),
@@ -214,11 +251,12 @@ def _build_sensor_visualization_payload(
         "spectral_domain": _clean_optional_text(sensor_row.get("spectral_domain")),
         "curve_origin": curve_origin,
         "band_count": len(band_payloads),
+        "pan_band_count": pan_band_count,
         "wavelength_min_nm": round(sensor_support_min, 3),
         "wavelength_max_nm": round(sensor_support_max, 3),
         "bands": band_payloads,
     }
-    return sensor_payload, heatmap_row
+    return sensor_payload, heatmap_rows
 
 
 def _as_curve(response_definition: SampledCurve | BandSpec) -> tuple[SampledCurve, str]:
@@ -290,6 +328,13 @@ def _sensor_label(sensor_row: dict[str, Any]) -> str:
     elif instrument:
         core_label = f"{sensor_unit_id} {instrument}"
     return f"{core_label} / {representation_variant}"
+
+
+def _is_pan_band(sensor_unit_id: str, band_id: str, band_name: str | None) -> bool:
+    band_text = f"{band_id} {band_name or ''}".strip().lower()
+    if PAN_BAND_RE.search(band_text):
+        return True
+    return sensor_unit_id in NUMERIC_PAN_SENSOR_KEYS and band_id.upper() == "B8"
 
 
 def _clean_optional_text(value: Any) -> str | None:

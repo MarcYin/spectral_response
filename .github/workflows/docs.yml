@@ -36,6 +36,9 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare docs site files
+        run: python scripts/build/prepare_docs_site.py --root .
+
       - name: Build MkDocs site
         run: mkdocs build --strict
 

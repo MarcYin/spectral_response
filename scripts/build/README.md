@@ -9,3 +9,4 @@ Examples:
 - registry snapshots
 - planning-catalog registration such as `register_p2_planned_sensors.py`
 - docs visualization asset export such as `export_docs_visualization_assets.py`
+- docs site preparation such as `prepare_docs_site.py`

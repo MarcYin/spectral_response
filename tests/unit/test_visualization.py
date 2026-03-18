@@ -34,7 +34,10 @@ class VisualizationExportTests(unittest.TestCase):
             index_payload = read_json(output_dir / "index.json")
             overlap_payload = read_json(output_dir / "overlap_index.json")
             self.assertEqual(len(index_payload["sensors"]), 2)
+            self.assertEqual(index_payload["heatmap"]["default_mode"], "no_pan")
             self.assertEqual(len(index_payload["heatmap"]["z"]), 2)
+            self.assertEqual(len(index_payload["heatmap"]["modes"]["all_bands"]["z"]), 2)
+            self.assertEqual(len(index_payload["heatmap"]["modes"]["no_pan"]["z"]), 2)
             self.assertEqual(len(overlap_payload["sensors"]), 2)
             self.assertNotIn("generated_at", index_payload)
             self.assertNotIn("generated_at", overlap_payload)
@@ -61,6 +64,26 @@ class VisualizationExportTests(unittest.TestCase):
             self.assertEqual(
                 hyperspec_payload["bands"][0]["curve_origin"],
                 "realized_band_spec",
+            )
+            self.assertIn("is_pan_band", sentinel_payload["bands"][0])
+
+    def test_export_docs_visualization_assets_tracks_pan_heatmap_modes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir).resolve()
+            export_docs_visualization_assets(
+                ROOT,
+                output_dir=output_dir,
+                sensor_keys={("landsat-8_oli", "band_average")},
+            )
+
+            index_payload = read_json(output_dir / "index.json")
+            sensor_payload = read_json(output_dir / "sensors" / "landsat-8_oli__band_average.json")
+
+            self.assertEqual(sensor_payload["pan_band_count"], 1)
+            self.assertTrue(any(band["is_pan_band"] for band in sensor_payload["bands"]))
+            self.assertNotEqual(
+                index_payload["heatmap"]["modes"]["all_bands"]["z"][0],
+                index_payload["heatmap"]["modes"]["no_pan"]["z"][0],
             )
 
     def test_export_docs_visualization_assets_is_stable_for_identical_inputs(self) -> None:
