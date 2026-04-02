@@ -135,7 +135,7 @@ class CliTests(unittest.TestCase):
             main(["--version"])
 
         self.assertEqual(context.exception.code, 0)
-        self.assertIn("rsrf 0.0.1", output.getvalue())
+        self.assertIn("rsrf 0.1.0", output.getvalue())
 
     def test_list_sensors_returns_available_sensor_representations(self) -> None:
         exit_code, stdout = self._run_main(["list-sensors", "--root", str(ROOT)])
