@@ -35,11 +35,7 @@ class RegistryRowTests(unittest.TestCase):
         rows = manifest_registry_rows(manifest)
         self.assertEqual(len(rows["sensors"]), 2)
         self.assertEqual(len(rows["realizations"]), 1)
-        realized_sensor = next(
-            row
-            for row in rows["sensors"]
-            if row["representation_variant"] == "gaussian_from_fwhm"
-        )
+        realized_sensor = next(row for row in rows["sensors"] if row["representation_variant"] == "gaussian_from_fwhm")
         self.assertEqual(realized_sensor["content_kind"], "sampled_curve")
         self.assertEqual(realized_sensor["realization_kind"], "approximate_parametric")
         self.assertTrue(realized_sensor["approximation"])

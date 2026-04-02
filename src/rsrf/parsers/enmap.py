@@ -80,9 +80,7 @@ def parse_enmap_band_workbook(workbook_path: Path, manifest: SourceManifest) -> 
         workbook.close()
 
     center_wavelengths = [row["center_wavelength_nm"] for row in band_spec_rows]
-    monotonic_centers = all(
-        current > previous for previous, current in zip(center_wavelengths, center_wavelengths[1:])
-    )
+    monotonic_centers = all(current > previous for previous, current in zip(center_wavelengths, center_wavelengths[1:]))
 
     metadata = {
         "source_id": manifest.source_id,

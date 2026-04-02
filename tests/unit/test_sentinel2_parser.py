@@ -42,10 +42,7 @@ def _build_fixture_workbook(path: Path) -> None:
     overview["A1"] = "Overview"
 
     spectral = workbook.create_sheet("Spectral Responses (S2C)")
-    spectral.append(
-        ["SR_WL"]
-        + [f"S2C_SR_AV_{band_id.replace('B0', 'B').replace('B8A', 'B8A')}" for band_id in _BANDS]
-    )
+    spectral.append(["SR_WL"] + [f"S2C_SR_AV_{band_id.replace('B0', 'B').replace('B8A', 'B8A')}" for band_id in _BANDS])
     spectral.append([300] + [0.0] * len(_BANDS))
     spectral.append([301] + [1.0] * len(_BANDS))
     spectral.append([302] + [0.0] * len(_BANDS))
@@ -64,7 +61,9 @@ def _build_fixture_workbook(path: Path) -> None:
     bandwidth.append([None, "S2A", None, "S2B", None, "S2C", None, None, None])
     bandwidth.append([None, "Wa", "Bandwidth", "Wa", "Bandwidth", "Wa", "Bandwidth", None, None])
     for index, band_id in enumerate(_BANDS, start=1):
-        bandwidth.append([band_id, 500.0 + index, 10.0 + index, 501.0 + index, 11.0 + index, 502.0 + index, 12.0 + index, None, None])
+        bandwidth.append(
+            [band_id, 500.0 + index, 10.0 + index, 501.0 + index, 11.0 + index, 502.0 + index, 12.0 + index, None, None]
+        )
 
     workbook.save(path)
 

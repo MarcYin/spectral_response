@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import os
 import sys
-import tempfile
 import unittest
 from pathlib import Path
 
@@ -13,7 +12,6 @@ if str(SRC) not in sys.path:
 
 from rsrf.registry import (
     REGISTRY_TABLES,
-    build_repo_layout,
     canonical_variant_dir,
     discover_repo_root,
     ensure_repo_layout,
@@ -22,8 +20,6 @@ from rsrf.registry import (
     registry_table_columns,
     registry_table_path,
     representation_variant_dir,
-    sensor_row_from_manifest,
-    source_row_from_manifest,
 )
 
 

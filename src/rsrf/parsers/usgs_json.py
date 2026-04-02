@@ -107,9 +107,7 @@ def _series_wavelength_score(values: list[float]) -> tuple[float, float, float]:
     deltas = [right - left for left, right in zip(values, values[1:])]
     negative_steps = sum(1 for delta in deltas if delta < 0.0)
     total_variation = sum(abs(delta) for delta in deltas)
-    monotonic_ratio = (
-        1.0 if total_variation == 0.0 else abs(values[-1] - values[0]) / total_variation
-    )
+    monotonic_ratio = 1.0 if total_variation == 0.0 else abs(values[-1] - values[0]) / total_variation
     span = abs(values[-1] - values[0])
     return (-negative_steps, monotonic_ratio, span)
 
@@ -136,9 +134,7 @@ def _parse_usgs_band_identity(filename_stem: str, *, sensor_unit_id: str) -> tup
         band_number = int(band_token)
         return f"B{band_number}", band_number, f"B{band_number}"
 
-    raise ValueError(
-        f"unable to infer USGS band identity from {filename_stem!r} for sensor {sensor_unit_id}"
-    )
+    raise ValueError(f"unable to infer USGS band identity from {filename_stem!r} for sensor {sensor_unit_id}")
 
 
 def _normalize_landsat_band(token: str) -> tuple[str, int]:

@@ -58,9 +58,7 @@ def parse_s2_srf_xlsx(workbook_path: Path, manifest: SourceManifest) -> ParsedAr
     )
 
     curve_rows: list[dict[str, Any]] = []
-    band_support: dict[str, dict[str, float | None]] = {
-        band_id: {"min": None, "max": None} for band_id in band_columns
-    }
+    band_support: dict[str, dict[str, float | None]] = {band_id: {"min": None, "max": None} for band_id in band_columns}
     sampling_nm: float | None = None
     previous_wavelength_nm: float | None = None
     wavelength_min_nm: float | None = None

@@ -43,15 +43,11 @@ def parse_prisma_he5_metadata(source_path: Path, manifest: SourceManifest) -> Pa
 
         for subsystem, center_key, fwhm_key in _SUBSYSTEM_SPECS:
             if center_key not in handle.attrs or fwhm_key not in handle.attrs:
-                raise ValueError(
-                    f"PRISMA HE5 source must contain {center_key} and {fwhm_key} attributes"
-                )
+                raise ValueError(f"PRISMA HE5 source must contain {center_key} and {fwhm_key} attributes")
             centers = list(handle.attrs[center_key])
             fwhm_values = list(handle.attrs[fwhm_key])
             if len(centers) != len(fwhm_values):
-                raise ValueError(
-                    f"PRISMA metadata arrays {center_key} and {fwhm_key} must have the same length"
-                )
+                raise ValueError(f"PRISMA metadata arrays {center_key} and {fwhm_key} must have the same length")
 
             subsystem_valid = 0
             subsystem_dropped = 0
@@ -113,9 +109,7 @@ def parse_prisma_he5_metadata(source_path: Path, manifest: SourceManifest) -> Pa
             dropped_slots[subsystem] = subsystem_dropped
 
     centers = [row["center_wavelength_nm"] for row in band_spec_rows]
-    monotonic_centers = all(
-        current > previous for previous, current in zip(centers, centers[1:])
-    )
+    monotonic_centers = all(current > previous for previous, current in zip(centers, centers[1:]))
 
     metadata = {
         "source_id": manifest.source_id,

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import tempfile
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -29,9 +29,7 @@ class ManifestValidationTests(unittest.TestCase):
             self.assertEqual(validate_manifest_dict(payload), [])
 
     def test_band_spec_manifest_is_valid(self) -> None:
-        payload = read_json(
-            manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json")
-        )
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
         self.assertEqual(validate_manifest_dict(payload), [])
 
     def test_manifest_round_trip_preserves_core_fields(self) -> None:
@@ -43,9 +41,7 @@ class ManifestValidationTests(unittest.TestCase):
         self.assertEqual(manifest.to_dict()["mission_family"], "Sentinel-2")
 
     def test_manifest_rejects_nonpositive_grid_policy_values(self) -> None:
-        payload = read_json(
-            manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json")
-        )
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
         payload["curve_realization"]["grid_policy"]["samples_per_fwhm"] = 0
         errors = validate_manifest_dict(payload)
         self.assertIn(
@@ -54,9 +50,7 @@ class ManifestValidationTests(unittest.TestCase):
         )
 
     def test_approximation_requires_reason(self) -> None:
-        payload = read_json(
-            manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json")
-        )
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
         payload["curve_realization"]["approximation_reason"] = None
         errors = validate_manifest_dict(payload)
         self.assertIn(
@@ -65,9 +59,7 @@ class ManifestValidationTests(unittest.TestCase):
         )
 
     def test_manifest_requires_reason_for_top_level_approximation(self) -> None:
-        payload = read_json(
-            manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json")
-        )
+        payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))
         payload["approximation"] = True
         payload["approximation_reason"] = None
         errors = validate_manifest_dict(payload)

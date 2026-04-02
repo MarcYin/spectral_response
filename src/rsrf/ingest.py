@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import shutil
 import tempfile
-from datetime import datetime, timezone
+from collections.abc import Mapping
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 from .io import parquet_support_available, write_json, write_parquet_table
 from .models import BandSpec, ContentKind, SourceManifest
@@ -17,7 +18,6 @@ from .registry import (
     realization_id_from_manifest,
     realized_variant_dir,
     register_manifest,
-    registry_table_columns,
     registry_table_path,
     upsert_registry_rows,
 )
@@ -78,9 +78,7 @@ def write_sampled_curve_artifacts(
     if manifest.content_kind != ContentKind.SAMPLED_CURVE:
         raise ValueError("write_sampled_curve_artifacts requires a sampled_curve manifest")
     if not parquet_support_available():
-        raise RuntimeError(
-            "Parquet support requires either pyarrow or fastparquet in the Python environment"
-        )
+        raise RuntimeError("Parquet support requires either pyarrow or fastparquet in the Python environment")
 
     output_dir = canonical_variant_dir(
         root,
@@ -133,9 +131,7 @@ def write_band_spec_artifacts(
     if manifest.content_kind != ContentKind.BAND_SPEC:
         raise ValueError("write_band_spec_artifacts requires a band_spec manifest")
     if not parquet_support_available():
-        raise RuntimeError(
-            "Parquet support requires either pyarrow or fastparquet in the Python environment"
-        )
+        raise RuntimeError("Parquet support requires either pyarrow or fastparquet in the Python environment")
     realized_artifacts: ParsedArtifacts | None = None
     if manifest.curve_realization.persist_realized_curves:
         # Preflight derived-curve generation so unsupported recipes fail
@@ -232,9 +228,7 @@ def _build_realized_curve_artifacts(
     if not realization.enabled:
         raise ValueError("curve_realization must be enabled to build realized curve artifacts")
     if realization.profile_type != "gaussian":
-        raise NotImplementedError(
-            f"unsupported realized profile_type: {realization.profile_type}"
-        )
+        raise NotImplementedError(f"unsupported realized profile_type: {realization.profile_type}")
     if realization.grid_policy is None:
         raise ValueError("curve_realization.grid_policy is required for realized curves")
 
@@ -251,9 +245,7 @@ def _build_realized_curve_artifacts(
             band_id=str(band_spec_row["band_id"]),
             center_wavelength_nm=float(band_spec_row["center_wavelength_nm"]),
             fwhm_nm=float(band_spec_row["fwhm_nm"]),
-            band_index=None
-            if _is_nullish(band_spec_row["band_index"])
-            else int(band_spec_row["band_index"]),
+            band_index=None if _is_nullish(band_spec_row["band_index"]) else int(band_spec_row["band_index"]),
             band_name=str(band_spec_row["band_id"]),
             band_status=str(band_spec_row["band_status"]),
             published_shape_type=str(band_spec_row["published_shape_type"]),
@@ -274,9 +266,7 @@ def _build_realized_curve_artifacts(
         support_min_nm = float(wavelength_nm[0])
         support_max_nm = float(wavelength_nm[-1])
 
-        recovered_center_errors.append(
-            abs(estimate_center_wavelength(curve) - band_spec.center_wavelength_nm)
-        )
+        recovered_center_errors.append(abs(estimate_center_wavelength(curve) - band_spec.center_wavelength_nm))
         recovered_fwhm_errors.append(abs(estimate_fwhm(curve) - band_spec.fwhm_nm))
 
         for wavelength, band_response in zip(wavelength_nm, response):

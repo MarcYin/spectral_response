@@ -60,9 +60,14 @@ def _select_band_average_members(member_names: list[str]) -> list[str]:
             continue
         if "detector" in lower_name:
             continue
-        if "_ba_" not in lower_name and "_ba." not in lower_name and "_ba_" not in normalized_name:
-            if "/j1_viirs_ba_rsr_" not in lower_name and "/j2_viirs_ba_rsr_" not in lower_name:
-                continue
+        if (
+            "_ba_" not in lower_name
+            and "_ba." not in lower_name
+            and "_ba_" not in normalized_name
+            and "/j1_viirs_ba_rsr_" not in lower_name
+            and "/j2_viirs_ba_rsr_" not in lower_name
+        ):
+            continue
         band_token = _extract_band_token(normalized_name)
         if band_token.startswith("DNB"):
             continue
@@ -72,7 +77,10 @@ def _select_band_average_members(member_names: list[str]) -> list[str]:
             candidates_by_band[band_token] = (priority, normalized_name)
     if "M16" in candidates_by_band and {"M16A", "M16B"} & set(candidates_by_band):
         candidates_by_band.pop("M16")
-    return [item[1] for item in sorted(candidates_by_band.values(), key=lambda value: _band_order(_extract_band_token(value[1])))]
+    return [
+        item[1]
+        for item in sorted(candidates_by_band.values(), key=lambda value: _band_order(_extract_band_token(value[1])))
+    ]
 
 
 def _member_priority(member_name: str) -> int:

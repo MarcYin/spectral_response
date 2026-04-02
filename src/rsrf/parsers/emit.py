@@ -22,7 +22,9 @@ def parse_emit_band_parameters_ascii(source_path: Path, manifest: SourceManifest
     text = source_path.read_text(encoding="utf-8")
     wavelengths = _parse_numeric_series(text, "/sensor_band_parameters/wavelengths,")
     fwhm_values = _parse_numeric_series(text, "/sensor_band_parameters/fwhm,")
-    good_wavelengths = [int(value) for value in _parse_numeric_series(text, "/sensor_band_parameters/good_wavelengths,")]
+    good_wavelengths = [
+        int(value) for value in _parse_numeric_series(text, "/sensor_band_parameters/good_wavelengths,")
+    ]
     if not wavelengths or not fwhm_values or not good_wavelengths:
         raise ValueError("EMIT ASCII source must contain wavelengths, fwhm, and good_wavelengths arrays")
     if not (len(wavelengths) == len(fwhm_values) == len(good_wavelengths)):
@@ -110,6 +112,6 @@ def parse_emit_band_parameters_ascii(source_path: Path, manifest: SourceManifest
 def _parse_numeric_series(text: str, prefix: str) -> list[float]:
     for line in text.splitlines():
         if line.startswith(prefix):
-            values = [value.strip() for value in line[len(prefix):].split(",")]
+            values = [value.strip() for value in line[len(prefix) :].split(",")]
             return [float(value) for value in values if value]
     return []

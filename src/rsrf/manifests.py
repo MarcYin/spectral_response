@@ -99,8 +99,7 @@ def _check_path_within_repo(resolved: Path, repo_root: Path, original: str | Pat
         resolved.relative_to(repo_root)
     except ValueError:
         raise ValueError(
-            f"manifest path {original} resolves to {resolved} which is outside "
-            f"the repository root {repo_root}"
+            f"manifest path {original} resolves to {resolved} which is outside the repository root {repo_root}"
         ) from None
 
 

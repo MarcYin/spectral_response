@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
-import hashlib
+from collections.abc import Mapping, Sequence
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any
 
 
 def ensure_directory(path: Path) -> Path:
@@ -129,9 +130,7 @@ def write_parquet_table(
 
     engine = parquet_engine()
     if engine is None:
-        raise RuntimeError(
-            "Parquet support requires either pyarrow or fastparquet in the Python environment"
-        )
+        raise RuntimeError("Parquet support requires either pyarrow or fastparquet in the Python environment")
 
     frame = dataframe_from_rows(rows, columns=columns)
     ensure_directory(path.parent)
@@ -144,9 +143,7 @@ def read_parquet_table(path: Path):
 
     engine = parquet_engine()
     if engine is None:
-        raise RuntimeError(
-            "Parquet support requires either pyarrow or fastparquet in the Python environment"
-        )
+        raise RuntimeError("Parquet support requires either pyarrow or fastparquet in the Python environment")
 
     try:
         import pandas as pd
@@ -173,10 +170,7 @@ def upsert_parquet_table(
     incoming = dataframe_from_rows(rows, columns=columns)
     if path.exists():
         existing = read_parquet_table(path)
-        frames = [
-            frame.dropna(axis=1, how="all")
-            for frame in (existing, incoming)
-        ]
+        frames = [frame.dropna(axis=1, how="all") for frame in (existing, incoming)]
         combined = pd.concat(frames, ignore_index=True, sort=False)
     else:
         combined = incoming
@@ -188,9 +182,7 @@ def upsert_parquet_table(
 
     engine = parquet_engine()
     if engine is None:
-        raise RuntimeError(
-            "Parquet support requires either pyarrow or fastparquet in the Python environment"
-        )
+        raise RuntimeError("Parquet support requires either pyarrow or fastparquet in the Python environment")
     ensure_directory(path.parent)
     combined.to_parquet(path, index=False, engine=engine)
     return path

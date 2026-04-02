@@ -56,7 +56,8 @@ class BuildBandSpecTests(unittest.TestCase):
 
     def test_optional_fields(self) -> None:
         spec = build_band_spec(
-            550.0, 10.0,
+            550.0,
+            10.0,
             band_id="Green",
             band_name="Green Channel",
             band_status="active",

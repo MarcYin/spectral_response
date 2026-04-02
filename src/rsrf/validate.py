@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from json import JSONDecodeError
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 from .io import read_json
 from .manifests import resolve_manifest_path
@@ -26,9 +27,7 @@ def parse_manifest_file(path: Path, root: Path | None = None) -> SourceManifest:
     try:
         payload = read_json(resolved_path)
     except JSONDecodeError as exc:
-        raise ManifestValidationError(
-            [f"manifest file is not valid JSON: {exc.msg}"]
-        ) from exc
+        raise ManifestValidationError([f"manifest file is not valid JSON: {exc.msg}"]) from exc
     return parse_manifest_dict(payload)
 
 

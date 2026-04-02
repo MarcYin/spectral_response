@@ -12,7 +12,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from rsrf.registry import RSRF_ROOT_ENV_VAR, REGISTRY_TABLES, build_repo_layout, registry_table_path
+from rsrf.registry import REGISTRY_TABLES, RSRF_ROOT_ENV_VAR, build_repo_layout, registry_table_path
 
 
 class RegistryLayoutTests(unittest.TestCase):

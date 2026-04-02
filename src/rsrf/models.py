@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, Mapping, Optional, Sequence
+from typing import Any
 
 
 class ManifestValidationError(ValueError):
@@ -49,8 +50,8 @@ class BandSpec:
     band_id: str
     center_wavelength_nm: float
     fwhm_nm: float
-    band_index: Optional[int] = None
-    band_name: Optional[str] = None
+    band_index: int | None = None
+    band_name: str | None = None
     band_status: str = "nominal"
     published_shape_type: str = "unknown"
     shape_param_json: Mapping[str, Any] = field(default_factory=dict)
@@ -63,7 +64,7 @@ class SampledCurve:
     band_id: str
     wavelength_nm: Sequence[float]
     response: Sequence[float]
-    source_variant: Optional[str] = None
+    source_variant: str | None = None
 
 
 @dataclass(frozen=True)
@@ -77,7 +78,7 @@ class ManifestSummary:
     source_tier: str
 
     @classmethod
-    def from_payload(cls, payload: Mapping[str, Any]) -> "ManifestSummary":
+    def from_payload(cls, payload: Mapping[str, Any]) -> ManifestSummary:
         return cls(
             source_id=str(payload.get("source_id", "")),
             sensor_unit_id=str(payload.get("sensor_unit_id", "")),
@@ -87,7 +88,7 @@ class ManifestSummary:
         )
 
     @classmethod
-    def from_manifest(cls, manifest: "SourceManifest") -> "ManifestSummary":
+    def from_manifest(cls, manifest: SourceManifest) -> ManifestSummary:
         return cls(
             source_id=manifest.source_id,
             sensor_unit_id=manifest.sensor_unit_id,
@@ -105,7 +106,7 @@ class ParserOutputs:
     optional: tuple[str, ...] = ()
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any], *, prefix: str = "parser.outputs") -> "ParserOutputs":
+    def from_dict(cls, payload: Mapping[str, Any], *, prefix: str = "parser.outputs") -> ParserOutputs:
         errors: list[str] = []
         canonical = _required_string_list(payload, "canonical", errors, prefix)
         optional = _optional_string_list(payload, "optional", errors, prefix)
@@ -115,7 +116,7 @@ class ParserOutputs:
             raise ManifestValidationError(errors)
         return cls(canonical=tuple(canonical), optional=tuple(optional))
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "canonical": list(self.canonical),
             "optional": list(self.optional),
@@ -132,7 +133,7 @@ class ParserSpec:
     notes: tuple[str, ...]
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any], *, prefix: str = "parser") -> "ParserSpec":
+    def from_dict(cls, payload: Mapping[str, Any], *, prefix: str = "parser") -> ParserSpec:
         errors: list[str] = []
         script = _required_string(payload, "script", errors, prefix)
         entrypoint = _required_string(payload, "entrypoint", errors, prefix)
@@ -145,7 +146,7 @@ class ParserSpec:
             outputs = ParserOutputs.from_dict(outputs_payload, prefix=f"{prefix}.outputs")
         except ManifestValidationError as exc:
             errors.extend(exc.errors)
-            raise ManifestValidationError(errors)
+            raise ManifestValidationError(errors) from exc
 
         return cls(
             script=script,
@@ -154,7 +155,7 @@ class ParserSpec:
             notes=tuple(notes),
         )
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "script": self.script,
             "entrypoint": self.entrypoint,
@@ -174,17 +175,13 @@ class CanonicalSpec:
     published_shape_type: str
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any], *, prefix: str = "canonical") -> "CanonicalSpec":
+    def from_dict(cls, payload: Mapping[str, Any], *, prefix: str = "canonical") -> CanonicalSpec:
         errors: list[str] = []
         kind_raw = _required_string(payload, "kind", errors, prefix)
-        spectral_calibration_scope = _required_string(
-            payload, "spectral_calibration_scope", errors, prefix
-        )
+        spectral_calibration_scope = _required_string(payload, "spectral_calibration_scope", errors, prefix)
         axis_policy = _required_string(payload, "axis_policy", errors, prefix)
         normalization = _required_string(payload, "normalization", errors, prefix)
-        published_shape_type = _required_string(
-            payload, "published_shape_type", errors, prefix
-        )
+        published_shape_type = _required_string(payload, "published_shape_type", errors, prefix)
         kind = _enum_from_string(ContentKind, kind_raw, errors, f"{prefix}.kind")
         if errors:
             raise ManifestValidationError(errors)
@@ -196,7 +193,7 @@ class CanonicalSpec:
             published_shape_type=published_shape_type,
         )
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "kind": self.kind.value,
             "spectral_calibration_scope": self.spectral_calibration_scope,
@@ -211,27 +208,23 @@ class BandSpecSection:
     """Manifest section describing how to extract band-spec fields."""
 
     enabled: bool
-    band_index_field: Optional[str]
-    band_id_field: Optional[str]
-    center_wavelength_field: Optional[str]
-    fwhm_field: Optional[str]
-    band_status_field: Optional[str]
+    band_index_field: str | None
+    band_id_field: str | None
+    center_wavelength_field: str | None
+    fwhm_field: str | None
+    band_status_field: str | None
     shape_param_fields: Mapping[str, str]
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any], *, prefix: str = "band_spec") -> "BandSpecSection":
+    def from_dict(cls, payload: Mapping[str, Any], *, prefix: str = "band_spec") -> BandSpecSection:
         errors: list[str] = []
         enabled = _required_bool(payload, "enabled", errors, prefix)
         band_index_field = _optional_string(payload, "band_index_field", errors, prefix)
         band_id_field = _optional_string(payload, "band_id_field", errors, prefix)
-        center_wavelength_field = _optional_string(
-            payload, "center_wavelength_field", errors, prefix
-        )
+        center_wavelength_field = _optional_string(payload, "center_wavelength_field", errors, prefix)
         fwhm_field = _optional_string(payload, "fwhm_field", errors, prefix)
         band_status_field = _optional_string(payload, "band_status_field", errors, prefix)
-        shape_param_fields = _optional_string_mapping(
-            payload, "shape_param_fields", errors, prefix
-        )
+        shape_param_fields = _optional_string_mapping(payload, "shape_param_fields", errors, prefix)
         if errors:
             raise ManifestValidationError(errors)
         return cls(
@@ -244,7 +237,7 @@ class BandSpecSection:
             shape_param_fields=shape_param_fields,
         )
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "enabled": self.enabled,
             "band_index_field": self.band_index_field,
@@ -266,7 +259,7 @@ class GridPolicy:
     truncate_sigma: float
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any], *, prefix: str = "curve_realization.grid_policy") -> "GridPolicy":
+    def from_dict(cls, payload: Mapping[str, Any], *, prefix: str = "curve_realization.grid_policy") -> GridPolicy:
         errors: list[str] = []
         kind = _required_string(payload, "kind", errors, prefix)
         samples_per_fwhm = _required_int(payload, "samples_per_fwhm", errors, prefix)
@@ -287,7 +280,7 @@ class GridPolicy:
             truncate_sigma=truncate_sigma,
         )
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "kind": self.kind,
             "samples_per_fwhm": self.samples_per_fwhm,
@@ -301,13 +294,13 @@ class CurveRealizationSpec:
     """Optional derived sampled-curve realization section."""
 
     enabled: bool
-    output_representation_variant: Optional[str]
-    profile_type: Optional[str]
+    output_representation_variant: str | None
+    profile_type: str | None
     approximation: bool
-    approximation_reason: Optional[str]
+    approximation_reason: str | None
     persist_realized_curves: bool
-    grid_policy: Optional[GridPolicy]
-    normalization: Optional[str]
+    grid_policy: GridPolicy | None
+    normalization: str | None
 
     @classmethod
     def from_dict(
@@ -315,24 +308,18 @@ class CurveRealizationSpec:
         payload: Mapping[str, Any],
         *,
         prefix: str = "curve_realization",
-    ) -> "CurveRealizationSpec":
+    ) -> CurveRealizationSpec:
         errors: list[str] = []
         enabled = _required_bool(payload, "enabled", errors, prefix)
-        output_representation_variant = _optional_string(
-            payload, "output_representation_variant", errors, prefix
-        )
+        output_representation_variant = _optional_string(payload, "output_representation_variant", errors, prefix)
         profile_type = _optional_string(payload, "profile_type", errors, prefix)
         approximation = _required_bool(payload, "approximation", errors, prefix)
-        approximation_reason = _optional_string(
-            payload, "approximation_reason", errors, prefix
-        )
-        persist_realized_curves = _required_bool(
-            payload, "persist_realized_curves", errors, prefix
-        )
+        approximation_reason = _optional_string(payload, "approximation_reason", errors, prefix)
+        persist_realized_curves = _required_bool(payload, "persist_realized_curves", errors, prefix)
         normalization = _optional_string(payload, "normalization", errors, prefix)
         grid_policy_payload = payload.get("grid_policy")
 
-        grid_policy: Optional[GridPolicy] = None
+        grid_policy: GridPolicy | None = None
         if grid_policy_payload is not None:
             if not isinstance(grid_policy_payload, Mapping):
                 errors.append(f"{prefix}.grid_policy must be an object or null")
@@ -371,7 +358,7 @@ class CurveRealizationSpec:
             normalization=normalization,
         )
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "enabled": self.enabled,
             "output_representation_variant": self.output_representation_variant,
@@ -398,26 +385,16 @@ class ValidationSpec:
     monotonic_centers_required: bool
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any], *, prefix: str = "validation") -> "ValidationSpec":
+    def from_dict(cls, payload: Mapping[str, Any], *, prefix: str = "validation") -> ValidationSpec:
         errors: list[str] = []
-        expected_band_count = _required_int_or_placeholder(
-            payload, "expected_band_count", errors, prefix
-        )
+        expected_band_count = _required_int_or_placeholder(payload, "expected_band_count", errors, prefix)
         expected_domain = _required_string(payload, "expected_domain", errors, prefix)
         require_band_spec = _required_bool(payload, "require_band_spec", errors, prefix)
         require_sampled_curve = _required_bool(payload, "require_sampled_curve", errors, prefix)
-        compare_center_and_fwhm = _required_bool(
-            payload, "compare_center_and_fwhm", errors, prefix
-        )
-        plot_overlay_required = _required_bool(
-            payload, "plot_overlay_required", errors, prefix
-        )
-        curve_checks_if_realized = _required_bool(
-            payload, "curve_checks_if_realized", errors, prefix
-        )
-        monotonic_centers_required = _required_bool(
-            payload, "monotonic_centers_required", errors, prefix
-        )
+        compare_center_and_fwhm = _required_bool(payload, "compare_center_and_fwhm", errors, prefix)
+        plot_overlay_required = _required_bool(payload, "plot_overlay_required", errors, prefix)
+        curve_checks_if_realized = _required_bool(payload, "curve_checks_if_realized", errors, prefix)
+        monotonic_centers_required = _required_bool(payload, "monotonic_centers_required", errors, prefix)
         if errors:
             raise ManifestValidationError(errors)
         return cls(
@@ -431,7 +408,7 @@ class ValidationSpec:
             monotonic_centers_required=monotonic_centers_required,
         )
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "expected_band_count": self.expected_band_count,
             "expected_domain": self.expected_domain,
@@ -474,7 +451,7 @@ class SourceManifest:
     notes: tuple[str, ...]
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any]) -> "SourceManifest":
+    def from_dict(cls, payload: Mapping[str, Any]) -> SourceManifest:
         errors: list[str] = []
         source_id = _required_string(payload, "source_id", errors)
         sensor_unit_id = _required_string(payload, "sensor_unit_id", errors)
@@ -559,9 +536,7 @@ class SourceManifest:
         if validation.require_band_spec and not band_spec.enabled:
             errors.append("validation.require_band_spec=true requires band_spec.enabled=true")
         if validation.require_sampled_curve and canonical.kind != ContentKind.SAMPLED_CURVE:
-            errors.append(
-                "validation.require_sampled_curve=true requires canonical.kind=sampled_curve"
-            )
+            errors.append("validation.require_sampled_curve=true requires canonical.kind=sampled_curve")
         if approximation and not approximation_reason:
             errors.append("approximation_reason is required when approximation=true")
         if curve_realization.approximation and not curve_realization.enabled:
@@ -596,7 +571,7 @@ class SourceManifest:
             notes=tuple(notes),
         )
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "source_id": self.source_id,
             "sensor_unit_id": self.sensor_unit_id,
@@ -634,10 +609,10 @@ def enum_values(enum_cls: type[Enum]) -> set[str]:
     return {str(member.value) for member in enum_cls}  # type: ignore[arg-type]
 
 
-def as_dict_without_none(payload: Mapping[str, Any]) -> Dict[str, Any]:
+def as_dict_without_none(payload: Mapping[str, Any]) -> dict[str, Any]:
     """Drop null values from nested metadata dictionaries."""
 
-    cleaned: Dict[str, Any] = {}
+    cleaned: dict[str, Any] = {}
     for key, value in payload.items():
         if value is None:
             continue
@@ -663,9 +638,7 @@ def _enum_from_string(
     try:
         return enum_cls(raw_value)
     except ValueError:
-        errors.append(
-            f"{field_name} must be one of {sorted(enum_values(enum_cls))}; got {raw_value!r}"
-        )
+        errors.append(f"{field_name} must be one of {sorted(enum_values(enum_cls))}; got {raw_value!r}")
         return None
 
 
@@ -702,7 +675,7 @@ def _optional_string(
     key: str,
     errors: list[str],
     prefix: str = "",
-) -> Optional[str]:
+) -> str | None:
     value = payload.get(key)
     full_name = _join_prefix(prefix, key)
     if value is None:
@@ -757,7 +730,7 @@ def _optional_string_mapping(
     if not isinstance(value, Mapping):
         errors.append(f"{full_name} must be an object")
         return {}
-    items: Dict[str, str] = {}
+    items: dict[str, str] = {}
     for nested_key, nested_value in value.items():
         if not isinstance(nested_key, str):
             errors.append(f"{full_name} contains a non-string key")

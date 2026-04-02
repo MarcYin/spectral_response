@@ -30,6 +30,7 @@ class ResolveManifestPathTests(unittest.TestCase):
         # A relative path that resolves (via cwd) to somewhere outside the repo
         # should be rejected by the containment check.
         import os
+
         with tempfile.TemporaryDirectory() as tmpdir:
             manifest = Path(tmpdir) / "sneaky.json"
             manifest.write_text("{}")

@@ -91,11 +91,9 @@ class ObpgParserTests(unittest.TestCase):
         self.assertEqual(artifacts.band_rows[0]["band_id"], "B01")
         self.assertEqual(artifacts.band_rows[0]["center_wavelength_nm"], 412.0)
         self.assertEqual(artifacts.band_rows[1]["center_wavelength_nm"], 443.0)
-        negative_row = [
-            row
-            for row in artifacts.curve_rows
-            if row["band_id"] == "B02" and row["wavelength_nm"] == 400.0
-        ][0]
+        negative_row = next(
+            row for row in artifacts.curve_rows if row["band_id"] == "B02" and row["wavelength_nm"] == 400.0
+        )
         self.assertEqual(negative_row["response"], 0.0)
 
     def test_parse_obpg_bandpass_csv_skips_units_row(self) -> None:

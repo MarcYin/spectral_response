@@ -51,9 +51,7 @@ class VisualizationExportTests(unittest.TestCase):
             self.assertIn("sensors/hyperspec_example__metadata_band_spec.json", sensor_files)
 
             sentinel_payload = read_json(output_dir / "sensors" / "sentinel-2c_msi__band_average.json")
-            hyperspec_payload = read_json(
-                output_dir / "sensors" / "hyperspec_example__metadata_band_spec.json"
-            )
+            hyperspec_payload = read_json(output_dir / "sensors" / "hyperspec_example__metadata_band_spec.json")
 
             self.assertEqual(sentinel_payload["band_count"], 13)
             self.assertEqual(sentinel_payload["curve_origin"], "sampled_curve")
@@ -99,9 +97,7 @@ class VisualizationExportTests(unittest.TestCase):
             export_docs_visualization_assets(ROOT, **kwargs)
             first_index = (output_dir / "index.json").read_text(encoding="utf-8")
             first_overlap = (output_dir / "overlap_index.json").read_text(encoding="utf-8")
-            first_sensor = (
-                output_dir / "sensors" / "sentinel-2c_msi__band_average.json"
-            ).read_text(encoding="utf-8")
+            first_sensor = (output_dir / "sensors" / "sentinel-2c_msi__band_average.json").read_text(encoding="utf-8")
 
             export_docs_visualization_assets(ROOT, **kwargs)
 
@@ -111,9 +107,7 @@ class VisualizationExportTests(unittest.TestCase):
                 first_overlap,
             )
             self.assertEqual(
-                (output_dir / "sensors" / "sentinel-2c_msi__band_average.json").read_text(
-                    encoding="utf-8"
-                ),
+                (output_dir / "sensors" / "sentinel-2c_msi__band_average.json").read_text(encoding="utf-8"),
                 first_sensor,
             )
 

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 import numpy as np
 
@@ -13,6 +13,7 @@ from .models import BandSpec, SampledCurve
 def _load_pyplot():
     try:
         import matplotlib
+
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
     except ImportError as exc:
@@ -168,10 +169,7 @@ def plot_band_spec_summary(
         "recommended": "#2ca02c",
         "masked": "#7f7f7f",
     }
-    colors = [
-        status_colors.get(band_spec.band_status, "#ff7f0e")
-        for band_spec in ordered_band_specs
-    ]
+    colors = [status_colors.get(band_spec.band_status, "#ff7f0e") for band_spec in ordered_band_specs]
 
     figure, axis = plt.subplots(figsize=(9, 5))
     for y_position, center, half_width, label, color in zip(

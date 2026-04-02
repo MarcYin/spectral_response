@@ -12,8 +12,8 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from rsrf.api import load_band_spec, load_curve
-from rsrf.models import SampledCurve
 from rsrf.convolve import convolution_weights, convolve_spectrum
+from rsrf.models import SampledCurve
 
 
 class ConvolveResponseDefinitionTests(unittest.TestCase):

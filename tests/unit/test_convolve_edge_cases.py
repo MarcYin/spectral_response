@@ -11,7 +11,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from rsrf.convolve import convolve_spectrum, convolution_weights, response_area
+from rsrf.convolve import convolution_weights, convolve_spectrum, response_area
 from rsrf.models import SampledCurve
 
 

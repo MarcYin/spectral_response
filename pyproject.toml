@@ -97,6 +97,7 @@ select = [
 ignore = [
   "E501",   # line length (handled by formatter)
   "UP007",  # use X | Y for union types (need runtime support)
+  "E402",   # module-level import not at top — scripts and tests use sys.path manipulation
 ]
 
 [tool.ruff.lint.isort]
