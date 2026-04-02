@@ -26,8 +26,7 @@ def parse_probav_srf_workbook(workbook_path: Path, manifest: SourceManifest):
     camera_key = manifest.representation_variant
     if camera_key not in {"center_camera", "left_camera", "right_camera"}:
         raise ValueError(
-            "PROBA-V representation_variant must be one of "
-            "'center_camera', 'left_camera', or 'right_camera'"
+            "PROBA-V representation_variant must be one of 'center_camera', 'left_camera', or 'right_camera'"
         )
 
     workbook = load_workbook(workbook_path, data_only=True, read_only=True)

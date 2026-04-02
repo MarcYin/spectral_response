@@ -56,9 +56,7 @@ def validate_sampled_curve_inventory(
     """Validate every sampled-curve representation in the current repository."""
 
     sampled_rows = [
-        row
-        for row in list_sensors(root=root)
-        if str(row["content_kind"]) == ContentKind.SAMPLED_CURVE.value
+        row for row in list_sensors(root=root) if str(row["content_kind"]) == ContentKind.SAMPLED_CURVE.value
     ]
     sampled_rows.sort(key=lambda row: (str(row["sensor_unit_id"]), str(row["representation_variant"])))
 
@@ -456,10 +454,8 @@ def _validate_band_spec_realization(
 
     grid_policy_payload = realization_section.get("grid_policy")
     try:
-        grid_policy = (
-            None if grid_policy_payload is None else GridPolicy.from_dict(grid_policy_payload)
-        )
-    except Exception as exc:
+        grid_policy = None if grid_policy_payload is None else GridPolicy.from_dict(grid_policy_payload)
+    except (KeyError, TypeError, ValueError) as exc:
         failures.append(
             _failure(
                 sensor_unit_id,
@@ -493,7 +489,7 @@ def _validate_band_spec_realization(
             )
             center_error = abs(estimate_center_wavelength(curve) - band_spec.center_wavelength_nm)
             fwhm_error = abs(estimate_fwhm(curve) - band_spec.fwhm_nm)
-        except Exception as exc:
+        except (KeyError, TypeError, ValueError, NotImplementedError) as exc:
             failures.append(
                 _failure(
                     sensor_unit_id,
@@ -681,12 +677,7 @@ def _overlay_reference_path(
     root: Path | None,
 ) -> Path:
     layout = build_repo_layout(root)
-    return (
-        layout.extracted_sources_root
-        / sensor_unit_id
-        / representation_variant
-        / OVERLAY_REFERENCE_FILENAME
-    )
+    return layout.extracted_sources_root / sensor_unit_id / representation_variant / OVERLAY_REFERENCE_FILENAME
 
 
 def _load_overlay_curve_pairs(
@@ -711,16 +702,21 @@ def _load_overlay_curve_pairs(
 
 def _load_overlay_reference_curves(reference_path: Path) -> dict[str, SampledCurve]:
     rows_by_band: dict[str, list[tuple[float, float]]] = {}
+    required_columns = {"band_id", "wavelength_nm", "response"}
     with reference_path.open("r", encoding="utf-8", newline="") as handle:
         reader = csv.DictReader(handle)
+        if reader.fieldnames is not None:
+            missing = required_columns - set(reader.fieldnames)
+            if missing:
+                raise ValueError(f"overlay reference CSV is missing required columns: {sorted(missing)}")
         for row in reader:
             band_id = str(row["band_id"]).strip()
-            rows_by_band.setdefault(band_id, []).append(
-                (
-                    float(row["wavelength_nm"]),
-                    float(row["response"]),
-                )
-            )
+            try:
+                wl = float(row["wavelength_nm"])
+                resp = float(row["response"])
+            except (TypeError, ValueError) as exc:
+                raise ValueError(f"invalid numeric value in overlay reference CSV for band {band_id}: {exc}") from exc
+            rows_by_band.setdefault(band_id, []).append((wl, resp))
 
     curves: dict[str, SampledCurve] = {}
     for band_id, rows in rows_by_band.items():

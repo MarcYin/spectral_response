@@ -23,7 +23,9 @@ def _manifest_for(sensor_unit_id: str) -> dict:
     payload["source_id"] = f"{sensor_unit_id}_slstr_test"
     payload["sensor_unit_id"] = sensor_unit_id
     payload["title"] = f"{sensor_unit_id} SLSTR test source"
-    payload["url"] = "https://nwp-saf.eumetsat.int/site/software/rttov/download/coefficients/spectral-response-functions/"
+    payload["url"] = (
+        "https://nwp-saf.eumetsat.int/site/software/rttov/download/coefficients/spectral-response-functions/"
+    )
     payload["doc_version"] = "test"
     payload["raw_local_path"] = "sources/raw/test_slstr.tar.gz"
     payload["file_sha256"] = "test"
@@ -60,7 +62,10 @@ class SlstrParserTests(unittest.TestCase):
 
         s7_rows = [row for row in artifacts.curve_rows if row["band_id"] == "S7"]
         f1_rows = [row for row in artifacts.curve_rows if row["band_id"] == "F1"]
-        self.assertEqual([(row["wavelength_nm"], row["response"]) for row in s7_rows], [(row["wavelength_nm"], row["response"]) for row in f1_rows])
+        self.assertEqual(
+            [(row["wavelength_nm"], row["response"]) for row in s7_rows],
+            [(row["wavelength_nm"], row["response"]) for row in f1_rows],
+        )
 
     @staticmethod
     def _sample_member_text(channel: int, band_id: str) -> str:

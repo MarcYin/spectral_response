@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import shutil
-import tempfile
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -87,9 +87,7 @@ class QaTests(unittest.TestCase):
 
         self.assertFalse(report["passed"])
         self.assertEqual(report["overlay_checks"]["available"], False)
-        self.assertTrue(
-            any(failure["check"] == "overlay_reference_missing" for failure in report["failures"])
-        )
+        self.assertTrue(any(failure["check"] == "overlay_reference_missing" for failure in report["failures"]))
 
     def test_validate_band_spec_variant_reports_realization_checks(self) -> None:
         report = validate_sensor("hyperspec_example", "metadata_band_spec", root=ROOT)
@@ -159,12 +157,7 @@ class QaTests(unittest.TestCase):
                 copy_function=shutil.copyfile,
             )
             overlay_path = (
-                tmp_root
-                / "sources"
-                / "extracted"
-                / "sentinel-2c_msi"
-                / "band_average"
-                / "overlay_reference.csv"
+                tmp_root / "sources" / "extracted" / "sentinel-2c_msi" / "band_average" / "overlay_reference.csv"
             )
             overlay_lines = overlay_path.read_text(encoding="utf-8").splitlines()
             overlay_path.write_text(
@@ -183,12 +176,7 @@ class QaTests(unittest.TestCase):
             self.assertTrue(written["overlay_plot"].exists())
             report = read_json(written["report"])
             self.assertFalse(report["passed"])
-            self.assertTrue(
-                any(
-                    failure["check"] == "overlay_reference_band_missing"
-                    for failure in report["failures"]
-                )
-            )
+            self.assertTrue(any(failure["check"] == "overlay_reference_band_missing" for failure in report["failures"]))
 
     def test_validate_band_spec_variant_reports_invalid_fwhm_without_crashing(self) -> None:
         payload = read_json(manifest_path(ROOT, "rsrf_source_manifest_hyperspectral_band_spec_example.json"))

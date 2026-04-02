@@ -142,10 +142,7 @@ class CliTests(unittest.TestCase):
 
         self.assertEqual(exit_code, 0)
         rows = json.loads(stdout)
-        variants = {
-            (row["sensor_unit_id"], row["representation_variant"])
-            for row in rows
-        }
+        variants = {(row["sensor_unit_id"], row["representation_variant"]) for row in rows}
         self.assertEqual(variants, EXPECTED_CANONICAL_VARIANTS)
 
     def test_list_planned_sensors_returns_p2_catalog_entries(self) -> None:

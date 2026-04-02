@@ -66,8 +66,12 @@ class ProbavParserTests(unittest.TestCase):
                     "SWIR RIGHT",
                 ]
             )
-            worksheet.append([400, 0.1, 0.2, 0.3, None, 600, 0.4, 0.5, 0.6, None, 800, 0.7, 0.8, 0.9, None, 1600, 0.2, 0.3, 0.4])
-            worksheet.append([405, 0.0, 0.1, 0.0, None, 605, 0.1, 0.2, 0.3, None, 805, 0.4, 0.5, 0.6, None, 1605, 0.0, 0.1, 0.2])
+            worksheet.append(
+                [400, 0.1, 0.2, 0.3, None, 600, 0.4, 0.5, 0.6, None, 800, 0.7, 0.8, 0.9, None, 1600, 0.2, 0.3, 0.4]
+            )
+            worksheet.append(
+                [405, 0.0, 0.1, 0.0, None, 605, 0.1, 0.2, 0.3, None, 805, 0.4, 0.5, 0.6, None, 1605, 0.0, 0.1, 0.2]
+            )
             workbook.save(workbook_path)
 
             artifacts = parse_probav_srf_workbook(workbook_path, manifest)

@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 from .io import parquet_support_available, read_json, write_parquet_table
-from .manifests import manifest_path, PLANNING_MANIFEST_DIRNAME
+from .manifests import PLANNING_MANIFEST_DIRNAME, manifest_path
 from .models import ContentKind, SourceTier
 from .registry import (
     read_registry_table,
@@ -39,7 +40,7 @@ class PlannedSensorEntry:
     approximation: bool = False
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any]) -> "PlannedSensorEntry":
+    def from_dict(cls, payload: Mapping[str, Any]) -> PlannedSensorEntry:
         content_kind = ContentKind(str(payload["content_kind"]))
         source_tier = SourceTier(str(payload["source_tier"]))
         band_count = payload.get("band_count")
@@ -166,9 +167,7 @@ def register_planned_sensor_catalog(
     catalog = load_planned_sensor_catalog(root, catalog_path=catalog_path)
     rows = [entry.sensor_registry_row() for entry in catalog["entries"]]
     if not parquet_support_available():
-        raise RuntimeError(
-            "Parquet support requires either pyarrow or fastparquet in the Python environment"
-        )
+        raise RuntimeError("Parquet support requires either pyarrow or fastparquet in the Python environment")
 
     try:
         current = read_registry_table(root, "sensors")

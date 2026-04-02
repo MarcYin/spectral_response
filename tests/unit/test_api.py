@@ -18,9 +18,9 @@ from rsrf.api import (
     load_curve,
     load_response_definition,
 )
+from rsrf.ingest import write_band_spec_artifacts
 from rsrf.io import read_json
 from rsrf.manifests import manifest_path
-from rsrf.ingest import write_band_spec_artifacts
 from rsrf.models import BandSpec, SampledCurve
 from rsrf.parsers.band_spec_table import parse_band_spec_table
 from rsrf.validate import parse_manifest_dict
@@ -100,10 +100,7 @@ EXPECTED_CANONICAL_VARIANTS = {
 class ApiTests(unittest.TestCase):
     def test_list_sensors_returns_registered_canonical_forms(self) -> None:
         sensors = list_sensors(ROOT)
-        variants = {
-            (row["sensor_unit_id"], row["representation_variant"])
-            for row in sensors
-        }
+        variants = {(row["sensor_unit_id"], row["representation_variant"]) for row in sensors}
         self.assertEqual(variants, EXPECTED_CANONICAL_VARIANTS)
 
     def test_load_curve_reads_canonical_sampled_data(self) -> None:
@@ -280,10 +277,7 @@ class ApiTests(unittest.TestCase):
             write_band_spec_artifacts(tmp_root, manifest, artifacts)
 
             sensors = list_sensors(tmp_root)
-            variants = {
-                (row["sensor_unit_id"], row["representation_variant"])
-                for row in sensors
-            }
+            variants = {(row["sensor_unit_id"], row["representation_variant"]) for row in sensors}
             self.assertIn(("hyperspec_example", "gaussian_from_fwhm"), variants)
 
             realized_bands = list_bands(

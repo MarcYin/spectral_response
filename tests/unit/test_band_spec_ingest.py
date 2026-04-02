@@ -11,9 +11,9 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from rsrf.ingest import write_band_spec_artifacts
 from rsrf.io import read_json
 from rsrf.manifests import manifest_path
-from rsrf.ingest import write_band_spec_artifacts
 from rsrf.parsers.band_spec_table import parse_band_spec_table
 from rsrf.registry import read_registry_table
 from rsrf.validate import parse_manifest_dict
@@ -33,7 +33,17 @@ class BandSpecIngestTests(unittest.TestCase):
             realizations = read_registry_table(tmp_root, "realizations")
             self.assertEqual(len(band_specs), 6)
             self.assertEqual(len(realizations), 1)
-            metadata = json.loads((tmp_root / "data" / "canonical" / "band_spec" / manifest.sensor_unit_id / manifest.representation_variant / "metadata.json").read_text())
+            metadata = json.loads(
+                (
+                    tmp_root
+                    / "data"
+                    / "canonical"
+                    / "band_spec"
+                    / manifest.sensor_unit_id
+                    / manifest.representation_variant
+                    / "metadata.json"
+                ).read_text()
+            )
             self.assertEqual(metadata["band_spec_table"]["row_count"], 6)
 
     def test_write_band_spec_artifacts_can_persist_realized_curves(self) -> None:
@@ -50,19 +60,12 @@ class BandSpecIngestTests(unittest.TestCase):
             self.assertIn("realized_metadata", written)
 
             realized_curves = read_registry_table(tmp_root, "bands")
-            realized_curves = realized_curves[
-                realized_curves["representation_variant"] == "gaussian_from_fwhm"
-            ]
+            realized_curves = realized_curves[realized_curves["representation_variant"] == "gaussian_from_fwhm"]
             self.assertEqual(len(realized_curves), 6)
             self.assertTrue(realized_curves["has_sampled_curve"].all())
 
             realized_metadata = read_json(
-                tmp_root
-                / "data"
-                / "realized"
-                / manifest.sensor_unit_id
-                / "gaussian_from_fwhm"
-                / "metadata.json"
+                tmp_root / "data" / "realized" / manifest.sensor_unit_id / "gaussian_from_fwhm" / "metadata.json"
             )
             self.assertEqual(realized_metadata["content_kind"], "sampled_curve")
             self.assertEqual(

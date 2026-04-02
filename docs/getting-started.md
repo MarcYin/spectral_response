@@ -1,5 +1,7 @@
 # Getting Started
 
+RSRF requires Python 3.9 or later (tested up to 3.14).
+
 ## Installation
 
 During development:
@@ -16,17 +18,17 @@ python3 -m pip install RSRF
 
 ## Pointing RSRF at repository data
 
-The code package and the canonical data repository are intentionally separate. Use one of these patterns:
+The code package and the canonical data repository are intentionally separate. RSRF resolves the repository root in this order:
+
+1. **Explicit argument**: pass `root=` to Python functions or `--root` to CLI commands
+2. **Environment variable**: set `RSRF_ROOT`
+3. **Auto-discovery**: RSRF walks upward from the current working directory
+
+For most workflows, running commands from the repository checkout is sufficient. For installed-package or notebook workflows, setting the environment variable is recommended:
 
 ```bash
 export RSRF_ROOT=/path/to/spectral_response_function
 ```
-
-```bash
-rsrf list-sensors --root /path/to/spectral_response_function
-```
-
-If neither is supplied, RSRF searches upward from the current working directory for a repository root.
 
 ## Working with manifests
 
@@ -59,3 +61,32 @@ print(list_sensors()[:3])
 response = load_response_definition("sentinel-2c_msi", "B01", "band_average")
 print(type(response).__name__)
 ```
+
+## Error handling
+
+Loading functions raise predictable exceptions:
+
+```python
+from rsrf import load_curve, load_response_definition
+
+# KeyError when a sensor or band is not found
+try:
+    load_curve("nonexistent_sensor", "B01")
+except KeyError as exc:
+    print(f"Not found: {exc}")
+
+# ValueError when the content kind does not match the loader
+try:
+    load_curve("prisma_hsi", "B001", "metadata_band_spec")  # band_spec, not sampled_curve
+except ValueError as exc:
+    print(f"Wrong content kind: {exc}")
+```
+
+`validate_sensor()` does not raise on validation failures; it returns a structured report dictionary with pass/fail status and diagnostic messages.
+
+## Next steps
+
+- [Python API](python-api.md) for the full function reference
+- [CLI Reference](cli.md) for all available commands
+- [Data Model](data-model.md) for `BandSpec`, `SampledCurve`, and registry table details
+- [Visualizations](visualizations.md) for interactive spectral response plots

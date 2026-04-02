@@ -10,8 +10,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from rsrf.io import parquet_support_available, read_parquet_table, write_parquet_table
-from rsrf.io import read_json
+from rsrf.io import parquet_support_available, read_json, read_parquet_table, write_parquet_table
 from rsrf.manifests import manifest_path
 from rsrf.registry import manifest_registry_rows, registry_table_columns
 from rsrf.validate import parse_manifest_dict

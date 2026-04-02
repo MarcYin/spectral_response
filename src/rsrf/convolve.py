@@ -37,7 +37,7 @@ def convolve_spectrum(
     )
     numerator = _integrate(sampled_spectrum * curve_response, curve_wavelength_nm)
     denominator = _integrate(curve_response, curve_wavelength_nm)
-    if denominator == 0.0:
+    if abs(denominator) < 1e-15:
         raise ValueError("response curve has zero area")
     return numerator / denominator
 
@@ -65,7 +65,7 @@ def convolution_weights(
     )
     weights = response * _interval_widths(spectrum_wavelength_nm)
     total = float(weights.sum())
-    if total == 0.0:
+    if abs(total) < 1e-15:
         raise ValueError("response definition does not overlap the provided spectrum grid")
     return weights / total
 

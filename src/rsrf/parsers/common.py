@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any
 
 import numpy as np
 
@@ -79,11 +80,15 @@ def build_sampled_curve_artifacts(
         total_negative_values_clipped += normalized.negative_values_clipped
         total_values_capped_to_one += normalized.values_capped_to_one
 
-        global_wavelength_min_nm = float(wavelength_nm.min()) if global_wavelength_min_nm is None else min(
-            global_wavelength_min_nm, float(wavelength_nm.min())
+        global_wavelength_min_nm = (
+            float(wavelength_nm.min())
+            if global_wavelength_min_nm is None
+            else min(global_wavelength_min_nm, float(wavelength_nm.min()))
         )
-        global_wavelength_max_nm = float(wavelength_nm.max()) if global_wavelength_max_nm is None else max(
-            global_wavelength_max_nm, float(wavelength_nm.max())
+        global_wavelength_max_nm = (
+            float(wavelength_nm.max())
+            if global_wavelength_max_nm is None
+            else max(global_wavelength_max_nm, float(wavelength_nm.max()))
         )
 
         native_sampling_nm = _infer_native_sampling_nm(wavelength_nm)

@@ -1,16 +1,22 @@
 # Development
 
+RSRF supports Python 3.9 through 3.14. CI tests every minor version in that range.
+
 ## Editable install
 
 ```bash
 python3 -m pip install -e ".[dev]"
 ```
 
+The `[dev]` extra composes all sub-extras: `ingest`, `qa`, `docs`, `release`, and `lint`.
+
 ## Local verification
 
 Run the same core commands used by CI:
 
 ```bash
+ruff check src/ tests/ scripts/
+ruff format --check src/ tests/ scripts/
 python3 -m unittest discover -s tests/unit
 python3 -m unittest discover -s tests/regression
 python3 scripts/build/prepare_docs_site.py --root .

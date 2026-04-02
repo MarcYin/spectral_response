@@ -4,9 +4,10 @@ from __future__ import annotations
 
 import json
 import os
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Iterable, Mapping
+from typing import Any
 
 from .io import read_parquet_table, upsert_parquet_table
 from .models import ContentKind, SourceManifest, SourceType
@@ -141,9 +142,7 @@ def discover_repo_root(start: Path | None = None) -> Path:
         if environment_root:
             candidate = Path(environment_root).expanduser().resolve()
             if not candidate.exists():
-                raise FileNotFoundError(
-                    f"{RSRF_ROOT_ENV_VAR} points to a missing path: {candidate}"
-                )
+                raise FileNotFoundError(f"{RSRF_ROOT_ENV_VAR} points to a missing path: {candidate}")
             return candidate
         current = Path.cwd().resolve()
     for candidate in (current, *current.parents):
@@ -252,12 +251,7 @@ def canonical_variant_dir(
     """Return the canonical output directory for a sensor variant."""
 
     layout = build_repo_layout(root)
-    return (
-        layout.canonical_root
-        / content_kind
-        / sensor_unit_id
-        / representation_variant
-    )
+    return layout.canonical_root / content_kind / sensor_unit_id / representation_variant
 
 
 def realized_variant_dir(
@@ -310,9 +304,7 @@ def sensor_row_from_manifest(
     """Build the canonical sensor registry row for a manifest."""
 
     band_count = (
-        manifest.validation.expected_band_count
-        if isinstance(manifest.validation.expected_band_count, int)
-        else None
+        manifest.validation.expected_band_count if isinstance(manifest.validation.expected_band_count, int) else None
     )
     return {
         "sensor_unit_id": manifest.sensor_unit_id,
@@ -326,8 +318,7 @@ def sensor_row_from_manifest(
         "spectral_domain": manifest.validation.expected_domain,
         "source_tier": manifest.source_tier.value,
         "approximation": manifest.approximation if approximation is None else approximation,
-        "official_source_available": manifest.source_type
-        in {SourceType.OFFICIAL, SourceType.OFFICIAL_METADATA},
+        "official_source_available": manifest.source_type in {SourceType.OFFICIAL, SourceType.OFFICIAL_METADATA},
         "band_count": band_count,
         "license_note": manifest.license_note,
         "status": status,
@@ -360,16 +351,10 @@ def realization_row_from_manifest(manifest: SourceManifest) -> dict[str, Any] | 
         return None
 
     grid_policy = (
-        manifest.curve_realization.grid_policy.to_dict()
-        if manifest.curve_realization.grid_policy is not None
-        else {}
+        manifest.curve_realization.grid_policy.to_dict() if manifest.curve_realization.grid_policy is not None else {}
     )
     truncate_sigma = grid_policy.get("truncate_sigma")
-    support_rule = (
-        f"center_plus_minus_{truncate_sigma}_sigma"
-        if truncate_sigma is not None
-        else "manifest_defined"
-    )
+    support_rule = f"center_plus_minus_{truncate_sigma}_sigma" if truncate_sigma is not None else "manifest_defined"
     realization_id = realization_id_from_manifest(manifest)
 
     return {
@@ -407,9 +392,7 @@ def manifest_registry_rows(
                 representation_variant=manifest.curve_realization.output_representation_variant,
                 content_kind=ContentKind.SAMPLED_CURVE,
                 realization_kind=(
-                    "approximate_parametric"
-                    if manifest.curve_realization.approximation
-                    else "official_parametric"
+                    "approximate_parametric" if manifest.curve_realization.approximation else "official_parametric"
                 ),
                 approximation=manifest.curve_realization.approximation,
                 status=status,

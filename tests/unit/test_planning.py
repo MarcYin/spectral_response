@@ -10,8 +10,8 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from rsrf.manifests import PLANNING_MANIFEST_DIRNAME, manifest_path
 from rsrf.io import write_parquet_table
+from rsrf.manifests import PLANNING_MANIFEST_DIRNAME, manifest_path
 from rsrf.planning import list_planned_sensors, load_planned_sensor_catalog, register_planned_sensor_catalog
 from rsrf.registry import read_registry_table, registry_table_columns, registry_table_path
 

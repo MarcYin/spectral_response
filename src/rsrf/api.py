@@ -34,10 +34,7 @@ def list_bands(
     )
     resolved_variant = str(sensor_row["representation_variant"])
     frame = read_registry_table(root, "bands")
-    frame = frame[
-        (frame["sensor_unit_id"] == sensor_unit_id)
-        & (frame["representation_variant"] == resolved_variant)
-    ]
+    frame = frame[(frame["sensor_unit_id"] == sensor_unit_id) & (frame["representation_variant"] == resolved_variant)]
     if "band_index" in frame.columns:
         frame = frame.sort_values(["band_index", "band_id"], na_position="last")
     return frame.to_dict(orient="records")
@@ -56,10 +53,7 @@ def get_metadata(
         representation_variant,
         root=root,
     )
-    metadata_path = (
-        _representation_dir(root, sensor_row)
-        / "metadata.json"
-    )
+    metadata_path = _representation_dir(root, sensor_row) / "metadata.json"
     return read_json(metadata_path)
 
 
@@ -80,14 +74,9 @@ def load_curve(
     resolved_variant = str(sensor_row["representation_variant"])
     content_kind = ContentKind(str(sensor_row["content_kind"]))
     if content_kind != ContentKind.SAMPLED_CURVE:
-        raise ValueError(
-            f"{sensor_unit_id}/{resolved_variant} is {content_kind.value}, not sampled_curve"
-        )
+        raise ValueError(f"{sensor_unit_id}/{resolved_variant} is {content_kind.value}, not sampled_curve")
 
-    curves_path = (
-        _representation_dir(root, sensor_row)
-        / "curves.parquet"
-    )
+    curves_path = _representation_dir(root, sensor_row) / "curves.parquet"
     frame = _read_parquet(curves_path)
     frame = frame[
         (frame["sensor_unit_id"] == sensor_unit_id)
@@ -124,10 +113,7 @@ def load_band_spec(
     if content_kind != ContentKind.BAND_SPEC:
         raise ValueError(f"{sensor_unit_id}/{resolved_variant} is not a band_spec representation")
 
-    band_specs_path = (
-        _representation_dir(root, sensor_row)
-        / "band_specs.parquet"
-    )
+    band_specs_path = _representation_dir(root, sensor_row) / "band_specs.parquet"
     frame = _read_parquet(band_specs_path)
     frame = frame[
         (frame["sensor_unit_id"] == sensor_unit_id)
@@ -157,9 +143,7 @@ def load_band_spec(
         band_status="nominal" if _is_nullish(row["band_status"]) else str(row["band_status"]),
         published_shape_type=str(row["published_shape_type"]),
         shape_param_json=(
-            {}
-            if _is_nullish(shape_param_json) or not shape_param_json
-            else json.loads(shape_param_json)
+            {} if _is_nullish(shape_param_json) or not shape_param_json else json.loads(shape_param_json)
         ),
     )
 
@@ -200,9 +184,7 @@ def _resolve_sensor_variant(
     if frame.empty:
         raise KeyError(f"sensor representation not found: {sensor_unit_id}/{representation_variant}")
     if len(frame) > 1:
-        raise ValueError(
-            f"multiple representations found for {sensor_unit_id}; representation_variant is required"
-        )
+        raise ValueError(f"multiple representations found for {sensor_unit_id}; representation_variant is required")
     return frame.iloc[0]
 
 
@@ -212,7 +194,7 @@ def _lookup_band_registry_row(
     representation_variant: str,
     *,
     root: Path | None = None,
-):
+) -> Any | None:
     frame = read_registry_table(root, "bands")
     frame = frame[
         (frame["sensor_unit_id"] == sensor_unit_id)

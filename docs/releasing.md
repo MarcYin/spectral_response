@@ -16,7 +16,7 @@ python3 -m twine check dist/*
 
 This repo includes three workflows:
 
-- `ci.yml`: test matrix plus packaging smoke check
+- `ci.yml`: lint checks (ruff), test matrix (Python 3.9–3.14), and packaging smoke check
 - `docs.yml`: build and deploy MkDocs to GitHub Pages
 - `release-package.yml`: build and publish to PyPI using trusted publishing
 

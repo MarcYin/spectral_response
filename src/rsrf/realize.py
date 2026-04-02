@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import replace
 import math
+from dataclasses import replace
 
 import numpy as np
 
@@ -51,12 +51,10 @@ def gaussian_curve_from_band_spec(
         min_step_nm=min_step_nm,
     )
     half_width_nm = truncate_sigma * sigma_nm
-    half_steps = int(math.ceil(half_width_nm / step_nm))
+    half_steps = math.ceil(half_width_nm / step_nm)
     offsets_nm = np.arange(-half_steps, half_steps + 1, dtype=float) * step_nm
     wavelength_nm = band_spec.center_wavelength_nm + offsets_nm
-    response = np.exp(
-        -0.5 * ((wavelength_nm - band_spec.center_wavelength_nm) / sigma_nm) ** 2
-    )
+    response = np.exp(-0.5 * ((wavelength_nm - band_spec.center_wavelength_nm) / sigma_nm) ** 2)
     return SampledCurve(
         band_id=band_spec.band_id,
         wavelength_nm=wavelength_nm,

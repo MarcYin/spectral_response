@@ -4,8 +4,9 @@ from __future__ import annotations
 
 import json
 import re
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import numpy as np
 
@@ -38,11 +39,7 @@ def export_docs_visualization_assets(
 
     layout = build_repo_layout(root)
     resolved_root = layout.root
-    output_root = (
-        output_dir
-        if output_dir is not None
-        else layout.docs_root / "assets" / "visualization"
-    ).resolve()
+    output_root = (output_dir if output_dir is not None else layout.docs_root / "assets" / "visualization").resolve()
     sensors_root = output_root / "sensors"
     output_root.mkdir(parents=True, exist_ok=True)
     sensors_root.mkdir(parents=True, exist_ok=True)
@@ -51,8 +48,7 @@ def export_docs_visualization_assets(
     sensor_rows = [
         row
         for row in list_sensors(root=resolved_root)
-        if allowed_keys is None
-        or (str(row["sensor_unit_id"]), str(row["representation_variant"])) in allowed_keys
+        if allowed_keys is None or (str(row["sensor_unit_id"]), str(row["representation_variant"])) in allowed_keys
     ]
     sensor_rows.sort(key=lambda row: (str(row["sensor_unit_id"]), str(row["representation_variant"])))
 
@@ -120,9 +116,7 @@ def export_docs_visualization_assets(
             "z": heatmap_rows_no_pan,
             "modes": {
                 "all_bands": {
-                    "description": (
-                        "Peak-normalized per-sensor maximum response across all bands on a 1 nm grid."
-                    ),
+                    "description": ("Peak-normalized per-sensor maximum response across all bands on a 1 nm grid."),
                     "z": heatmap_rows_all,
                 },
                 "no_pan": {
@@ -214,14 +208,12 @@ def _build_sensor_visualization_payload(
                 "band_index": _clean_optional_int(band_row.get("band_index")),
                 "curve_origin": curve_origin,
                 "is_pan_band": is_pan_band,
-                "center_wavelength_nm": _clean_optional_float(
-                    band_row.get("center_wavelength_nm")
-                ),
+                "center_wavelength_nm": _clean_optional_float(band_row.get("center_wavelength_nm")),
                 "fwhm_nm": _clean_optional_float(band_row.get("fwhm_nm")),
                 "support_min_nm": round(support_min_nm, 3),
                 "support_max_nm": round(support_max_nm, 3),
-                "native_point_count": int(len(curve.wavelength_nm)),
-                "display_point_count": int(len(display_curve.wavelength_nm)),
+                "native_point_count": len(curve.wavelength_nm),
+                "display_point_count": len(display_curve.wavelength_nm),
                 "peak_response": round(float(np.max(np.asarray(curve.response, dtype=float))), 6),
                 "area": round(float(response_area(curve)), 6),
                 "points": [
@@ -234,11 +226,7 @@ def _build_sensor_visualization_payload(
             }
         )
 
-    curve_origin = (
-        next(iter(curve_origins))
-        if len(curve_origins) == 1
-        else "mixed"
-    )
+    curve_origin = next(iter(curve_origins)) if len(curve_origins) == 1 else "mixed"
     sensor_payload = {
         "sensor_key": _sensor_key(sensor_unit_id, representation_variant),
         "label": _sensor_label(sensor_row),

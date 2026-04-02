@@ -44,9 +44,7 @@ class SampledCurveNormalizationTests(unittest.TestCase):
         )
 
         curve_rows = [
-            (row["wavelength_nm"], row["response"])
-            for row in artifacts.curve_rows
-            if row["band_id"] == "B01"
+            (row["wavelength_nm"], row["response"]) for row in artifacts.curve_rows if row["band_id"] == "B01"
         ]
         self.assertEqual(
             curve_rows,

@@ -55,7 +55,14 @@ def manifest_path(
 
 
 def resolve_manifest_path(path_or_name: str | Path, root: Path | None = None) -> Path:
-    """Resolve a manifest from an explicit path or a library filename."""
+    """Resolve a manifest from an explicit path or a library filename.
+
+    Resolved paths are validated to reside within the repository tree to
+    prevent accidental loading of manifests from arbitrary locations.
+    """
+
+    layout = build_repo_layout(root)
+    repo_root = layout.root
 
     candidate = Path(path_or_name).expanduser()
     if candidate.is_absolute():
@@ -64,9 +71,9 @@ def resolve_manifest_path(path_or_name: str | Path, root: Path | None = None) ->
             return resolved
         raise FileNotFoundError(f"manifest not found: {candidate}")
 
-    repo_root = build_repo_layout(root).root
     cwd_candidate = candidate.resolve()
     if cwd_candidate.exists():
+        _check_path_within_repo(cwd_candidate, repo_root, path_or_name)
         return cwd_candidate
 
     repo_relative = (repo_root / candidate).resolve()
@@ -84,6 +91,16 @@ def resolve_manifest_path(path_or_name: str | Path, root: Path | None = None) ->
             return library_candidate.resolve()
 
     raise FileNotFoundError(f"manifest not found: {path_or_name}")
+
+
+def _check_path_within_repo(resolved: Path, repo_root: Path, original: str | Path) -> None:
+    """Raise ValueError if *resolved* is outside the repository root."""
+    try:
+        resolved.relative_to(repo_root)
+    except ValueError:
+        raise ValueError(
+            f"manifest path {original} resolves to {resolved} which is outside the repository root {repo_root}"
+        ) from None
 
 
 def iter_source_manifest_paths(

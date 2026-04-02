@@ -48,6 +48,9 @@ Optional extras are split by workflow:
 - `.[qa]` for validation plots
 - `.[docs]` for MkDocs site builds
 - `.[release]` for packaging checks
+- `.[lint]` for ruff-based code quality checks
+
+The `.[dev]` extra composes all of the above.
 
 ## Repository-Backed Data Access
 
@@ -169,6 +172,7 @@ Project documentation is built with MkDocs and published at [https://marcyin.git
 Key entry points:
 
 - getting started: [`docs/getting-started.md`](docs/getting-started.md)
+- Python API reference: [`docs/python-api.md`](docs/python-api.md)
 - interactive visualizations: [`docs/visualizations.md`](docs/visualizations.md)
 - CLI reference: [`docs/cli.md`](docs/cli.md)
 - data model: [`docs/data-model.md`](docs/data-model.md)
@@ -189,6 +193,8 @@ This refreshes `docs/assets/visualization/`, renders `docs/visualizations.md` fr
 Run the local verification stack with:
 
 ```bash
+ruff check src/ tests/ scripts/
+ruff format --check src/ tests/ scripts/
 python3 -m unittest discover -s tests/unit
 python3 -m unittest discover -s tests/regression
 python3 scripts/build/prepare_docs_site.py --root .
