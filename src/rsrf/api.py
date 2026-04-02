@@ -212,7 +212,7 @@ def _lookup_band_registry_row(
     representation_variant: str,
     *,
     root: Path | None = None,
-):
+) -> Any | None:
     frame = read_registry_table(root, "bands")
     frame = frame[
         (frame["sensor_unit_id"] == sensor_unit_id)

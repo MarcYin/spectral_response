@@ -9,6 +9,9 @@ description = "Canonical spectral response definitions, ingest tooling, and QA w
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.9"
 license = "LicenseRef-RepositorySpecific"
+authors = [
+  { name = "Marc Yin" },
+]
 keywords = [
   "spectral response",
   "remote sensing",
@@ -59,15 +62,11 @@ release = [
   "build>=1.2",
   "twine>=5.1",
 ]
+lint = [
+  "ruff>=0.4",
+]
 dev = [
-  "h5py>=3.8",
-  "matplotlib>=3.5",
-  "mkdocs>=1.6",
-  "mkdocs-material>=9.5",
-  "netCDF4>=1.6",
-  "build>=1.2",
-  "twine>=5.1",
-  "xarray>=2023.0",
+  "RSRF[ingest,qa,docs,release,lint]",
 ]
 
 [project.scripts]
@@ -78,3 +77,27 @@ include-package-data = false
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 120
+src = ["src"]
+
+[tool.ruff.lint]
+select = [
+  "E",    # pycodestyle errors
+  "F",    # pyflakes
+  "W",    # pycodestyle warnings
+  "I",    # isort
+  "UP",   # pyupgrade
+  "B",    # flake8-bugbear
+  "SIM",  # flake8-simplify
+  "RUF",  # ruff-specific
+]
+ignore = [
+  "E501",   # line length (handled by formatter)
+  "UP007",  # use X | Y for union types (need runtime support)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["rsrf"]

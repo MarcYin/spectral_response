@@ -144,13 +144,19 @@ def _resolve_band_id(record: dict[str, Any], band_id_field: str | None, band_ind
 def _required_float(record: dict[str, Any], field_name: str) -> float:
     if field_name not in record or record[field_name] in ("", None):
         raise ValueError(f"missing required field: {field_name}")
-    return float(record[field_name])
+    try:
+        return float(record[field_name])
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"field {field_name!r} has non-numeric value {record[field_name]!r}") from exc
 
 
 def _optional_int(record: dict[str, Any], field_name: str | None) -> int | None:
     if not field_name or field_name not in record or record[field_name] in ("", None):
         return None
-    return int(record[field_name])
+    try:
+        return int(record[field_name])
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"field {field_name!r} has non-integer value {record[field_name]!r}") from exc
 
 
 def _optional_string(record: dict[str, Any], field_name: str | None) -> str | None:

@@ -124,7 +124,7 @@ def write_parquet_table(
     rows: Sequence[Mapping[str, Any]],
     *,
     columns: Sequence[str] | None = None,
-):
+) -> Path:
     """Write a parquet table from row mappings."""
 
     engine = parquet_engine()
@@ -162,7 +162,7 @@ def upsert_parquet_table(
     *,
     key_columns: Sequence[str],
     columns: Sequence[str] | None = None,
-):
+) -> Path:
     """Upsert rows into a parquet-backed table using a simple key-based merge."""
 
     try:

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import shutil
+import tempfile
 from datetime import datetime, timezone
 from dataclasses import dataclass
 from pathlib import Path
@@ -89,12 +91,26 @@ def write_sampled_curve_artifacts(
     curves_path = output_dir / "curves.parquet"
     metadata_path = output_dir / "metadata.json"
 
-    write_parquet_table(
-        curves_path,
-        artifacts.curve_rows,
-        columns=CURVE_TABLE_COLUMNS,
-    )
-    write_json(metadata_path, artifacts.metadata)
+    # Write canonical artifacts to a staging directory first, then move
+    # them into place so a partial failure does not leave corrupt state.
+    staging_dir = Path(tempfile.mkdtemp(prefix="rsrf_ingest_"))
+    try:
+        staged_curves = staging_dir / "curves.parquet"
+        staged_metadata = staging_dir / "metadata.json"
+        write_parquet_table(
+            staged_curves,
+            artifacts.curve_rows,
+            columns=CURVE_TABLE_COLUMNS,
+        )
+        write_json(staged_metadata, artifacts.metadata)
+
+        # All writes succeeded — commit by moving files into place.
+        output_dir.mkdir(parents=True, exist_ok=True)
+        shutil.move(str(staged_curves), str(curves_path))
+        shutil.move(str(staged_metadata), str(metadata_path))
+    finally:
+        shutil.rmtree(staging_dir, ignore_errors=True)
+
     register_manifest(root, manifest)
     upsert_registry_rows(root, "bands", list(artifacts.band_rows))
 
@@ -135,12 +151,23 @@ def write_band_spec_artifacts(
     band_specs_path = output_dir / "band_specs.parquet"
     metadata_path = output_dir / "metadata.json"
 
-    write_parquet_table(
-        band_specs_path,
-        artifacts.band_spec_rows,
-        columns=BAND_SPEC_TABLE_COLUMNS,
-    )
-    write_json(metadata_path, artifacts.metadata)
+    staging_dir = Path(tempfile.mkdtemp(prefix="rsrf_ingest_"))
+    try:
+        staged_specs = staging_dir / "band_specs.parquet"
+        staged_metadata = staging_dir / "metadata.json"
+        write_parquet_table(
+            staged_specs,
+            artifacts.band_spec_rows,
+            columns=BAND_SPEC_TABLE_COLUMNS,
+        )
+        write_json(staged_metadata, artifacts.metadata)
+
+        output_dir.mkdir(parents=True, exist_ok=True)
+        shutil.move(str(staged_specs), str(band_specs_path))
+        shutil.move(str(staged_metadata), str(metadata_path))
+    finally:
+        shutil.rmtree(staging_dir, ignore_errors=True)
+
     register_manifest(root, manifest)
     upsert_registry_rows(root, "band_specs", list(artifacts.band_spec_rows))
     upsert_registry_rows(root, "bands", list(artifacts.band_rows))
