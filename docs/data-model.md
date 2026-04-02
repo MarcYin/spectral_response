@@ -2,7 +2,15 @@
 
 ## Canonical forms
 
-RSRF stores optical response definitions in two canonical forms.
+RSRF stores optical response definitions in two canonical forms, identified by the `ContentKind` enum.
+
+### `ContentKind`
+
+| Value | Description |
+|-------|-------------|
+| `sampled_curve` | Full spectral response samples on a wavelength axis |
+| `band_spec` | Metadata-only band parameters (center wavelength, FWHM, etc.) |
+| `hybrid` | Reserved for manifests that produce both sampled curves and band specs |
 
 ## `sampled_curve`
 
@@ -20,6 +28,17 @@ Typical examples:
 - MODIS
 - VIIRS
 - Planet RSR CSV families
+
+### `SampledCurve` fields
+
+The `SampledCurve` dataclass (frozen) is returned by `load_curve()` and `load_response_definition()`:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `band_id` | `str` | Band identifier (e.g. `"B03"`, `"B001"`) |
+| `wavelength_nm` | `Sequence[float]` | Wavelength samples in nanometers, sorted ascending |
+| `response` | `Sequence[float]` | Response values corresponding to each wavelength sample |
+| `source_variant` | `str \| None` | Representation variant that produced this curve, or `None` |
 
 ## `band_spec`
 
@@ -43,19 +62,38 @@ Typical examples:
 - PACE OCI
 - WMO OSCAR support-range proxies
 
+### `BandSpec` fields
+
+The `BandSpec` dataclass (frozen) is returned by `load_band_spec()` and `load_response_definition()`:
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `band_id` | `str` | required | Band identifier |
+| `center_wavelength_nm` | `float` | required | Center wavelength in nanometers |
+| `fwhm_nm` | `float` | required | Full width at half maximum in nanometers |
+| `band_index` | `int \| None` | `None` | Numeric band ordering index |
+| `band_name` | `str \| None` | `None` | Human-readable band name |
+| `band_status` | `str` | `"nominal"` | Quality or operational status flag |
+| `published_shape_type` | `str` | `"unknown"` | Shape type from the source (e.g. `"gaussian"`, `"tabulated"`) |
+| `shape_param_json` | `Mapping[str, Any]` | `{}` | Additional shape parameters as key-value pairs |
+
 ## Realized curves
 
-Some `band_spec` sources can optionally produce derived sampled curves under `data/realized/`. These are approximations, not replacements for native published SRFs.
+Some `band_spec` sources can optionally produce derived sampled curves under `data/realized/`. These are approximations synthesized from center wavelength and FWHM using a profile model (typically Gaussian), not replacements for native published SRFs.
+
+Realized curves are produced by the `realize_curve()` function and controlled by the `CurveRealizationSpec` section in source manifests.
 
 ## Registry tables
 
 The repository registry lives under `data/registry/`:
 
-- `sensors.parquet`
-- `bands.parquet`
-- `sources.parquet`
-- `band_specs.parquet`
-- `realizations.parquet`
+| Table | Description |
+|-------|-------------|
+| `sensors.parquet` | Sensor representations with mission, platform, instrument, and content kind |
+| `bands.parquet` | Band-level rows with band IDs, names, indices, and wavelength metadata |
+| `sources.parquet` | Source provenance rows linked to manifests |
+| `band_specs.parquet` | Band specification parameter rows for `band_spec` representations |
+| `realizations.parquet` | Tracking rows for realized (approximated) sampled curves |
 
 These tables drive the public read API and the CLI.
 
@@ -64,5 +102,5 @@ These tables drive the public read API and the CLI.
 Repository-aware operations resolve the root in this order:
 
 1. explicit `root=` argument or `--root`
-2. `RSRF_ROOT`
+2. `RSRF_ROOT` environment variable
 3. upward search from the current working directory

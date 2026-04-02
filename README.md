@@ -172,6 +172,7 @@ Project documentation is built with MkDocs and published at [https://marcyin.git
 Key entry points:
 
 - getting started: [`docs/getting-started.md`](docs/getting-started.md)
+- Python API reference: [`docs/python-api.md`](docs/python-api.md)
 - interactive visualizations: [`docs/visualizations.md`](docs/visualizations.md)
 - CLI reference: [`docs/cli.md`](docs/cli.md)
 - data model: [`docs/data-model.md`](docs/data-model.md)

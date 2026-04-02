@@ -36,6 +36,7 @@ nav:
   - Getting Started: getting-started.md
   - Visualizations: visualizations.md
   - Repository Layout: repository-layout.md
+  - Python API: python-api.md
   - CLI: cli.md
   - Data Model: data-model.md
   - Development: development.md
