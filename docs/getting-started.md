@@ -1,5 +1,7 @@
 # Getting Started
 
+RSRF requires Python 3.9 or later (tested up to 3.14).
+
 ## Installation
 
 During development:

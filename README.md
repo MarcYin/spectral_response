@@ -48,6 +48,9 @@ Optional extras are split by workflow:
 - `.[qa]` for validation plots
 - `.[docs]` for MkDocs site builds
 - `.[release]` for packaging checks
+- `.[lint]` for ruff-based code quality checks
+
+The `.[dev]` extra composes all of the above.
 
 ## Repository-Backed Data Access
 
@@ -189,6 +192,8 @@ This refreshes `docs/assets/visualization/`, renders `docs/visualizations.md` fr
 Run the local verification stack with:
 
 ```bash
+ruff check src/ tests/ scripts/
+ruff format --check src/ tests/ scripts/
 python3 -m unittest discover -s tests/unit
 python3 -m unittest discover -s tests/regression
 python3 scripts/build/prepare_docs_site.py --root .
