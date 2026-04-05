@@ -69,13 +69,52 @@ def _custom_sensor_payload() -> dict[str, object]:
 
 
 class SensorDefinitionTests(unittest.TestCase):
+    def _assert_matches_custom_payload(self, serialized: dict[str, object]) -> None:
+        self.assertEqual(serialized["schema_type"], "rsrf_sensor_definition")
+        self.assertEqual(serialized["schema_version"], "1.0.0")
+        self.assertEqual(serialized["sensor_id"], "custom_example_sensor")
+        self.assertEqual(
+            serialized["extensions"],
+            {"custom_consumer": {"mode": "reflectance", "revisions": [1, 2]}},
+        )
+
+        bands = serialized["bands"]
+        self.assertEqual(len(bands), 2)
+        self.assertEqual(bands[0]["band_id"], "blue")
+        self.assertEqual(
+            bands[0]["response_definition"],
+            {
+                "kind": "gaussian",
+                "center_wavelength_nm": 490.0,
+                "fwhm_nm": 65.0,
+            },
+        )
+        self.assertEqual(bands[0]["extensions"], {"spectral_library": {"segment": "vnir"}})
+
+        self.assertEqual(bands[1]["band_id"], "swir1")
+        self.assertEqual(
+            bands[1]["response_definition"],
+            {
+                "kind": "sampled",
+                "wavelength_nm": [1550.0, 1600.0, 1650.0],
+                "response": [0.1, 1.0, 0.1],
+            },
+        )
+        self.assertEqual(
+            bands[1]["extensions"],
+            {
+                "spectral_library": {"segment": "swir"},
+                "custom_consumer": {"notes": ["primary"]},
+            },
+        )
+
     def test_sensor_definition_round_trips_extensions_through_dict(self) -> None:
         payload = _custom_sensor_payload()
 
         sensor_definition = sensor_definition_from_dict(payload)
         serialized = sensor_definition_to_dict(sensor_definition)
 
-        self.assertEqual(serialized, payload)
+        self._assert_matches_custom_payload(serialized)
 
     def test_load_and_dump_sensor_definition_round_trip_json(self) -> None:
         payload = _custom_sensor_payload()
@@ -86,7 +125,7 @@ class SensorDefinitionTests(unittest.TestCase):
             dump_sensor_definition(sensor_definition, path)
             loaded = load_sensor_definition(path)
 
-        self.assertEqual(sensor_definition_to_dict(loaded), payload)
+        self._assert_matches_custom_payload(sensor_definition_to_dict(loaded))
 
     def test_coerce_sensor_definition_accepts_json_path(self) -> None:
         payload = _custom_sensor_payload()
@@ -118,7 +157,7 @@ class SensorDefinitionTests(unittest.TestCase):
         sensor_definition = get_sensor_definition("hyperspec_example", root=ROOT)
 
         self.assertEqual(sensor_definition.sensor_id, "hyperspec_example")
-        self.assertEqual(sensor_definition.bands[0].response_definition["kind"], "gaussian")
+        self.assertEqual(sensor_definition.bands[0].response_definition["kind"], "band_spec")
         self.assertEqual(sensor_definition.bands[0].response_definition["center_wavelength_nm"], 410.0)
         self.assertEqual(sensor_definition.bands[0].extensions, {})
         self.assertEqual(sensor_definition.extensions["rsrf"]["representation_variant"], "metadata_band_spec")

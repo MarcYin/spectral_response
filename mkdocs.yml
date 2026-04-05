@@ -39,6 +39,7 @@ nav:
   - Python API: python-api.md
   - CLI: cli.md
   - Data Model: data-model.md
+  - Sensor Definition Handoff: rsrf_sensor_definition_handoff.md
   - Development: development.md
   - Releasing: releasing.md
   - Sensor Notes:

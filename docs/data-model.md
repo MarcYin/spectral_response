@@ -106,7 +106,7 @@ Each `BandDefinition` holds the downstream-facing band payload:
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `band_id` | `str` | required | Unique band identifier within the sensor |
-| `response_definition` | `Mapping[str, Any]` | required | Stable JSON-shaped response definition with `kind="sampled"` or `kind="band_spec"` |
+| `response_definition` | `Mapping[str, Any]` | required | Stable JSON-shaped response definition with `kind="sampled"` and center/FWHM forms represented as `kind="band_spec"` or `kind="gaussian"` |
 | `extensions` | `Mapping[str, Any]` | `{}` | Namespaced band metadata |
 
 ### Extensions

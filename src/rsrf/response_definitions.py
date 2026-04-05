@@ -100,8 +100,14 @@ def response_definition_to_dict(
             "response": np.asarray(normalized.response, dtype=float).tolist(),
         }
 
+    kind = "band_spec"
+    if isinstance(response_definition, Mapping):
+        original_kind = _normalized_kind(response_definition.get("kind"))
+        if original_kind in _BAND_SPEC_KINDS:
+            kind = original_kind
+
     return {
-        "kind": "gaussian",
+        "kind": kind,
         "center_wavelength_nm": float(normalized.center_wavelength_nm),
         "fwhm_nm": float(normalized.fwhm_nm),
     }
