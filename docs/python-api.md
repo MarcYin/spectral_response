@@ -138,6 +138,47 @@ meta = get_metadata("sentinel-2c_msi", "band_average")
 print(meta["content_kind"], meta["representation_variant"])
 ```
 
+### `coerce_response_definition`
+
+```python
+coerce_response_definition(
+    response_definition: SampledCurve | BandSpec | Mapping[str, Any] | Callable[[], Any],
+    *,
+    band_id: str = "custom",
+    source_variant: str | None = "custom",
+) -> SampledCurve | BandSpec
+```
+
+Normalize a runtime response-definition input into the package's native dataclasses. Supported forms are:
+
+- a `SampledCurve` or `BandSpec` instance
+- a mapping with `wavelength_nm` and `response`
+- a mapping with `wavelength` and `relative_spectral_response`
+- a mapping with `center_wavelength_nm` and `fwhm_nm`
+- a zero-argument callable returning one of the above
+
+Center+FWHM inputs are normalized to a `BandSpec`. Helpers that need sampled responses, such as convolution utilities, realize them as Gaussian curves.
+
+```python
+from rsrf import coerce_response_definition
+
+curve = coerce_response_definition(
+    {
+        "band_id": "custom_blue",
+        "wavelength_nm": [450.0, 455.0, 460.0],
+        "response": [0.1, 1.0, 0.1],
+    }
+)
+
+spec = coerce_response_definition(
+    lambda: {
+        "band_id": "custom_nir",
+        "center_wavelength_nm": 842.0,
+        "fwhm_nm": 20.0,
+    }
+)
+```
+
 ## Validation
 
 ### `validate_sensor`

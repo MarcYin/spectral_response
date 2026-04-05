@@ -92,6 +92,8 @@ response = load_response_definition("sentinel-2c_msi", "B03", "band_average", ro
 
 `load_response_definition()` returns either a `SampledCurve` or a `BandSpec`, depending on the representation variant.
 
+For runtime custom inputs, use `coerce_response_definition()` with either sampled points (`wavelength_nm` + `response`, or `wavelength` + `relative_spectral_response`), a band spec (`center_wavelength_nm` + `fwhm_nm`), or a zero-argument callable returning one of those forms. Downstream helpers realize center+FWHM inputs as Gaussian curves when they need sampled responses.
+
 ## Manifest And Registry Workflows
 
 Manifest-aware commands accept either explicit paths or checked-in manifest filenames from the manifest library. From the repository root, these work without the full manifest path:

@@ -5,19 +5,15 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import numpy as np
+
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from rsrf.api import (
-    get_metadata,
-    list_bands,
-    list_sensors,
-    load_band_spec,
-    load_curve,
-    load_response_definition,
-)
+from rsrf import coerce_response_definition
+from rsrf.api import get_metadata, list_bands, list_sensors, load_band_spec, load_curve, load_response_definition
 from rsrf.ingest import write_band_spec_artifacts
 from rsrf.io import read_json
 from rsrf.manifests import manifest_path
@@ -246,6 +242,56 @@ class ApiTests(unittest.TestCase):
         )
         self.assertIsInstance(sampled, SampledCurve)
         self.assertIsInstance(band_spec, BandSpec)
+
+    def test_coerce_response_definition_builds_sampled_curve_from_mapping(self) -> None:
+        response_definition = coerce_response_definition(
+            {
+                "band_id": "custom_blue",
+                "wavelength_nm": [450.0, 455.0, 460.0],
+                "response": [0.1, 1.0, 0.1],
+                "source_variant": "user_supplied",
+            }
+        )
+        self.assertIsInstance(response_definition, SampledCurve)
+        self.assertEqual(response_definition.band_id, "custom_blue")
+        self.assertEqual(response_definition.source_variant, "user_supplied")
+        self.assertTrue(np.allclose(response_definition.wavelength_nm, [450.0, 455.0, 460.0]))
+
+    def test_coerce_response_definition_builds_band_spec_from_mapping(self) -> None:
+        response_definition = coerce_response_definition(
+            {
+                "band_name": "Custom NIR",
+                "center_wavelength_nm": 842.0,
+                "fwhm_nm": 20.0,
+                "shape_param_json": {"origin": "user"},
+            }
+        )
+        self.assertIsInstance(response_definition, BandSpec)
+        self.assertEqual(response_definition.band_id, "custom")
+        self.assertEqual(response_definition.band_name, "Custom NIR")
+        self.assertEqual(response_definition.shape_param_json["origin"], "user")
+
+    def test_coerce_response_definition_accepts_callable_returning_mapping(self) -> None:
+        response_definition = coerce_response_definition(
+            lambda: {
+                "band_id": "callable_band",
+                "wavelength_nm": [600.0, 610.0, 620.0],
+                "response": [0.0, 1.0, 0.0],
+            }
+        )
+        self.assertIsInstance(response_definition, SampledCurve)
+        self.assertEqual(response_definition.band_id, "callable_band")
+
+    def test_coerce_response_definition_rejects_ambiguous_mapping(self) -> None:
+        with self.assertRaises(ValueError):
+            coerce_response_definition(
+                {
+                    "wavelength_nm": [500.0, 510.0],
+                    "response": [0.0, 1.0],
+                    "center_wavelength_nm": 505.0,
+                    "fwhm_nm": 12.0,
+                }
+            )
 
     def test_unbacked_realized_variant_is_not_exposed_by_read_api(self) -> None:
         with self.assertRaises(KeyError):

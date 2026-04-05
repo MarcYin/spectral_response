@@ -4,24 +4,26 @@ from __future__ import annotations
 
 import numpy as np
 
-from .models import BandSpec, SampledCurve
+from .models import SampledCurve
 from .realize import realize_curve
+from .response_definitions import ResponseDefinitionInput, coerce_response_definition
 
 
-def response_area(curve: SampledCurve) -> float:
-    """Return the integral of a sampled response curve."""
+def response_area(curve: ResponseDefinitionInput) -> float:
+    """Return the integral of a sampled curve or realized band specification."""
 
-    wavelength_nm = np.asarray(curve.wavelength_nm, dtype=float)
-    response = np.asarray(curve.response, dtype=float)
+    sampled_curve = _as_curve(curve)
+    wavelength_nm = np.asarray(sampled_curve.wavelength_nm, dtype=float)
+    response = np.asarray(sampled_curve.response, dtype=float)
     return _integrate(response, wavelength_nm)
 
 
 def convolve_spectrum(
     spectrum_wavelength_nm: np.ndarray,
     spectrum_values: np.ndarray,
-    response_definition: SampledCurve | BandSpec,
+    response_definition: ResponseDefinitionInput,
 ) -> float:
-    """Convolve a spectrum with a sampled curve or a band specification."""
+    """Convolve a spectrum with a sampled curve, band spec, mapping, or callable."""
 
     spectrum_wavelength_nm = np.asarray(spectrum_wavelength_nm, dtype=float)
     spectrum_values = np.asarray(spectrum_values, dtype=float)
@@ -44,7 +46,7 @@ def convolve_spectrum(
 
 def convolution_weights(
     spectrum_wavelength_nm: np.ndarray,
-    response_definition: SampledCurve | BandSpec,
+    response_definition: ResponseDefinitionInput,
 ) -> np.ndarray:
     """Build normalized response weights on a target spectral grid."""
 
@@ -70,12 +72,11 @@ def convolution_weights(
     return weights / total
 
 
-def _as_curve(response_definition: SampledCurve | BandSpec) -> SampledCurve:
-    if isinstance(response_definition, SampledCurve):
-        return response_definition
-    if isinstance(response_definition, BandSpec):
-        return realize_curve(response_definition)
-    raise TypeError(f"unsupported response definition type: {type(response_definition)!r}")
+def _as_curve(response_definition: ResponseDefinitionInput) -> SampledCurve:
+    resolved_definition = coerce_response_definition(response_definition)
+    if isinstance(resolved_definition, SampledCurve):
+        return resolved_definition
+    return realize_curve(resolved_definition)
 
 
 def _integrate(values: np.ndarray, wavelength_nm: np.ndarray) -> float:

@@ -11,6 +11,7 @@ from .manifests import iter_source_manifest_paths, manifest_path, resolve_manife
 from .planning import list_planned_sensors, register_planned_sensor_catalog
 from .qa import validate_sampled_curve_inventory, validate_sensor, write_validation_artifacts
 from .realize import realize_curve
+from .response_definitions import coerce_response_definition
 from .visualization import export_docs_visualization_assets
 
 PACKAGE_ROOT = Path(__file__).resolve().parent
@@ -71,6 +72,7 @@ else:
 __all__ = [
     "PACKAGE_ROOT",
     "__version__",
+    "coerce_response_definition",
     "export_docs_visualization_assets",
     "get_metadata",
     "iter_source_manifest_paths",

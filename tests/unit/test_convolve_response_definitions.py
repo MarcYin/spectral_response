@@ -49,6 +49,32 @@ class ConvolveResponseDefinitionTests(unittest.TestCase):
         band_value = convolve_spectrum(wavelength_nm, values, curve)
         self.assertAlmostEqual(float(np.dot(values, weights)), band_value, places=6)
 
+    def test_convolve_spectrum_accepts_sampled_curve_mapping(self) -> None:
+        wavelength_nm = np.linspace(400.0, 500.0, 1001)
+        values = np.full_like(wavelength_nm, 3.0)
+        band_value = convolve_spectrum(
+            wavelength_nm,
+            values,
+            {
+                "band_id": "custom_curve",
+                "wavelength_nm": [430.0, 440.0, 450.0],
+                "response": [0.0, 1.0, 0.0],
+            },
+        )
+        self.assertAlmostEqual(band_value, 3.0, places=6)
+
+    def test_convolution_weights_accept_band_spec_callable(self) -> None:
+        wavelength_nm = np.linspace(350.0, 500.0, 1501)
+        weights = convolution_weights(
+            wavelength_nm,
+            lambda: {
+                "band_id": "custom_spec",
+                "center_wavelength_nm": 410.0,
+                "fwhm_nm": 12.0,
+            },
+        )
+        self.assertAlmostEqual(float(weights.sum()), 1.0, places=6)
+
 
 if __name__ == "__main__":
     unittest.main()
