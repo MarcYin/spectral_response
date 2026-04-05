@@ -34,7 +34,7 @@ Recommended release sequence:
 
 1. Merge verified changes to `main`.
 2. Wait for the `CI` workflow on `main` to finish successfully.
-3. Create and push a version tag such as `v0.2.0`.
+3. Create and push a version tag such as `v0.3.0`.
 4. Let `release-package.yml` start automatically from that tag push and publish the package.
 5. Create a GitHub Release from that tag if you want release notes on GitHub.
 

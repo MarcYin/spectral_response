@@ -190,7 +190,12 @@ def get_sensor_definition(
             "schema_version": SENSOR_DEFINITION_SCHEMA_VERSION,
             "sensor_id": sensor_id,
             "bands": bands_payload,
-            "extensions": {},
+            "extensions": {
+                "rsrf": {
+                    "representation_variant": resolved_variant,
+                    "content_kind": content_kind.value,
+                }
+            },
         }
     )
 
@@ -392,7 +397,9 @@ def _resolve_sensor_variant(
     if frame.empty:
         raise KeyError(f"sensor definition not found: {sensor_id}/{representation_variant}")
     if len(frame) > 1:
-        raise ValueError(f"multiple sensor definitions found for {sensor_id}; representation_variant is required")
+        frame = frame.copy()
+        frame["_default_rank"] = frame.apply(_sensor_variant_default_rank, axis=1)
+        frame = frame.sort_values(["_default_rank", "representation_variant"])
     return frame.iloc[0]
 
 
@@ -479,7 +486,7 @@ def _registry_band_payloads(
                     "band_id": band_id,
                     "response_definition": response_definition_to_dict(
                         {
-                            "kind": "gaussian",
+                            "kind": "band_spec",
                             "center_wavelength_nm": float(artifact_row["center_wavelength_nm"]),
                             "fwhm_nm": float(artifact_row["fwhm_nm"]),
                         },
@@ -503,6 +510,19 @@ def _band_curve_samples(frame, band_id: str, column_name: str) -> list[float]:
 
 def _registry_band_extensions() -> dict[str, Any]:
     return {}
+
+
+def _sensor_variant_default_rank(row) -> tuple[int, int, int, str]:
+    approximation = bool(row.get("approximation"))
+    realization_kind = str(row.get("realization_kind", "none"))
+    content_kind = str(row.get("content_kind", ""))
+    representation_variant = str(row.get("representation_variant", ""))
+    return (
+        1 if approximation else 0,
+        1 if realization_kind != "none" else 0,
+        0 if content_kind == ContentKind.SAMPLED_CURVE.value else 1,
+        representation_variant,
+    )
 
 
 def _resolve_required_path(source: str | Path, *, root: Path | None = None) -> Path:

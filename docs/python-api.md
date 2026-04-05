@@ -53,6 +53,107 @@ list_planned_sensors(
 
 Return planned sensor entries from the planning catalog as JSON-friendly dictionaries. These are sensors tracked for future ingest that do not yet have canonical artifacts.
 
+### `list_sensor_definitions`
+
+```python
+list_sensor_definitions(
+    *,
+    representation_variant: str | None = None,
+    root: Path | None = None,
+) -> list[str]
+```
+
+List registry-backed sensor ids that can be normalized into full `SensorDefinition` objects.
+
+```python
+from rsrf import list_sensor_definitions
+
+sensor_ids = list_sensor_definitions()
+print(sensor_ids[:5])
+```
+
+## Whole-sensor definitions
+
+### `get_sensor_definition`
+
+```python
+get_sensor_definition(
+    sensor_id: str,
+    *,
+    representation_variant: str | None = None,
+    root: Path | None = None,
+) -> SensorDefinition
+```
+
+Load a registry-backed sensor as a versioned `SensorDefinition`. When multiple backed variants exist for the same sensor id and no `representation_variant` is provided, RSRF picks a deterministic default and records the chosen variant in `sensor_definition.extensions["rsrf"]["representation_variant"]`.
+
+```python
+from rsrf import get_sensor_definition
+
+sensor_definition = get_sensor_definition("sentinel-2c_msi")
+print(sensor_definition.schema_type, sensor_definition.schema_version)
+print(sensor_definition.extensions["rsrf"]["representation_variant"])
+```
+
+### `sensor_definition_from_dict`
+
+```python
+sensor_definition_from_dict(payload: Mapping[str, Any]) -> SensorDefinition
+```
+
+Validate and normalize a custom sensor-definition payload into the stable typed model.
+
+### `sensor_definition_to_dict`
+
+```python
+sensor_definition_to_dict(sensor_definition: SensorDefinition) -> dict[str, Any]
+```
+
+Serialize a `SensorDefinition` back to its stable JSON-facing shape. `extensions` content is preserved.
+
+### `load_sensor_definition`
+
+```python
+load_sensor_definition(
+    source: str | Path,
+    *,
+    root: Path | None = None,
+) -> SensorDefinition
+```
+
+Load and validate a sensor definition from a JSON file.
+
+### `dump_sensor_definition`
+
+```python
+dump_sensor_definition(
+    sensor_definition: SensorDefinition,
+    destination: str | Path,
+) -> None
+```
+
+Write a validated sensor definition to JSON.
+
+### `coerce_sensor_definition`
+
+```python
+coerce_sensor_definition(
+    sensor_definition_input: SensorDefinition | Mapping[str, Any] | str | Path,
+    *,
+    representation_variant: str | None = None,
+    root: Path | None = None,
+) -> SensorDefinition
+```
+
+Normalize any supported sensor-definition input into a `SensorDefinition`. Supported forms are:
+
+- a `SensorDefinition` instance
+- a mapping payload
+- a JSON file path
+- a registry sensor id
+
+Band-level `response_definition` payloads accept sampled arrays plus `kind="sampled"`, or center/FWHM metadata via `kind="band_spec"` or `kind="gaussian"`, and are validated during coercion.
+
 ## Loading response definitions
 
 ### `load_response_definition`

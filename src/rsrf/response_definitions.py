@@ -101,7 +101,7 @@ def response_definition_to_dict(
         }
 
     return {
-        "kind": "band_spec",
+        "kind": "gaussian",
         "center_wavelength_nm": float(normalized.center_wavelength_nm),
         "fwhm_nm": float(normalized.fwhm_nm),
     }

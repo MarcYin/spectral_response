@@ -94,6 +94,8 @@ response = load_response_definition("sentinel-2c_msi", "B03", "band_average", ro
 
 For runtime custom inputs, use `coerce_response_definition()` with either sampled points (`wavelength_nm` + `response`, or `wavelength` + `relative_spectral_response`), a band spec (`center_wavelength_nm` + `fwhm_nm`), or a zero-argument callable returning one of those forms. Downstream helpers realize center+FWHM inputs as Gaussian curves when they need sampled responses.
 
+For whole-sensor interchange, use `get_sensor_definition()` for registry sensors and `coerce_sensor_definition()` or `load_sensor_definition()` for custom payloads. These APIs normalize canonical and user-supplied sensors into the same versioned `SensorDefinition` contract with per-band `response_definition` payloads and namespaced `extensions`.
+
 ## Manifest And Registry Workflows
 
 Manifest-aware commands accept either explicit paths or checked-in manifest filenames from the manifest library. From the repository root, these work without the full manifest path:

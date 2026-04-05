@@ -85,6 +85,19 @@ class ResponseDefinitionCoercionTests(unittest.TestCase):
         self.assertIsInstance(response_definition, BandSpec)
         self.assertEqual(response_definition.band_id, "B002")
 
+    def test_coerce_accepts_band_spec_kind_mapping(self) -> None:
+        response_definition = coerce_response_definition(
+            {
+                "kind": "band_spec",
+                "band_id": "B002",
+                "center_wavelength_nm": 560.0,
+                "fwhm_nm": 35.0,
+            }
+        )
+
+        self.assertIsInstance(response_definition, BandSpec)
+        self.assertEqual(response_definition.band_id, "B002")
+
     def test_coerce_accepts_center_wavelength_alias(self) -> None:
         response_definition = coerce_response_definition(
             {

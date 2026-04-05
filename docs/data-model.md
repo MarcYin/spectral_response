@@ -83,6 +83,45 @@ Some `band_spec` sources can optionally produce derived sampled curves under `da
 
 Realized curves are produced by the `realize_curve()` function and controlled by the `CurveRealizationSpec` section in source manifests.
 
+## Sensor definitions
+
+RSRF also exposes a versioned whole-sensor interchange model for downstream packages and custom user inputs.
+
+### `SensorDefinition` fields
+
+The `SensorDefinition` dataclass (frozen) is returned by `get_sensor_definition()`, `coerce_sensor_definition()`, and `load_sensor_definition()`:
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `schema_type` | `str` | `"rsrf_sensor_definition"` | Public schema identifier |
+| `schema_version` | `str` | `"1.0.0"` | Version of the serialized sensor-definition contract |
+| `sensor_id` | `str` | required | Stable sensor identifier |
+| `bands` | `tuple[BandDefinition, ...]` | required | Ordered per-band definitions |
+| `extensions` | `Mapping[str, Any]` | `{}` | Namespaced metadata preserved through round-trip serialization |
+
+### `BandDefinition` fields
+
+Each `BandDefinition` holds the downstream-facing band payload:
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `band_id` | `str` | required | Unique band identifier within the sensor |
+| `response_definition` | `Mapping[str, Any]` | required | Stable JSON-shaped response definition with `kind="sampled"` or `kind="band_spec"` |
+| `extensions` | `Mapping[str, Any]` | `{}` | Namespaced band metadata |
+
+### Extensions
+
+Known downstream metadata lives under `extensions.<consumer_name>`. The initial validated extension namespace is:
+
+- `extensions.spectral_library.segment`
+
+Allowed `segment` values are:
+
+- `vnir`
+- `swir`
+
+Unknown extension namespaces are preserved, but the `spectral_library` block is validated strictly.
+
 ## Registry tables
 
 The repository registry lives under `data/registry/`:

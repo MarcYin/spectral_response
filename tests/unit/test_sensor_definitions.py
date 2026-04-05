@@ -112,6 +112,7 @@ class SensorDefinitionTests(unittest.TestCase):
         self.assertEqual(sensor_definition.bands[0].response_definition["kind"], "sampled")
         self.assertGreater(len(sensor_definition.bands[0].response_definition["wavelength_nm"]), 10)
         self.assertEqual(sensor_definition.bands[0].extensions, {})
+        self.assertEqual(sensor_definition.extensions["rsrf"]["representation_variant"], "band_average")
 
     def test_get_sensor_definition_normalizes_band_spec_sensor(self) -> None:
         sensor_definition = get_sensor_definition("hyperspec_example", root=ROOT)
@@ -120,6 +121,13 @@ class SensorDefinitionTests(unittest.TestCase):
         self.assertEqual(sensor_definition.bands[0].response_definition["kind"], "gaussian")
         self.assertEqual(sensor_definition.bands[0].response_definition["center_wavelength_nm"], 410.0)
         self.assertEqual(sensor_definition.bands[0].extensions, {})
+        self.assertEqual(sensor_definition.extensions["rsrf"]["representation_variant"], "metadata_band_spec")
+
+    def test_get_sensor_definition_defaults_deterministically_for_multi_variant_sensor(self) -> None:
+        sensor_definition = get_sensor_definition("probav_vgt", root=ROOT)
+
+        self.assertEqual(sensor_definition.sensor_id, "probav_vgt")
+        self.assertEqual(sensor_definition.extensions["rsrf"]["representation_variant"], "center_camera")
 
     def test_list_sensor_definitions_returns_known_sensor_ids(self) -> None:
         sensor_ids = list_sensor_definitions(root=ROOT)
