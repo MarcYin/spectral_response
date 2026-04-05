@@ -12,6 +12,9 @@ from .models import BandSpec, SampledCurve
 ResponseDefinition = Union[SampledCurve, BandSpec]
 ResponseDefinitionInput = Union[ResponseDefinition, Mapping[str, Any], Callable[[], object]]
 
+_SAMPLED_KINDS = {"sampled", "sampled_curve"}
+_BAND_SPEC_KINDS = {"gaussian", "band_spec"}
+
 _WAVELENGTH_KEYS = ("wavelength_nm", "wavelength")
 _RESPONSE_KEYS = ("response", "relative_spectral_response", "spectral_response", "relative_response", "rsr")
 _CENTER_KEYS = ("center_wavelength_nm", "center_wavelength")
@@ -61,6 +64,49 @@ def coerce_response_definition(
     raise TypeError("response_definition must be a SampledCurve, BandSpec, mapping, or zero-argument callable")
 
 
+def validate_response_definition(
+    response_definition: ResponseDefinitionInput,
+    *,
+    band_id: str = "custom",
+    source_variant: str | None = "custom",
+) -> ResponseDefinition:
+    """Validate and normalize any supported response-definition input."""
+
+    return coerce_response_definition(
+        response_definition,
+        band_id=band_id,
+        source_variant=source_variant,
+    )
+
+
+def response_definition_to_dict(
+    response_definition: ResponseDefinitionInput,
+    *,
+    band_id: str = "custom",
+    source_variant: str | None = "custom",
+) -> dict[str, Any]:
+    """Normalize a response definition into the stable JSON-facing shape."""
+
+    normalized = coerce_response_definition(
+        response_definition,
+        band_id=band_id,
+        source_variant=source_variant,
+    )
+
+    if isinstance(normalized, SampledCurve):
+        return {
+            "kind": "sampled",
+            "wavelength_nm": np.asarray(normalized.wavelength_nm, dtype=float).tolist(),
+            "response": np.asarray(normalized.response, dtype=float).tolist(),
+        }
+
+    return {
+        "kind": "band_spec",
+        "center_wavelength_nm": float(normalized.center_wavelength_nm),
+        "fwhm_nm": float(normalized.fwhm_nm),
+    }
+
+
 def _coerce_mapping(
     response_definition: Mapping[str, Any],
     *,
@@ -71,9 +117,21 @@ def _coerce_mapping(
     response = _mapping_value(response_definition, _RESPONSE_KEYS)
     center_wavelength_nm = _mapping_value(response_definition, _CENTER_KEYS)
     fwhm_nm = _mapping_value(response_definition, _FWHM_KEYS)
+    kind = _normalized_kind(response_definition.get("kind"))
 
     has_sampled_keys = wavelength_nm is not _MISSING or response is not _MISSING
     has_band_spec_keys = center_wavelength_nm is not _MISSING or fwhm_nm is not _MISSING
+
+    if kind in _SAMPLED_KINDS:
+        if has_band_spec_keys:
+            raise ValueError("sampled response_definition mappings cannot also include center_wavelength_nm or fwhm_nm")
+        has_sampled_keys = True
+    elif kind in _BAND_SPEC_KINDS:
+        if has_sampled_keys:
+            raise ValueError("gaussian response_definition mappings cannot also include wavelength_nm or response")
+        has_band_spec_keys = True
+    elif kind is not None:
+        raise ValueError(f"unsupported response_definition kind: {kind}")
 
     if has_sampled_keys and has_band_spec_keys:
         raise ValueError(
@@ -166,3 +224,9 @@ def _mapping_value(payload: Mapping[str, Any], keys: tuple[str, ...]) -> Any:
         if key in payload:
             return payload[key]
     return _MISSING
+
+
+def _normalized_kind(value: object) -> str | None:
+    if value is None:
+        return None
+    return str(value).strip().lower()

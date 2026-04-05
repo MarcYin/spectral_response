@@ -11,6 +11,87 @@ from .models import BandSpec, ContentKind, SampledCurve
 from .registry import read_registry_table, representation_variant_dir
 
 
+def sensor_definition_to_dict(sensor_definition) -> dict[str, Any]:
+    """Serialize a stable sensor definition."""
+
+    from .sensor_definitions import sensor_definition_to_dict as _sensor_definition_to_dict
+
+    return _sensor_definition_to_dict(sensor_definition)
+
+
+def sensor_definition_from_dict(payload: dict[str, Any]):
+    """Parse a stable sensor definition payload."""
+
+    from .sensor_definitions import sensor_definition_from_dict as _sensor_definition_from_dict
+
+    return _sensor_definition_from_dict(payload)
+
+
+def load_sensor_definition(source, *, root: Path | None = None):
+    """Load a stable sensor definition from JSON."""
+
+    from .sensor_definitions import load_sensor_definition as _load_sensor_definition
+
+    return _load_sensor_definition(source, root=root)
+
+
+def dump_sensor_definition(sensor_definition, destination) -> None:
+    """Write a stable sensor definition to JSON."""
+
+    from .sensor_definitions import dump_sensor_definition as _dump_sensor_definition
+
+    _dump_sensor_definition(sensor_definition, destination)
+
+
+def coerce_sensor_definition(
+    sensor_definition_input,
+    *,
+    representation_variant: str | None = None,
+    root: Path | None = None,
+):
+    """Normalize supported inputs into a SensorDefinition."""
+
+    from .sensor_definitions import coerce_sensor_definition as _coerce_sensor_definition
+
+    return _coerce_sensor_definition(
+        sensor_definition_input,
+        representation_variant=representation_variant,
+        root=root,
+    )
+
+
+def get_sensor_definition(
+    sensor_id: str,
+    *,
+    representation_variant: str | None = None,
+    root: Path | None = None,
+):
+    """Load a registry-backed sensor definition."""
+
+    from .sensor_definitions import get_sensor_definition as _get_sensor_definition
+
+    return _get_sensor_definition(
+        sensor_id,
+        representation_variant=representation_variant,
+        root=root,
+    )
+
+
+def list_sensor_definitions(
+    *,
+    representation_variant: str | None = None,
+    root: Path | None = None,
+) -> list[str]:
+    """List available registry-backed sensor-definition ids."""
+
+    from .sensor_definitions import list_sensor_definitions as _list_sensor_definitions
+
+    return _list_sensor_definitions(
+        representation_variant=representation_variant,
+        root=root,
+    )
+
+
 def list_sensors(root: Path | None = None) -> list[dict[str, Any]]:
     """List registered sensor representations."""
 

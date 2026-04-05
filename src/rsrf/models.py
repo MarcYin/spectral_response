@@ -16,6 +16,14 @@ class ManifestValidationError(ValueError):
         super().__init__("manifest validation failed")
 
 
+class SensorDefinitionValidationError(ValueError):
+    """Raised when a sensor definition cannot be parsed into the typed model."""
+
+    def __init__(self, errors: Sequence[str]) -> None:
+        self.errors = list(errors)
+        super().__init__("sensor definition validation failed")
+
+
 class ContentKind(str, Enum):
     """Supported canonical content kinds."""
 
@@ -65,6 +73,26 @@ class SampledCurve:
     wavelength_nm: Sequence[float]
     response: Sequence[float]
     source_variant: str | None = None
+
+
+@dataclass(frozen=True)
+class BandDefinition:
+    """Stable band definition exposed to downstream consumers."""
+
+    band_id: str
+    response_definition: Mapping[str, Any]
+    extensions: Mapping[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class SensorDefinition:
+    """Stable whole-sensor definition exposed to downstream consumers."""
+
+    sensor_id: str
+    bands: tuple[BandDefinition, ...]
+    schema_type: str = "rsrf_sensor_definition"
+    schema_version: str = "1.0.0"
+    extensions: Mapping[str, Any] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)

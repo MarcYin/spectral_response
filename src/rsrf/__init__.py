@@ -5,13 +5,32 @@ from __future__ import annotations
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
-from .api import get_metadata, list_bands, list_sensors, load_band_spec, load_curve, load_response_definition
+from .api import (
+    get_metadata,
+    get_sensor_definition,
+    list_bands,
+    list_sensor_definitions,
+    list_sensors,
+    load_band_spec,
+    load_curve,
+    load_response_definition,
+)
 from .docs_site import prepare_docs_site
 from .manifests import iter_source_manifest_paths, manifest_path, resolve_manifest_path
 from .planning import list_planned_sensors, register_planned_sensor_catalog
 from .qa import validate_sampled_curve_inventory, validate_sensor, write_validation_artifacts
 from .realize import realize_curve
 from .response_definitions import coerce_response_definition
+from .sensor_definitions import (
+    BandDefinition,
+    SensorDefinition,
+    SensorDefinitionValidationError,
+    coerce_sensor_definition,
+    dump_sensor_definition,
+    load_sensor_definition,
+    sensor_definition_from_dict,
+    sensor_definition_to_dict,
+)
 from .visualization import export_docs_visualization_assets
 
 PACKAGE_ROOT = Path(__file__).resolve().parent
@@ -71,22 +90,32 @@ else:
 
 __all__ = [
     "PACKAGE_ROOT",
+    "BandDefinition",
+    "SensorDefinition",
+    "SensorDefinitionValidationError",
     "__version__",
     "coerce_response_definition",
+    "coerce_sensor_definition",
+    "dump_sensor_definition",
     "export_docs_visualization_assets",
     "get_metadata",
+    "get_sensor_definition",
     "iter_source_manifest_paths",
     "list_bands",
     "list_planned_sensors",
+    "list_sensor_definitions",
     "list_sensors",
     "load_band_spec",
     "load_curve",
     "load_response_definition",
+    "load_sensor_definition",
     "manifest_path",
     "prepare_docs_site",
     "realize_curve",
     "register_planned_sensor_catalog",
     "resolve_manifest_path",
+    "sensor_definition_from_dict",
+    "sensor_definition_to_dict",
     "validate_sampled_curve_inventory",
     "validate_sensor",
     "write_validation_artifacts",

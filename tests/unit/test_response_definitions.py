@@ -30,6 +30,19 @@ class ResponseDefinitionCoercionTests(unittest.TestCase):
         self.assertEqual(response_definition.band_id, "B001")
         self.assertEqual(list(response_definition.wavelength_nm), [500.0, 510.0, 520.0])
 
+    def test_coerce_accepts_sampled_kind_mapping(self) -> None:
+        response_definition = coerce_response_definition(
+            {
+                "kind": "sampled",
+                "band_id": "B001",
+                "wavelength_nm": [500.0, 510.0, 520.0],
+                "response": [0.0, 1.0, 0.0],
+            }
+        )
+
+        self.assertIsInstance(response_definition, SampledCurve)
+        self.assertEqual(response_definition.band_id, "B001")
+
     def test_coerce_accepts_relative_spectral_response_aliases(self) -> None:
         response_definition = coerce_response_definition(
             {
@@ -58,6 +71,19 @@ class ResponseDefinitionCoercionTests(unittest.TestCase):
         self.assertEqual(response_definition.band_name, "Green")
         self.assertEqual(response_definition.center_wavelength_nm, 560.0)
         self.assertEqual(response_definition.fwhm_nm, 35.0)
+
+    def test_coerce_accepts_gaussian_kind_mapping(self) -> None:
+        response_definition = coerce_response_definition(
+            {
+                "kind": "gaussian",
+                "band_id": "B002",
+                "center_wavelength_nm": 560.0,
+                "fwhm_nm": 35.0,
+            }
+        )
+
+        self.assertIsInstance(response_definition, BandSpec)
+        self.assertEqual(response_definition.band_id, "B002")
 
     def test_coerce_accepts_center_wavelength_alias(self) -> None:
         response_definition = coerce_response_definition(
@@ -102,6 +128,16 @@ class ResponseDefinitionCoercionTests(unittest.TestCase):
                 {
                     "wavelength_nm": [500.0, 495.0, 520.0],
                     "response": [0.0, 1.0, 0.0],
+                }
+            )
+
+    def test_coerce_rejects_unknown_kind(self) -> None:
+        with self.assertRaisesRegex(ValueError, "unsupported response_definition kind"):
+            coerce_response_definition(
+                {
+                    "kind": "triangle",
+                    "center_wavelength_nm": 560.0,
+                    "fwhm_nm": 35.0,
                 }
             )
 
