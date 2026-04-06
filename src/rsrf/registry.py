@@ -4,12 +4,20 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
+import sys
+import tarfile
+import tempfile
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as distribution_version
 from pathlib import Path
 from typing import Any
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
-from .io import read_parquet_table, upsert_parquet_table
+from .io import ensure_directory, read_parquet_table, upsert_parquet_table, write_json
 from .models import ContentKind, SourceManifest, SourceType
 
 REGISTRY_TABLES = ("sensors", "bands", "sources", "band_specs", "realizations")
@@ -101,6 +109,15 @@ REGISTRY_PRIMARY_KEYS = {
 }
 
 RSRF_ROOT_ENV_VAR = "RSRF_ROOT"
+RSRF_CACHE_DIR_ENV_VAR = "RSRF_CACHE_DIR"
+RUNTIME_RELEASE_REPOSITORY = "MarcYin/spectral_response"
+RUNTIME_RELEASE_ASSET_NAME_TEMPLATE = "rsrf-root-v{version}.tar.gz"
+RUNTIME_RELEASE_ASSET_URL_TEMPLATE = (
+    "https://github.com/{repository}/releases/download/v{version}/{asset_name}"
+)
+RUNTIME_SOURCE_ARCHIVE_URL_TEMPLATE = "https://github.com/{repository}/archive/refs/tags/v{version}.tar.gz"
+RUNTIME_MAIN_ARCHIVE_URL_TEMPLATE = "https://github.com/{repository}/archive/refs/heads/main.tar.gz"
+RUNTIME_READY_MARKER_FILENAME = ".rsrf-runtime-root.json"
 
 
 @dataclass(frozen=True)
@@ -133,24 +150,30 @@ class RepoLayout:
 
 
 def discover_repo_root(start: Path | None = None) -> Path:
-    """Walk upward until a repository root marker is found."""
+    """Resolve the active RSRF root.
 
-    if start is not None:
-        current = start.resolve()
-    else:
-        environment_root = os.getenv(RSRF_ROOT_ENV_VAR)
-        if environment_root:
-            candidate = Path(environment_root).expanduser().resolve()
-            if not candidate.exists():
-                raise FileNotFoundError(f"{RSRF_ROOT_ENV_VAR} points to a missing path: {candidate}")
-            return candidate
-        current = Path.cwd().resolve()
-    for candidate in (current, *current.parents):
-        if (candidate / "pyproject.toml").exists():
-            return candidate
-        if (candidate / ".git").exists():
-            return candidate
-    return current
+    Explicit roots and ``RSRF_ROOT`` override discovery. When neither is
+    provided, RSRF prefers a local repository checkout and otherwise
+    bootstraps a cached GitHub release snapshot for the installed version.
+    """
+
+    explicit_root = _resolve_supplied_root(start)
+    if explicit_root is not None:
+        return explicit_root
+
+    environment_root = _resolve_environment_root()
+    if environment_root is not None:
+        return environment_root
+
+    cwd_root = _discover_repo_root_from_directory(Path.cwd().resolve())
+    if cwd_root is not None:
+        return cwd_root
+
+    package_root = _package_checkout_root()
+    if package_root is not None:
+        return package_root
+
+    return _runtime_release_root()
 
 
 def build_repo_layout(root: Path | None = None) -> RepoLayout:
@@ -182,6 +205,231 @@ def build_repo_layout(root: Path | None = None) -> RepoLayout:
         template_source_manifests_root=repo_root / "sources" / "manifests" / "templates",
         tests_root=repo_root / "tests",
     )
+
+
+def _resolve_supplied_root(root: Path | None) -> Path | None:
+    if root is None:
+        return None
+    candidate = Path(root).expanduser().resolve()
+    if not candidate.exists():
+        raise FileNotFoundError(f"root path does not exist: {candidate}")
+    return candidate
+
+
+def _resolve_environment_root() -> Path | None:
+    environment_root = os.getenv(RSRF_ROOT_ENV_VAR)
+    if not environment_root:
+        return None
+    candidate = Path(environment_root).expanduser().resolve()
+    if not candidate.exists():
+        raise FileNotFoundError(f"{RSRF_ROOT_ENV_VAR} points to a missing path: {candidate}")
+    return candidate
+
+
+def _discover_repo_root_from_directory(current: Path) -> Path | None:
+    for candidate in (current, *current.parents):
+        if _looks_like_repo_root(candidate):
+            return candidate
+    return None
+
+
+def _looks_like_repo_root(candidate: Path) -> bool:
+    return (candidate / "pyproject.toml").exists() or (candidate / ".git").exists()
+
+
+def _package_checkout_root() -> Path | None:
+    candidate = Path(__file__).resolve().parents[2]
+    if _looks_like_repo_root(candidate):
+        return candidate
+    return None
+
+
+def _runtime_release_root() -> Path:
+    version = _installed_package_version()
+    cache_root = _runtime_release_cache_root(version)
+    ready_marker = cache_root / RUNTIME_READY_MARKER_FILENAME
+    if ready_marker.exists() and _looks_like_runtime_root(cache_root):
+        return cache_root
+
+    if cache_root.exists() and not _looks_like_runtime_root(cache_root):
+        shutil.rmtree(cache_root, ignore_errors=True)
+
+    ensure_directory(cache_root.parent)
+    staging_root = Path(tempfile.mkdtemp(prefix=f"rsrf_runtime_{version}_", dir=str(cache_root.parent)))
+    archive_path = staging_root / "runtime-root.tar.gz"
+    extracted_root = staging_root / "extracted"
+
+    try:
+        archive_url = _download_runtime_release_archive(version, archive_path)
+        _extract_runtime_archive(archive_path, extracted_root)
+        runtime_root = _locate_runtime_root(extracted_root)
+        if cache_root.exists():
+            return cache_root
+        shutil.move(str(runtime_root), str(cache_root))
+        write_json(
+            cache_root / RUNTIME_READY_MARKER_FILENAME,
+            {
+                "repository": RUNTIME_RELEASE_REPOSITORY,
+                "source_url": archive_url,
+                "version": version,
+            },
+        )
+        return cache_root
+    except Exception as exc:
+        raise RuntimeError(
+            "RSRF could not locate local repository data and failed to bootstrap the "
+            f"matching GitHub release snapshot for version {version}: {exc}"
+        ) from exc
+    finally:
+        shutil.rmtree(staging_root, ignore_errors=True)
+
+
+def _runtime_release_cache_root(version: str) -> Path:
+    return _cache_base_directory() / "rsrf" / "releases" / version
+
+
+def _cache_base_directory() -> Path:
+    override = os.getenv(RSRF_CACHE_DIR_ENV_VAR)
+    if override:
+        return Path(override).expanduser().resolve()
+
+    home = Path.home()
+    if sys.platform == "darwin":
+        return (home / "Library" / "Caches").resolve()
+    if os.name == "nt":
+        local_app_data = os.getenv("LOCALAPPDATA")
+        if local_app_data:
+            return Path(local_app_data).expanduser().resolve()
+        return (home / "AppData" / "Local").resolve()
+
+    xdg_cache_home = os.getenv("XDG_CACHE_HOME")
+    if xdg_cache_home:
+        return Path(xdg_cache_home).expanduser().resolve()
+    return (home / ".cache").resolve()
+
+
+def _download_runtime_release_archive(version: str, destination: Path) -> str:
+    errors: list[str] = []
+    for url in _runtime_release_archive_candidates(version):
+        try:
+            _download_url_to_path(url, destination, version)
+            return url
+        except (HTTPError, URLError) as exc:
+            errors.append(f"{url}: {exc}")
+            if destination.exists():
+                destination.unlink()
+            continue
+    raise RuntimeError(" ; ".join(errors) if errors else "no candidate archive URLs were generated")
+
+
+def _runtime_release_archive_candidates(version: str) -> tuple[str, ...]:
+    asset_name = RUNTIME_RELEASE_ASSET_NAME_TEMPLATE.format(version=version)
+    return (
+        RUNTIME_RELEASE_ASSET_URL_TEMPLATE.format(
+            repository=RUNTIME_RELEASE_REPOSITORY,
+            version=version,
+            asset_name=asset_name,
+        ),
+        RUNTIME_SOURCE_ARCHIVE_URL_TEMPLATE.format(
+            repository=RUNTIME_RELEASE_REPOSITORY,
+            version=version,
+        ),
+        RUNTIME_MAIN_ARCHIVE_URL_TEMPLATE.format(
+            repository=RUNTIME_RELEASE_REPOSITORY,
+        ),
+    )
+
+
+def _download_url_to_path(url: str, destination: Path, version: str) -> None:
+    request = Request(
+        url,
+        headers={
+            "Accept": "application/octet-stream",
+            "User-Agent": f"rsrf/{version}",
+        },
+    )
+    ensure_directory(destination.parent)
+    with urlopen(request) as response, destination.open("wb") as handle:
+        shutil.copyfileobj(response, handle)
+
+
+def _extract_runtime_archive(archive_path: Path, destination: Path) -> None:
+    destination = ensure_directory(destination).resolve()
+    with tarfile.open(archive_path, "r:gz") as archive:
+        members = archive.getmembers()
+        for member in members:
+            if member.issym() or member.islnk():
+                raise RuntimeError(f"runtime archive contains unsupported link entry: {member.name}")
+            member_path = (destination / member.name).resolve()
+            try:
+                member_path.relative_to(destination)
+            except ValueError:
+                raise RuntimeError(f"runtime archive contains unsafe path: {member.name}") from None
+        archive.extractall(destination)
+
+
+def _locate_runtime_root(extracted_root: Path) -> Path:
+    extracted_root = extracted_root.resolve()
+    if _looks_like_runtime_root(extracted_root):
+        return extracted_root
+
+    candidates = [child for child in extracted_root.iterdir() if child.is_dir() and _looks_like_runtime_root(child)]
+    if len(candidates) == 1:
+        return candidates[0]
+    if not candidates:
+        raise RuntimeError("runtime archive did not contain data/registry/sensors.parquet")
+    raise RuntimeError("runtime archive produced multiple candidate roots")
+
+
+def _looks_like_runtime_root(candidate: Path) -> bool:
+    return (candidate / "data" / "registry" / "sensors.parquet").exists()
+
+
+def _installed_package_version() -> str:
+    package_root = Path(__file__).resolve().parents[2]
+    repo_version = _pyproject_version(package_root / "pyproject.toml")
+    if repo_version:
+        return repo_version
+
+    candidates = [package_root / "src" / "RSRF.egg-info" / "PKG-INFO"]
+    candidates.extend(sorted((package_root / "src").glob("RSRF-*.dist-info/METADATA")))
+    for candidate in candidates:
+        metadata_version = _metadata_version_from_path(candidate)
+        if metadata_version:
+            return metadata_version
+
+    for distribution_name in ("RSRF", "spectral-response-function"):
+        try:
+            return distribution_version(distribution_name)
+        except PackageNotFoundError:
+            continue
+    return "0.0.1"
+
+
+def _metadata_version_from_path(metadata_path: Path) -> str | None:
+    if not metadata_path.exists():
+        return None
+    for line in metadata_path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("Version: "):
+            return line.split("Version: ", 1)[1].strip()
+    return None
+
+
+def _pyproject_version(pyproject_path: Path) -> str | None:
+    if not pyproject_path.exists():
+        return None
+
+    in_project_block = False
+    for raw_line in pyproject_path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if line.startswith("["):
+            in_project_block = line == "[project]"
+            continue
+        if in_project_block and line.startswith("version = "):
+            version_literal = line.split("=", 1)[1].strip()
+            if version_literal.startswith('"') and version_literal.endswith('"'):
+                return version_literal[1:-1]
+    return None
 
 
 def ensure_repo_layout(root: Path | None = None) -> RepoLayout:

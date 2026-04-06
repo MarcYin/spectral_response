@@ -4,6 +4,7 @@ import os
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "src"
@@ -28,6 +29,13 @@ class DiscoverRepoRootTests(unittest.TestCase):
         root = discover_repo_root(ROOT)
         self.assertTrue((root / "pyproject.toml").exists())
 
+    def test_explicit_root_can_be_a_custom_directory_without_repo_markers(self) -> None:
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = discover_repo_root(Path(tmpdir))
+        self.assertEqual(root, Path(tmpdir).resolve())
+
     def test_discovers_from_env_var(self) -> None:
         original = os.environ.get("RSRF_ROOT")
         try:
@@ -39,6 +47,20 @@ class DiscoverRepoRootTests(unittest.TestCase):
                 os.environ.pop("RSRF_ROOT", None)
             else:
                 os.environ["RSRF_ROOT"] = original
+
+    def test_falls_back_to_runtime_release_root_when_no_repo_is_available(self) -> None:
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            expected_root = Path(tmpdir).resolve()
+            with (
+                patch("rsrf.registry._discover_repo_root_from_directory", return_value=None),
+                patch("rsrf.registry._package_checkout_root", return_value=None),
+                patch("rsrf.registry._runtime_release_root", return_value=expected_root),
+            ):
+                root = discover_repo_root()
+
+        self.assertEqual(root, expected_root)
 
     def test_invalid_env_var_raises(self) -> None:
         original = os.environ.get("RSRF_ROOT")

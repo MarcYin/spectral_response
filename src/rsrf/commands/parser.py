@@ -13,7 +13,7 @@ def _add_root_argument(parser: argparse.ArgumentParser) -> None:
         "--root",
         type=Path,
         default=None,
-        help="repository root; defaults to the discovered current repository",
+        help="override the default RSRF root (local repo, RSRF_ROOT, or cached GitHub release snapshot)",
     )
 
 

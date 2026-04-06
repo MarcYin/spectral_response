@@ -8,12 +8,14 @@ import tempfile
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from rsrf import __version__
 from rsrf.cli import main
 from rsrf.ingest import write_band_spec_artifacts
 from rsrf.io import read_json
@@ -135,10 +137,29 @@ class CliTests(unittest.TestCase):
             main(["--version"])
 
         self.assertEqual(context.exception.code, 0)
-        self.assertIn("rsrf 0.3.0", output.getvalue())
+        self.assertIn(f"rsrf {__version__}", output.getvalue())
 
     def test_list_sensors_returns_available_sensor_representations(self) -> None:
         exit_code, stdout = self._run_main(["list-sensors", "--root", str(ROOT)])
+
+        self.assertEqual(exit_code, 0)
+        rows = json.loads(stdout)
+        variants = {(row["sensor_unit_id"], row["representation_variant"]) for row in rows}
+        self.assertEqual(variants, EXPECTED_CANONICAL_VARIANTS)
+
+    def test_list_sensors_without_root_can_use_runtime_bundle(self) -> None:
+        previous_cwd = Path.cwd()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            try:
+                os.chdir(tmpdir)
+                with (
+                    patch("rsrf.registry._discover_repo_root_from_directory", return_value=None),
+                    patch("rsrf.registry._package_checkout_root", return_value=None),
+                    patch("rsrf.registry._runtime_release_root", return_value=ROOT),
+                ):
+                    exit_code, stdout = self._run_main(["list-sensors"])
+            finally:
+                os.chdir(previous_cwd)
 
         self.assertEqual(exit_code, 0)
         rows = json.loads(stdout)

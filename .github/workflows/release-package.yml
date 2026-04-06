@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
 
 jobs:
@@ -34,3 +34,26 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+
+      - name: Build runtime root bundle
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          rm -rf dist/runtime-root
+          mkdir -p dist/runtime-root/sources
+          cp pyproject.toml dist/runtime-root/
+          cp README.md dist/runtime-root/
+          cp -R data dist/runtime-root/
+          cp -R sources/manifests dist/runtime-root/sources/
+          if [ -d sources/extracted ]; then
+            cp -R sources/extracted dist/runtime-root/sources/
+          fi
+          find dist/runtime-root -name '.DS_Store' -delete
+          tar -C dist/runtime-root -czf "dist/rsrf-root-v${VERSION}.tar.gz" .
+
+      - name: Publish GitHub release assets
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/rsrf-root-v*.tar.gz
+          generate_release_notes: true
