@@ -112,9 +112,7 @@ RSRF_ROOT_ENV_VAR = "RSRF_ROOT"
 RSRF_CACHE_DIR_ENV_VAR = "RSRF_CACHE_DIR"
 RUNTIME_RELEASE_REPOSITORY = "MarcYin/spectral_response"
 RUNTIME_RELEASE_ASSET_NAME_TEMPLATE = "rsrf-root-v{version}.tar.gz"
-RUNTIME_RELEASE_ASSET_URL_TEMPLATE = (
-    "https://github.com/{repository}/releases/download/v{version}/{asset_name}"
-)
+RUNTIME_RELEASE_ASSET_URL_TEMPLATE = "https://github.com/{repository}/releases/download/v{version}/{asset_name}"
 RUNTIME_SOURCE_ARCHIVE_URL_TEMPLATE = "https://github.com/{repository}/archive/refs/tags/v{version}.tar.gz"
 RUNTIME_MAIN_ARCHIVE_URL_TEMPLATE = "https://github.com/{repository}/archive/refs/heads/main.tar.gz"
 RUNTIME_READY_MARKER_FILENAME = ".rsrf-runtime-root.json"
