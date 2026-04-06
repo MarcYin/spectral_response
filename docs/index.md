@@ -25,6 +25,6 @@ It is designed for workflows where the code and the curated spectral-response re
 
 ## What the package does not ship
 
-The published Python package is intended to ship code, not the full repository data. Use `--root` or `RSRF_ROOT` to point the installed package at a checkout or generated data root.
+The published Python package still ships code separately from the repository snapshot, but installed-package workflows can now bootstrap the matching GitHub release data automatically on first use. Use `--root` or `RSRF_ROOT` only when you want to override that default with your own prepared root.
 
 Continue with [Getting Started](getting-started.md), explore the [Interactive Visualizations](visualizations.md), or review the [Repository Layout](repository-layout.md).

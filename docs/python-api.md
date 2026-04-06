@@ -436,7 +436,7 @@ All repository-aware functions accept an optional `root` parameter:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `root` | `Path \| None` | Repository root path. When `None`, resolved via `RSRF_ROOT` environment variable or upward directory walk from CWD. |
+| `root` | `Path \| None` | Override root path. When `None`, resolved via `RSRF_ROOT`, repository auto-discovery from CWD, or the cached GitHub release snapshot for the installed version. |
 
 ## Data classes
 

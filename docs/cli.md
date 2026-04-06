@@ -7,7 +7,7 @@ The `rsrf` CLI is the main operator interface for repository inspection and QA.
 | Option | Description |
 |--------|-------------|
 | `--version` | Print the RSRF version and exit |
-| `--root PATH` | Repository root directory. Defaults to `RSRF_ROOT` or upward directory search |
+| `--root PATH` | Override the default root. By default RSRF uses `RSRF_ROOT`, a local repository checkout, or a cached GitHub release snapshot |
 
 ## Discovery commands
 
@@ -169,11 +169,11 @@ rsrf register-planned-sensors --catalog-path /path/to/custom_catalog.json
 
 ## Root selection
 
-All repository-aware commands accept `--root`. For installed-package workflows, setting `RSRF_ROOT` is usually the simplest option:
+All repository-aware commands accept `--root`. For installed-package workflows, the default behavior is to use a cached GitHub release snapshot for the installed version. Set `RSRF_ROOT` only when you want to override that default:
 
 ```bash
 export RSRF_ROOT=/path/to/spectral_response_function
 rsrf list-sensors
 ```
 
-If neither `--root` nor `RSRF_ROOT` is provided, RSRF searches upward from the current working directory for a repository root.
+If neither `--root` nor `RSRF_ROOT` is provided, RSRF first searches upward from the current working directory for a repository root and then falls back to the cached GitHub release snapshot.

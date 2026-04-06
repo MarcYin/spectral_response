@@ -143,3 +143,4 @@ Repository-aware operations resolve the root in this order:
 1. explicit `root=` argument or `--root`
 2. `RSRF_ROOT` environment variable
 3. upward search from the current working directory
+4. cached GitHub release snapshot for the installed version

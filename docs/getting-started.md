@@ -18,13 +18,14 @@ python3 -m pip install RSRF
 
 ## Pointing RSRF at repository data
 
-The code package and the canonical data repository are intentionally separate. RSRF resolves the repository root in this order:
+The wheel does not embed the full repository snapshot. Instead, RSRF resolves the active root in this order:
 
 1. **Explicit argument**: pass `root=` to Python functions or `--root` to CLI commands
 2. **Environment variable**: set `RSRF_ROOT`
 3. **Auto-discovery**: RSRF walks upward from the current working directory
+4. **Release bootstrap**: outside a checkout, RSRF downloads the matching GitHub release snapshot into a local cache
 
-For most workflows, running commands from the repository checkout is sufficient. For installed-package or notebook workflows, setting the environment variable is recommended:
+For most workflows, running commands from the repository checkout is sufficient. For installed-package or notebook workflows, the default release bootstrap is usually enough. Set the environment variable only when you want to override that default:
 
 ```bash
 export RSRF_ROOT=/path/to/spectral_response_function

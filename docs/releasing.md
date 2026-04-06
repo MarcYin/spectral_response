@@ -18,7 +18,7 @@ This repo includes three workflows:
 
 - `ci.yml`: lint checks (ruff), test matrix (Python 3.9–3.14), and packaging smoke check
 - `docs.yml`: build and deploy MkDocs to GitHub Pages
-- `release-package.yml`: build and publish to PyPI using trusted publishing
+- `release-package.yml`: build and publish to PyPI, then publish the runtime data bundle to the GitHub Release
 
 ## Trusted publishing setup
 
@@ -36,6 +36,6 @@ Recommended release sequence:
 2. Wait for the `CI` workflow on `main` to finish successfully.
 3. Create and push a version tag such as `v0.3.0`.
 4. Let `release-package.yml` start automatically from that tag push and publish the package.
-5. Create a GitHub Release from that tag if you want release notes on GitHub.
+5. The same workflow uploads `rsrf-root-vX.Y.Z.tar.gz` to the GitHub Release so installed-package users can bootstrap the matching runtime data snapshot automatically.
 
 If you prefer a dry run first, use the workflow's manual dispatch option.

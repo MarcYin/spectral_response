@@ -54,13 +54,14 @@ The `.[dev]` extra composes all of the above.
 
 ## Repository-Backed Data Access
 
-The Python package does not bundle the full canonical repository, raw sources, or parquet registries. Point RSRF at a repository checkout or generated data root with one of these patterns:
+The Python package still ships code separately from the full repository snapshot, but installed-package workflows no longer need a manual checkout. When RSRF is used outside a repository checkout and no explicit root is provided, it downloads the matching GitHub release snapshot into a local cache and reads canonical data from there.
 
-- run commands from the repository root
-- pass `--root /path/to/repo`
-- set `RSRF_ROOT=/path/to/repo`
+Root resolution now follows this order:
 
-If neither is supplied, RSRF searches upward from the current working directory for a repository root.
+- pass `root=` or `--root /path/to/custom/root`
+- set `RSRF_ROOT=/path/to/custom/root`
+- run from inside a repository checkout
+- fall back to the cached GitHub release snapshot for the installed version
 
 ## Quick Start
 
@@ -89,6 +90,8 @@ sensors = list_sensors(root=root)
 metadata = get_metadata("sentinel-2c_msi", "band_average", root=root)
 response = load_response_definition("sentinel-2c_msi", "B03", "band_average", root=root)
 ```
+
+From an installed package outside a checkout, the same calls work without setting `root`; the first read will populate the local cache from the matching GitHub release.
 
 `load_response_definition()` returns either a `SampledCurve` or a `BandSpec`, depending on the representation variant.
 
